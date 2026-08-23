@@ -1,0 +1,10 @@
+# Legacy WordPress deep links → new routes (edge redirects, before the SPA fallback)
+/about-us                /about                             301
+/our-services            /services                          301
+/our-process-saudi-arabia  /recruitment/saudi-arabia        301
+/our-process-uae         /recruitment/united-arab-emirates  301
+/our-process-kuwait      /recruitment/kuwait                301
+/contact-us              /contact                           301
+
+# SPA fallback — let React Router handle every other path
+/*                       /index.html                        200

@@ -1,0 +1,240 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+   Design tokens
+--------------------------------------------------------------------------- */
+:root {
+  /* Surfaces */
+  --ink-950: #050607;
+  --ink-900: #090b0e;
+  --ink-850: #0b0e12;
+  --ink-800: #0d1115;
+
+  --surface: rgba(255, 255, 255, 0.035);
+  --surface-strong: rgba(255, 255, 255, 0.06);
+  --line: rgba(255, 255, 255, 0.1);
+  --line-soft: rgba(255, 255, 255, 0.07);
+
+  /* Text */
+  --text-primary: #f2f5f7;
+  --text-secondary: #9aa3ab;
+  --text-faint: #646d75;
+
+  /* Brand accent — sampled from the AKL globe logo (emerald green) */
+  --accent-300: #7ce8ae;
+  --accent-400: #4edd92;
+  --accent-500: #34c978;
+  --accent-600: #1fa45b;
+  --accent-glow: rgba(52, 201, 120, 0.16);
+
+  /* Motion tokens */
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+html {
+  scroll-behavior: auto; /* Lenis owns scrolling */
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  @apply bg-ink-950 font-body text-mist-100 antialiased;
+  overflow-x: clip;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgba(52, 201, 120, 0.32);
+  color: var(--text-primary);
+}
+
+/* Keyboard focus — always visible */
+:focus-visible {
+  outline: 2px solid var(--accent-400);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+img {
+  @apply select-none;
+}
+
+/* ---------------------------------------------------------------------------
+   Reusable primitives
+--------------------------------------------------------------------------- */
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-[1320px] px-5 sm:px-8 lg:px-12;
+  }
+
+  .glass {
+    background: linear-gradient(
+      160deg,
+      rgba(255, 255, 255, 0.055),
+      rgba(255, 255, 255, 0.02) 45%,
+      rgba(255, 255, 255, 0.038)
+    );
+    border: 1px solid var(--line);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  /* Translucent emerald variant — used by the floating navigation dock */
+  .glass-emerald {
+    background: linear-gradient(
+      160deg,
+      rgba(52, 201, 120, 0.16),
+      rgba(52, 201, 120, 0.07) 50%,
+      rgba(31, 164, 91, 0.12)
+    );
+    border: 1px solid rgba(78, 221, 146, 0.24);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2.5 font-display text-[10px] uppercase tracking-[0.18em] text-accent-400 sm:text-xs sm:tracking-widest2;
+  }
+  .eyebrow::before {
+    content: '';
+    @apply h-px w-8 bg-accent-500/70;
+  }
+
+  .btn {
+    @apply relative inline-flex min-h-[44px] items-center justify-center gap-2.5 overflow-hidden rounded-full px-7 py-3.5 font-display text-sm font-medium tracking-wide transition-all duration-300 ease-out;
+  }
+
+  .btn-primary {
+    @apply btn bg-accent-500 text-ink-950 hover:bg-accent-400;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.12) inset,
+      0 12px 34px -12px rgba(52, 201, 120, 0.55);
+  }
+
+  .btn-ghost {
+    @apply btn border border-white/15 bg-white/[0.04] text-mist-100 backdrop-blur-sm hover:border-white/30 hover:bg-white/[0.08];
+  }
+
+  .btn .btn-arrow {
+    @apply transition-transform duration-300 ease-out;
+  }
+
+  /* Lifted hover states only on devices that truly hover —
+     touch devices latch :hover after tap, freezing the transform. */
+  @media (hover: hover) {
+    .btn-primary:hover {
+      transform: translateY(-2px);
+    }
+    .btn-ghost:hover {
+      transform: translateY(-2px);
+    }
+    .btn:hover .btn-arrow {
+      transform: translateX(4px);
+    }
+  }
+
+  .card-surface {
+    @apply rounded-2xl border border-white/10 bg-white/[0.035];
+  }
+
+  .link-underline {
+    position: relative;
+  }
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform 0.35s var(--ease-out-expo);
+  }
+  .link-underline:hover::after,
+  .link-underline[aria-current='page']::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+
+  .text-gradient-accent {
+    background: linear-gradient(100deg, var(--accent-300), var(--accent-500) 55%, var(--accent-600));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Forms
+--------------------------------------------------------------------------- */
+@layer components {
+  .field-label {
+    @apply mb-2 block font-display text-xs uppercase tracking-widest text-mist-500;
+  }
+
+  .field-input {
+    /* 16px minimum — iOS Safari zooms the viewport when inputs are < 16px */
+    @apply w-full rounded-xl border border-white/10 bg-ink-800/80 px-4 py-3.5 text-base text-mist-100 placeholder:text-mist-700 transition-colors duration-200;
+  }
+  .field-input:hover {
+    border-color: rgba(255, 255, 255, 0.18);
+  }
+  .field-input:focus {
+    outline: none;
+    border-color: rgba(78, 221, 146, 0.65);
+    box-shadow: 0 0 0 3px rgba(52, 201, 120, 0.14);
+  }
+  .field-input[aria-invalid='true'] {
+    border-color: rgba(248, 113, 113, 0.6);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion — content stays visible, aggressive motion removed
+--------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Hide horizontal overflow caused by marquees without clipping shadows */
+.marquee-mask {
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
