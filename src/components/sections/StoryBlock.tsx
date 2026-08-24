@@ -1,7 +1,7 @@
 import { ButtonLink } from '@/components/ui/ButtonLink';
 import { ScrollReveal } from '@/components/motion/ScrollReveal';
 import { InteractiveModel } from '@/components/ui/InteractiveModel';
-import { Rotate3D } from 'lucide-react';
+import { Orbit } from 'lucide-react';
 import { STORY } from '@/data/company';
 
 /**
@@ -51,7 +51,7 @@ export function StoryBlock() {
               <figcaption className="flex items-center justify-between gap-3 border-t border-white/[0.07] px-4 py-3">
                 <span className="font-display text-[11px] uppercase tracking-widest text-mist-500">Global reach</span>
                 <span className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-mist-700">
-                  <Rotate3D className="h-3.5 w-3.5 text-accent-500" aria-hidden="true" />
+                  <Orbit className="h-3.5 w-3.5 text-accent-500" aria-hidden="true" />
                   Drag to explore
                 </span>
               </figcaption>

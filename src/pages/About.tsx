@@ -5,7 +5,7 @@ import { SectionHeading } from '@/components/ui/SectionHeading';
 import { ButtonLink } from '@/components/ui/ButtonLink';
 import { ScrollReveal } from '@/components/motion/ScrollReveal';
 import { ScrambleText } from '@/components/motion/ScrambleText';
-import { Rotate3D } from 'lucide-react';
+import { Orbit } from 'lucide-react';
 import { ABOUT, STATS } from '@/data/company';
 import { InteractiveModel } from '@/components/ui/InteractiveModel';
 
@@ -101,7 +101,7 @@ export default function About() {
                     Global reach since 1980
                   </span>
                   <span className="flex shrink-0 items-center gap-1.5 text-[10px] uppercase tracking-widest text-mist-700">
-                    <Rotate3D className="h-3.5 w-3.5 text-accent-500" aria-hidden="true" />
+                    <Orbit className="h-3.5 w-3.5 text-accent-500" aria-hidden="true" />
                     Drag to explore
                   </span>
                 </figcaption>
@@ -132,7 +132,7 @@ export default function About() {
                     Placed worldwide
                   </span>
                   <span className="flex shrink-0 items-center gap-1.5 text-[10px] uppercase tracking-widest text-mist-700">
-                    <Rotate3D className="h-3.5 w-3.5 text-accent-500" aria-hidden="true" />
+                    <Orbit className="h-3.5 w-3.5 text-accent-500" aria-hidden="true" />
                     Drag to explore
                   </span>
                 </figcaption>
