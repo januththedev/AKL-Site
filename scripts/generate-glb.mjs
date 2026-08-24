@@ -112,6 +112,121 @@ function translateGeometry(g, [tx, ty, tz]) {
   return { ...g, positions };
 }
 
+/** Rotate geometry about the X axis (degrees) — bakes node rotations into vertices. */
+function rotateGeometryX(g, deg) {
+  const a = (deg * Math.PI) / 180;
+  const c = Math.cos(a);
+  const s = Math.sin(a);
+  const rot = (arr) => {
+    const out = arr.slice();
+    for (let i = 0; i < out.length; i += 3) {
+      const y = out[i + 1];
+      const z = out[i + 2];
+      out[i + 1] = c * y - s * z;
+      out[i + 2] = s * y + c * z;
+    }
+    return out;
+  };
+  return { ...g, positions: rot(g.positions), normals: rot(g.normals) };
+}
+
+/** Rotate geometry about the Y axis (degrees). */
+function rotateGeometryY(g, deg) {
+  const a = (deg * Math.PI) / 180;
+  const c = Math.cos(a);
+  const s = Math.sin(a);
+  const rot = (arr) => {
+    const out = arr.slice();
+    for (let i = 0; i < out.length; i += 3) {
+      const x = out[i];
+      const z = out[i + 2];
+      out[i] = c * x + s * z;
+      out[i + 2] = -s * x + c * z;
+    }
+    return out;
+  };
+  return { ...g, positions: rot(g.positions), normals: rot(g.normals) };
+}
+
+/** Degree lat/lon → position on a sphere of radius r (lon 0 toward +Z, east positive). */
+function latLon(latDeg, lonDeg, r = 1) {
+  const lat = (latDeg * Math.PI) / 180;
+  const lon = (lonDeg * Math.PI) / 180;
+  return [r * Math.cos(lat) * Math.sin(lon), r * Math.sin(lat), r * Math.cos(lat) * Math.cos(lon)];
+}
+
+/** Great-circle route between two surface points, lifted parabolically off the globe. */
+function arcPoints(from, to, { lift = 0.26, steps = 40 } = {}) {
+  const dot = Math.max(-1, Math.min(1, from[0] * to[0] + from[1] * to[1] + from[2] * to[2]));
+  const omega = Math.acos(dot);
+  const sinOmega = Math.sin(omega);
+  const pts = [];
+  for (let i = 0; i <= steps; i++) {
+    const t = i / steps;
+    let x; let y; let z;
+    if (sinOmega < 1e-5) {
+      x = from[0]; y = from[1]; z = from[2];
+    } else {
+      const k1 = Math.sin((1 - t) * omega) / sinOmega;
+      const k2 = Math.sin(t * omega) / sinOmega;
+      x = from[0] * k1 + to[0] * k2;
+      y = from[1] * k1 + to[1] * k2;
+      z = from[2] * k1 + to[2] * k2;
+    }
+    const scale = 1.02 + lift * Math.sin(t * Math.PI);
+    pts.push([x * scale, y * scale, z * scale]);
+  }
+  return pts;
+}
+
+/** Smooth tube following a polyline — used for the route arcs. */
+function tube(points, radius = 0.02, sides = 6) {
+  const positions = [];
+  const normals = [];
+  const indices = [];
+  const ringStarts = [];
+  for (let i = 0; i < points.length; i++) {
+    const prev = points[Math.max(0, i - 1)];
+    const next = points[Math.min(points.length - 1, i + 1)];
+    let tx = next[0] - prev[0];
+    let ty = next[1] - prev[1];
+    let tz = next[2] - prev[2];
+    const tl = Math.hypot(tx, ty, tz) || 1;
+    tx /= tl; ty /= tl; tz /= tl;
+    let ux = 0; let uy = 1; let uz = 0;
+    if (Math.abs(ty) > 0.94) { ux = 1; uy = 0; uz = 0; }
+    let nx = ty * uz - tz * uy;
+    let ny = tz * ux - tx * uz;
+    let nz = tx * uy - ty * ux;
+    const nl = Math.hypot(nx, ny, nz) || 1;
+    nx /= nl; ny /= nl; nz /= nl;
+    const bx = ty * nz - tz * ny;
+    const by = tz * nx - tx * nz;
+    const bz = tx * ny - ty * nx;
+    ringStarts.push(positions.length / 3);
+    for (let sIdx = 0; sIdx < sides; sIdx++) {
+      const ang = (sIdx / sides) * Math.PI * 2;
+      const ca = Math.cos(ang);
+      const sa = Math.sin(ang);
+      const dx = nx * ca + bx * sa;
+      const dy = ny * ca + by * sa;
+      const dz = nz * ca + bz * sa;
+      positions.push(points[i][0] + dx * radius, points[i][1] + dy * radius, points[i][2] + dz * radius);
+      normals.push(dx, dy, dz);
+    }
+  }
+  for (let i = 0; i < points.length - 1; i++) {
+    for (let sIdx = 0; sIdx < sides; sIdx++) {
+      const a = ringStarts[i] + sIdx;
+      const b = ringStarts[i] + ((sIdx + 1) % sides);
+      const c = ringStarts[i + 1] + sIdx;
+      const d = ringStarts[i + 1] + ((sIdx + 1) % sides);
+      indices.push(a, c, b, b, c, d);
+    }
+  }
+  return { positions, normals, indices };
+}
+
 /* ------------------------------------------------------------- glB packing */
 
 const GLB_MAGIC = 0x46546c67; // 'glTF'
@@ -230,57 +345,101 @@ function buildGLB({ meshes, materials, nodes, name }) {
 const GREEN = [0.184, 0.639, 0.381, 1];
 const STEEL = [0.78, 0.81, 0.83, 1];
 const OFFWHITE = [0.93, 0.95, 0.96, 1];
+const ACCENT = [0.306, 0.867, 0.573, 1]; // accent-400 #4EDD92
 
-// Model 1 — armillary globe (echoes the AKL logo mark)
+/*
+ * Model 1 — network globe. The AKL-logo armillary sphere plus a steel
+ * graticule and the company's real placement map: Sri Lanka routed to the
+ * core destinations (Gulf, Europe, Malaysia, Australia) with marker pins.
+ */
+const HOME = { name: 'Sri Lanka', lat: 7.5, lon: 80.7 };
+const DESTINATIONS = [
+  { name: 'United Arab Emirates', lat: 25.2, lon: 55.3 },
+  { name: 'Saudi Arabia', lat: 24.7, lon: 46.7 },
+  { name: 'Kuwait', lat: 29.3, lon: 47.5 },
+  { name: 'United Kingdom', lat: 51.5, lon: -0.13 },
+  { name: 'Malaysia', lat: 3.1, lon: 101.7 },
+  { name: 'Australia', lat: -33.9, lon: 151.2 },
+];
+
+const globePrimitives = [
+  { geometry: uvSphere(1, 48, 30), material: 0 }, // globe body
+  { geometry: rotateGeometryX(torus({ R: 1.34, r: 0.04 }), 68), material: 1 }, // armillary, echoes logo
+  { geometry: rotateGeometryX(torus({ R: 1.46, r: 0.03 }), 90), material: 1 },
+];
+
+// graticule — equator + tropics + two meridians
+for (const latDeg of [23.5, 0, -23.5]) {
+  const lat = (latDeg * Math.PI) / 180;
+  globePrimitives.push({
+    geometry: translateGeometry(
+      torus({ R: Math.cos(lat) * 1.02, r: 0.014, radialSegs: 72, tubularSegs: 10 }),
+      [0, Math.sin(lat) * 1.02, 0],
+    ),
+    material: 1,
+  });
+}
+const meridianBase = torus({ R: 1.02, r: 0.014, radialSegs: 72, tubularSegs: 10 });
+globePrimitives.push({ geometry: rotateGeometryX(meridianBase, 90), material: 1 });
+globePrimitives.push({ geometry: rotateGeometryY(rotateGeometryX(meridianBase, 90), 90), material: 1 });
+
+// home marker (Sri Lanka, larger + offwhite)
+globePrimitives.push({
+  geometry: translateGeometry(uvSphere(0.085, 16, 12), latLon(HOME.lat, HOME.lon, 1.04)),
+  material: 2,
+});
+
+// destination markers + routes from Sri Lanka
+const homeVec = latLon(HOME.lat, HOME.lon);
+for (const dest of DESTINATIONS) {
+  globePrimitives.push({
+    geometry: translateGeometry(uvSphere(0.055, 12, 8), latLon(dest.lat, dest.lon, 1.03)),
+    material: 3,
+  });
+  globePrimitives.push({ geometry: tube(arcPoints(homeVec, latLon(dest.lat, dest.lon)), 0.02, 6), material: 3 });
+}
+
 const globe = buildGLB({
   name: 'AKL Globe',
   materials: [
     { baseColorFactor: GREEN, metallicFactor: 0.15, roughnessFactor: 0.28 },
     { baseColorFactor: STEEL, metallicFactor: 0.85, roughnessFactor: 0.26 },
+    { baseColorFactor: OFFWHITE, metallicFactor: 0.05, roughnessFactor: 0.45 },
+    { baseColorFactor: ACCENT, metallicFactor: 0.3, roughnessFactor: 0.3 },
   ],
-  meshes: [
-    {
-      name: 'Globe',
-      primitives: [{ geometry: uvSphere(1, 48, 30), material: 0 }],
-    },
-    {
-      name: 'RingHorizontal',
-      primitives: [{ geometry: torus({ R: 1.34, r: 0.04 }), material: 1 }],
-    },
-    {
-      name: 'RingVertical',
-      primitives: [{ geometry: torus({ R: 1.46, r: 0.03 }), material: 1 }],
-    },
-  ],
-  // quaternions: X,Y,Z,W
-  nodes: [{ mesh: 0 }, { mesh: 1, rotation: [Math.sin((68 / 2) * (Math.PI / 180)), 0, 0, Math.cos((68 / 2) * (Math.PI / 180))] }, { mesh: 2, rotation: [Math.SQRT1_2, 0, 0, Math.SQRT1_2] }],
+  meshes: [{ name: 'Globe', primitives: globePrimitives }],
+  nodes: [{ mesh: 0 }],
 });
 fs.writeFileSync(path.join(outDir, 'akl-globe.glb'), globe);
 
-// Model 2 — location pin ("placed worldwide")
+/*
+ * Model 2 — location pin. Classic pin silhouette with a marker dot and
+ * concentric "locked location" ripple rings at the tip.
+ */
 const head = uvSphere(0.55, 40, 26, 0.42);
 const dot = translateGeometry(uvSphere(0.17, 24, 16), [0, 0.42, 0.46]);
+const rippleNear = translateGeometry(torus({ R: 0.5, r: 0.02, radialSegs: 64, tubularSegs: 10 }), [0, -1.13, 0]);
+const rippleFar = translateGeometry(torus({ R: 0.78, r: 0.014, radialSegs: 64, tubularSegs: 10 }), [0, -1.15, 0]);
 const pin = buildGLB({
   name: 'AKL Pin',
   materials: [
     { baseColorFactor: GREEN, metallicFactor: 0.1, roughnessFactor: 0.3 },
     { baseColorFactor: OFFWHITE, metallicFactor: 0.05, roughnessFactor: 0.45 },
+    { baseColorFactor: STEEL, metallicFactor: 0.85, roughnessFactor: 0.26 },
   ],
   meshes: [
     {
-      name: 'PinHead',
-      primitives: [{ geometry: head, material: 0 }],
-    },
-    {
-      name: 'PinBody',
-      primitives: [{ geometry: coneDown({}), material: 0 }],
-    },
-    {
-      name: 'PinDot',
-      primitives: [{ geometry: dot, material: 1 }],
+      name: 'Pin',
+      primitives: [
+        { geometry: head, material: 0 },
+        { geometry: coneDown({}), material: 0 },
+        { geometry: dot, material: 1 },
+        { geometry: rippleNear, material: 2 },
+        { geometry: rippleFar, material: 2 },
+      ],
     },
   ],
-  nodes: [{ mesh: 0 }, { mesh: 1 }, { mesh: 2 }],
+  nodes: [{ mesh: 0 }],
 });
 fs.writeFileSync(path.join(outDir, 'akl-pin.glb'), pin);
 
