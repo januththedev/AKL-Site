@@ -95,12 +95,16 @@ export function InteractiveModel({ src, alt, className = '', orbit = '25deg 75de
         environment-image="neutral"
         style={
           {
+            /* React does not map className→class on custom elements, so the
+               viewer's box must come from inline style / globals.css. */
+            display: 'block',
+            width: '100%',
+            height: '100%',
             '--poster-color': 'transparent',
             '--progress-bar-color': '#34c978',
             '--progress-bar-height': '3px',
           } as CSSProperties
         }
-        className="block h-full w-full"
       />
     </div>
   );

@@ -5,6 +5,7 @@ import { SectionHeading } from '@/components/ui/SectionHeading';
 import { ButtonLink } from '@/components/ui/ButtonLink';
 import { ScrollReveal } from '@/components/motion/ScrollReveal';
 import { ScrambleText } from '@/components/motion/ScrambleText';
+import { Rotate3D } from 'lucide-react';
 import { ABOUT, STATS } from '@/data/company';
 import { InteractiveModel } from '@/components/ui/InteractiveModel';
 
@@ -78,30 +79,62 @@ export default function About() {
           {/* Interactive 3D sidebar — globe + pin */}
           <div className="space-y-4 lg:sticky lg:top-28">
             <ScrollReveal y={26}>
-              <figure className="card-surface overflow-hidden">
-                <div className="aspect-[4/3] w-full">
-                  <InteractiveModel
-                    src="/models/akl-globe.glb"
-                    alt="Interactive 3D globe — drag to rotate. Al Karrim Lanka has connected Sri Lankan talent to global markets since 1980."
+              <figure className="card-surface group overflow-hidden">
+                <div className="relative aspect-[4/3] w-full overflow-hidden">
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute left-1/2 top-1/2 h-[80%] w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[60px]"
+                    style={{ background: 'radial-gradient(closest-side, rgba(52,201,120,0.18), transparent)' }}
                   />
+                  <div className="relative h-full w-full">
+                    <InteractiveModel
+                      src="/models/akl-globe.glb"
+                      alt="Interactive 3D globe — drag to rotate. Al Karrim Lanka has connected Sri Lankan talent to global markets since 1980."
+                    />
+                  </div>
+                  <span className="pointer-events-none absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-ink-950/70 px-3 py-1 font-display text-[10px] uppercase tracking-widest text-mist-300 backdrop-blur-sm">
+                    360°
+                  </span>
                 </div>
-                <figcaption className="border-t border-white/[0.07] px-4 py-3 font-display text-[11px] uppercase tracking-widest text-mist-500">
-                  Global reach since 1980
+                <figcaption className="flex items-center justify-between gap-3 border-t border-white/[0.07] px-4 py-3">
+                  <span className="font-display text-[11px] uppercase tracking-widest text-mist-300">
+                    Global reach since 1980
+                  </span>
+                  <span className="flex shrink-0 items-center gap-1.5 text-[10px] uppercase tracking-widest text-mist-700">
+                    <Rotate3D className="h-3.5 w-3.5 text-accent-500" aria-hidden="true" />
+                    Drag to explore
+                  </span>
                 </figcaption>
               </figure>
             </ScrollReveal>
             {/* Second WebGL context is desktop-only — keeps mobile memory light */}
             <ScrollReveal y={26} delay={0.08} className="hidden lg:block">
-              <figure className="card-surface overflow-hidden">
-                <div className="aspect-[4/3] w-full">
-                  <InteractiveModel
-                    src="/models/akl-pin.glb"
-                    alt="Interactive 3D location pin — drag to rotate."
-                    orbit="-20deg 80deg 115%"
+              <figure className="card-surface group overflow-hidden">
+                <div className="relative aspect-[4/3] w-full overflow-hidden">
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute left-1/2 top-1/2 h-[80%] w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[60px]"
+                    style={{ background: 'radial-gradient(closest-side, rgba(52,201,120,0.14), transparent)' }}
                   />
+                  <div className="relative h-full w-full">
+                    <InteractiveModel
+                      src="/models/akl-pin.glb"
+                      alt="Interactive 3D location pin — drag to rotate."
+                      orbit="-20deg 80deg 115%"
+                    />
+                  </div>
+                  <span className="pointer-events-none absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-ink-950/70 px-3 py-1 font-display text-[10px] uppercase tracking-widest text-mist-300 backdrop-blur-sm">
+                    360°
+                  </span>
                 </div>
-                <figcaption className="border-t border-white/[0.07] px-4 py-3 font-display text-[11px] uppercase tracking-widest text-mist-500">
-                  Placed worldwide
+                <figcaption className="flex items-center justify-between gap-3 border-t border-white/[0.07] px-4 py-3">
+                  <span className="font-display text-[11px] uppercase tracking-widest text-mist-300">
+                    Placed worldwide
+                  </span>
+                  <span className="flex shrink-0 items-center gap-1.5 text-[10px] uppercase tracking-widest text-mist-700">
+                    <Rotate3D className="h-3.5 w-3.5 text-accent-500" aria-hidden="true" />
+                    Drag to explore
+                  </span>
                 </figcaption>
               </figure>
             </ScrollReveal>
