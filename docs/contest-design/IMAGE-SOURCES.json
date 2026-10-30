@@ -1,0 +1,131 @@
+{
+  "purpose": "Planning image shortlist, not final production assets",
+  "images": [
+    {
+      "id": "hero-team",
+      "file": "images/hero-team.jpg",
+      "title": "Construction team / employer opener",
+      "photographer": "Scott Blake",
+      "page": "https://unsplash.com/photos/seven-construction-workers-standing-on-white-field-x-ghf9LjrVg",
+      "published": "2018-11-10",
+      "image": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5",
+      "classification": "stock",
+      "placement": "Hero candidate / employer page",
+      "alt": "Construction team on a building site, viewed from above.",
+      "license": "Unsplash License",
+      "licenseUrl": "https://unsplash.com/license",
+      "reviewed": "2026-10-30",
+      "status": "Downloaded and visually inspected planning candidate; final crop and delivery variants pending",
+      "notAKLLocationOrStaff": true,
+      "dimensions": [
+        1800,
+        1200
+      ]
+    },
+    {
+      "id": "hospitality",
+      "file": "images/hospitality.jpg",
+      "title": "Hospitality / skill in action",
+      "photographer": "Muhammad Rahiman Abdulmanab",
+      "page": "https://unsplash.com/photos/chef-preparing-food-in-a-dimly-lit-kitchen-sthiQQhmljg",
+      "published": "2026-04-16",
+      "image": "https://images.unsplash.com/photo-1776353744117-9e8595e8092c",
+      "classification": "stock",
+      "placement": "Hospitality industry",
+      "alt": "Chef preparing food under warm kitchen lights.",
+      "license": "Unsplash License",
+      "licenseUrl": "https://unsplash.com/license",
+      "reviewed": "2026-10-30",
+      "status": "Downloaded and visually inspected planning candidate; final crop and delivery variants pending",
+      "notAKLLocationOrStaff": true,
+      "dimensions": [
+        1800,
+        1193
+      ]
+    },
+    {
+      "id": "logistics",
+      "file": "images/logistics.jpg",
+      "title": "Logistics / human focus",
+      "photographer": "Rodrigo Rodrigues | WOLF ART",
+      "page": "https://unsplash.com/photos/man-in-a-warehouse-looking-up-while-holding-a-tablet-DvUy7qVOJRE",
+      "published": "2026-06-15",
+      "image": "https://images.unsplash.com/photo-1781559818983-4180d744416a",
+      "classification": "stock",
+      "placement": "Logistics industry / employer page",
+      "alt": "Warehouse professional holding a tablet beside stocked shelves.",
+      "license": "Unsplash License",
+      "licenseUrl": "https://unsplash.com/license",
+      "reviewed": "2026-10-30",
+      "status": "Downloaded and visually inspected planning candidate; final crop and delivery variants pending",
+      "notAKLLocationOrStaff": true,
+      "dimensions": [
+        1800,
+        2700
+      ]
+    },
+    {
+      "id": "construction-facade",
+      "file": "images/construction-facade.jpg",
+      "title": "Construction / architecture and scale",
+      "photographer": "Infinara",
+      "page": "https://unsplash.com/photos/construction-workers-on-scaffolding-installing-glass-facade-DIMsTNbTA94",
+      "published": "2026-04-26",
+      "image": "https://images.unsplash.com/photo-1777181922142-012fc9a7617c",
+      "classification": "stock",
+      "placement": "Construction and engineering",
+      "alt": "Workers installing a glass facade on scaffolding in Hulhumale, Maldives.",
+      "license": "Unsplash License",
+      "licenseUrl": "https://unsplash.com/license",
+      "reviewed": "2026-10-30",
+      "status": "Downloaded and visually inspected planning candidate; final crop and delivery variants pending",
+      "notAKLLocationOrStaff": true,
+      "dimensions": [
+        1800,
+        1201
+      ]
+    },
+    {
+      "id": "colombo-dusk",
+      "file": "images/colombo-dusk.jpg",
+      "title": "Colombo / our Sri Lankan roots",
+      "photographer": "Dmitriy Sarychev",
+      "page": "https://unsplash.com/photos/city-skyline-with-ocean-view-at-dusk-QsyDe3_7OV0",
+      "published": "2025-12-08",
+      "image": "https://images.unsplash.com/photo-1765153743359-cfd5b64b2b64",
+      "classification": "stock-destination",
+      "placement": "Company story / geographic contact context",
+      "alt": "Colombo coastal buildings and the Indian Ocean at dusk; not an AKL office image.",
+      "license": "Unsplash License",
+      "licenseUrl": "https://unsplash.com/license",
+      "reviewed": "2026-10-30",
+      "status": "Downloaded and visually inspected planning candidate; final crop and delivery variants pending",
+      "notAKLLocationOrStaff": true,
+      "dimensions": [
+        1800,
+        1200
+      ]
+    },
+    {
+      "id": "dubai-night",
+      "file": "images/dubai-night.jpg",
+      "title": "Dubai / global opportunity",
+      "photographer": "Aman Kumar",
+      "page": "https://unsplash.com/photos/dubai-cityscape-at-night-with-burj-khalifa-and-light-trails-N5YSZszitII",
+      "published": "2026-07-15",
+      "image": "https://images.unsplash.com/photo-1784125160488-09f633671243",
+      "classification": "stock-destination",
+      "placement": "UAE destination chapter",
+      "alt": "Dubai skyline and illuminated road interchanges at night.",
+      "license": "Unsplash License",
+      "licenseUrl": "https://unsplash.com/license",
+      "reviewed": "2026-10-30",
+      "status": "Downloaded and visually inspected planning candidate; final crop and delivery variants pending",
+      "notAKLLocationOrStaff": true,
+      "dimensions": [
+        1800,
+        2700
+      ]
+    }
+  ]
+}

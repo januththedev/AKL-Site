@@ -1,0 +1,72 @@
+{
+  "version": "3.0",
+  "status": "draft_verify_before_release",
+  "actions": {
+    "home": {
+      "type": "internal",
+      "href": "/"
+    },
+    "about": {
+      "type": "internal",
+      "href": "/about"
+    },
+    "services": {
+      "type": "internal",
+      "href": "/services"
+    },
+    "industries": {
+      "type": "internal",
+      "href": "/industries"
+    },
+    "employers": {
+      "type": "internal",
+      "href": "/employers"
+    },
+    "employer_inquiry": {
+      "type": "internal",
+      "href": "/employers#request-workforce"
+    },
+    "contact": {
+      "type": "internal",
+      "href": "/contact"
+    },
+    "process": {
+      "type": "internal",
+      "href": "/recruitment"
+    },
+    "careers": {
+      "type": "external",
+      "href": "https://alk.intellixhr.com/careers"
+    },
+    "application_status": {
+      "type": "external",
+      "href": "https://alk.intellixhr.com/application/status?lang=en",
+      "review": "recheck_link"
+    },
+    "phone": {
+      "type": "tel",
+      "href": "tel:+94112592551"
+    },
+    "email": {
+      "type": "mailto",
+      "href": "mailto:alkarrim@slt.lk"
+    },
+    "directions": {
+      "type": "external",
+      "href": "https://www.google.com/maps/search/?api=1&query=Al+Karrim+Lanka+10%2F1+Duplication+Road+Colombo+05+Sri+Lanka"
+    },
+    "image_credits": {
+      "type": "internal",
+      "href": "/image-credits"
+    },
+    "profile_download": {
+      "type": "managed_public_asset",
+      "href": null,
+      "requires": "approved_public_profile_asset"
+    }
+  },
+  "rules": [
+    "The model emits allowed action IDs, not arbitrary trusted URLs.",
+    "A null href is an unresolved managed asset and must not become a broken link."
+  ]
+}

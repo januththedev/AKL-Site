@@ -1,0 +1,93 @@
+[
+  {
+    "id": "hero-team",
+    "title": "Construction team / employer opener",
+    "photographer": "Scott Blake",
+    "source": "https://unsplash.com/photos/seven-construction-workers-standing-on-white-field-x-ghf9LjrVg",
+    "license": "Unsplash License"
+  },
+  {
+    "id": "hospitality",
+    "title": "Hospitality / skill in action",
+    "photographer": "Muhammad Rahiman Abdulmanab",
+    "source": "https://unsplash.com/photos/chef-preparing-food-in-a-dimly-lit-kitchen-sthiQQhmljg",
+    "license": "Unsplash License"
+  },
+  {
+    "id": "logistics",
+    "title": "Logistics / human focus",
+    "photographer": "Rodrigo Rodrigues | WOLF ART",
+    "source": "https://unsplash.com/photos/man-in-a-warehouse-looking-up-while-holding-a-tablet-DvUy7qVOJRE",
+    "license": "Unsplash License"
+  },
+  {
+    "id": "construction-facade",
+    "title": "Construction / architecture and scale",
+    "photographer": "Infinara",
+    "source": "https://unsplash.com/photos/construction-workers-on-scaffolding-installing-glass-facade-DIMsTNbTA94",
+    "license": "Unsplash License"
+  },
+  {
+    "id": "colombo-dusk",
+    "title": "Colombo / our Sri Lankan roots",
+    "photographer": "Dmitriy Sarychev",
+    "source": "https://unsplash.com/photos/city-skyline-with-ocean-view-at-dusk-QsyDe3_7OV0",
+    "license": "Unsplash License"
+  },
+  {
+    "id": "dubai-night",
+    "title": "Dubai / global opportunity",
+    "photographer": "Aman Kumar",
+    "source": "https://unsplash.com/photos/dubai-cityscape-at-night-with-burj-khalifa-and-light-trails-N5YSZszitII",
+    "license": "Unsplash License"
+  },
+  {
+    "id": "welding",
+    "title": "Skilled trades / manufacturing",
+    "photographer": "Cemrecan Yurtman",
+    "source": "https://unsplash.com/photos/welder-working-on-a-piece-of-metal-in-a-factory-JpzMc-FMUes",
+    "license": "Unsplash License"
+  },
+  {
+    "id": "automotive",
+    "title": "Automotive workshop",
+    "photographer": "Mehmet Talha Onuk",
+    "source": "https://unsplash.com/photos/mechanics-working-in-automotive-repair-workshop-8t6tk7LYLrE",
+    "license": "Unsplash License"
+  },
+  {
+    "id": "port-team",
+    "title": "Logistics / collaborative work",
+    "photographer": "Haris Illahi",
+    "source": "https://unsplash.com/photos/two-workers-in-hard-hats-discuss-plans-near-shipping-containers-V89PqZteK-k",
+    "license": "Unsplash License"
+  },
+  {
+    "id": "container-port",
+    "title": "Global logistics / scale",
+    "photographer": "Haris Illahi",
+    "source": "https://unsplash.com/photos/shipping-containers-stacked-at-a-busy-port-with-cranes-Beg5nxwR9tA",
+    "license": "Unsplash License"
+  },
+  {
+    "id": "muscat",
+    "title": "Muscat / destination context",
+    "photographer": "Rafael Peier",
+    "source": "https://unsplash.com/photos/sunlit-coastal-city-with-white-buildings-bay-and-mountains-KhrV799dams",
+    "license": "Unsplash License"
+  },
+  {
+    "id": "airport",
+    "title": "Journey / overseas departure",
+    "photographer": "MChe Lee",
+    "source": "https://unsplash.com/photos/traveler-on-a-moving-walkway-in-a-modern-airport-terminal-ZyBRtdUuq0g",
+    "license": "Unsplash License"
+  },
+  {
+    "id": "employer-meeting",
+    "title": "Employer collaboration",
+    "photographer": "Elena Golubeva",
+    "source": "https://unsplash.com/photos/a-diverse-group-of-people-in-a-modern-meeting-room-uFL-uZ_qDJw",
+    "license": "Unsplash License"
+  }
+]

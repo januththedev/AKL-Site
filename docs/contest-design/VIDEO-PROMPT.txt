@@ -1,0 +1,41 @@
+AL KARRIM LANKA — CINEMATIC WEBSITE BRAND FILM
+Copy-ready production prompt · 30 October 2026
+
+PURPOSE
+Create an 8-second silent brand film for Al Karrim Lanka, a Sri Lankan international recruitment company. This is a premium website opening/hero film. It must feel calm, ambitious, human and precise.
+
+INPUT REFERENCES
+Use the supplied photographs as shot/composition references:
+01-hero-team.jpg — construction team / skilled workforce
+02-hospitality.jpg — chef working under warm kitchen lights
+03-logistics.jpg — warehouse professional with a tablet
+04-construction-facade.jpg — engineering and architectural scale
+05-colombo-dusk.jpg — Colombo and the company's Sri Lankan roots
+06-dubai-night.jpg — international opportunity / UAE city lights
+AKL-Logo-Original.png — the existing official green globe, yellow AKL letters and Since 1980 mark. It must remain unchanged.
+
+VISUAL DIRECTION
+Photorealistic editorial cinematography. Deep forest and ink-green shadows, warm ivory highlights, restrained natural gold accents. Refined contrast, subtle depth, believable practical lighting and shallow, slow camera movement. Preserve the humanity and dignity of the people shown. Use the references as illustrative industry and destination imagery, not evidence of AKL staff, premises, clients or placements.
+
+SHOT SEQUENCE — 8 SECONDS TOTAL
+0.0–1.6s: A controlled aerial/overhead push over a construction team and building site, inspired by reference 01. Keep the workers' appearance and protective equipment stable. Show teamwork and scale.
+1.6–3.1s: A chef's hands carefully preparing a dish under warm kitchen lighting, inspired by reference 02. A very shallow lateral move; realistic hands and kitchen tools.
+3.1–4.6s: A warehouse professional holding a tablet against receding shelves, inspired by reference 03. Slow camera drift, stable face and tablet geometry.
+4.6–6.2s: A graceful transition from Colombo's coastal evening atmosphere to Dubai's illuminated skyline, inspired by references 05 and 06. Treat them as distinct places. Do not morph one city's landmarks into the other.
+6.2–8.0s: Settle onto an elegant deep ink-green background (#071916), with a restrained soft light falloff and ample negative space for the original logo. The final moment should feel composed and quiet.
+
+TRANSITIONS
+Gentle motivated match cuts and short, clean dissolves. One restrained gold route-line motif may connect the geographic shots. No glitching, flashing, rapid zooming, frantic edits, plastic 3D objects or dramatic camera spins. Keep frame edges and architecture stable.
+
+LOGO AND TEXT — FINISHING PASS
+Generate the cinematic footage and clean end background first. In the editor, overlay the actual supplied AKL-Logo-Original.png; do not ask the video model to redraw, reinterpret, replace, recolour or regenerate it. Preserve the original proportions and artwork. Use a simple opacity reveal and at most a tiny scale settle. Do not enlarge the small raster logo excessively.
+Optional editor-added text: “Sri Lankan talent. Global ambition.” Keep it crisp, minimal and separate from the logo. Generate no lettering within the footage itself.
+
+DELIVERY
+1920×1080, 16:9, 24 fps, 8 seconds, no audio. Export an H.264 MP4 master and a compressed WebM/MP4 website version, plus a still poster. Make a separate 9:16 crop/composition if a mobile video is needed. Do not crop faces, the logo or key text out of the mobile version.
+
+NEGATIVE DIRECTIONS
+No altered AKL logo. No invented office signage or company uniforms. No recruitment posters, salary figures, vacancy counts, flags pasted over workers, fake client endorsements, fake testimonials, generated watermarks, malformed hands, warped faces, duplicated people, impossible tools, flickering shelves or distorted landmarks. No voice-over or music.
+
+WEBSITE INTEGRATION NOTE
+The full 8-second film must not become a compulsory loading screen. The website and controls load immediately. Use a short 0.8–1.2-second logo reveal on a first visit if desired; display the film as a hero/optional intro with a visible Skip or Pause control. Use a still poster for reduced-motion, data-saving, autoplay failure and slow connections. Never delay the page until the video downloads or finishes. When used as background video, load it after the poster and critical page content; cap delivered mobile bytes aggressively.

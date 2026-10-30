@@ -1,0 +1,10 @@
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import { authConfigured, currentIdentity, currentMember } from '@/lib/server/auth';
+import { databaseConfigured } from '@/lib/server/db';
+import { storageConfigured } from '@/lib/server/media';
+import { AdminApp } from '@/components/admin/AdminApp';
+import { SignOutButton } from '@/components/AuthForms';
+export default async function AdminPage(){const auth=authConfigured(),database=databaseConfigured();if(!auth||!database)return <section className="setup-page"><div className="setup-card"><Link href="/"><img src="/brand/AKL-Official-Logo-200.png" alt="AKL" width="90" height="90"/></Link><span className="eyebrow">STAFF WORKSPACE / CONNECTION SETUP</span><h1>A secure workspace.<br/>Ready to connect.</h1><p>The CMS requires this project’s Neon database and Auth configuration. Staff access stays closed until those services are connected and the first Super Admin is provisioned.</p><div className="setup-checks"><div>Neon database<span>{database?'Configured':'Not configured'}</span></div><div>Neon authentication<span>{auth?'Configured':'Not configured'}</span></div><div>Media storage<span>{storageConfigured()?'Configured':'Not configured'}</span></div><div>Public assistant<span>Company FAQ fallback available</span></div></div><p>Setup instructions are in the repository’s <strong>docs/SETUP.md</strong>. No default administrator or demonstration password is enabled.</p><Link className="button button-primary" href="/">View the public website ↗</Link></div></section>;
+ const identity=await currentIdentity();if(!identity)redirect('/admin/sign-in');const member=await currentMember();if(!member)return <section className="setup-page"><div className="setup-card"><span className="eyebrow">STAFF MEMBERSHIP REQUIRED</span><h1>Your account<br/>has no active access.</h1><p>Signing in does not grant staff permissions. Ask a Super Admin for a valid invitation, or use the controlled first-owner bootstrap procedure.</p><SignOutButton/><Link className="button button-primary" href="/">Back to the website ↗</Link></div></section>;
+ return <AdminApp member={member}/>;}

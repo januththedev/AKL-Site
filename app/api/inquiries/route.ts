@@ -1,0 +1,4 @@
+import { inquirySchema } from '@/lib/validation';
+import { apiError, assertSameOrigin, boundedJson, rateLimit } from '@/lib/server/http';
+import { query } from '@/lib/server/db';
+export async function POST(request:Request){try{await assertSameOrigin(request);const data=inquirySchema.parse(await boundedJson(request,14000));if(data.website)throw new Error('INVALID_REQUEST');await rateLimit('inquiry',5,3600);const {idempotencyKey,website,consent,...payload}=data;const {rows}=await query<{id:string}>('INSERT INTO akl.inquiries(idempotency_key,payload) VALUES($1,$2) ON CONFLICT(idempotency_key) DO UPDATE SET idempotency_key=EXCLUDED.idempotency_key RETURNING id',[idempotencyKey,JSON.stringify(payload)]);return Response.json({ok:true,data:{id:rows[0].id}},{status:201,headers:{'Cache-Control':'no-store'}});}catch(e){return apiError(e);}}

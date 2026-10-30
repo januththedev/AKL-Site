@@ -1,0 +1,2 @@
+import type { MetadataRoute } from 'next';
+export default function sitemap():MetadataRoute.Sitemap {const base=process.env.SITE_BASE_URL||'https://al-karrim.net';return ['','/about','/services','/industries','/employers','/destinations','/recruitment','/contact','/privacy','/terms','/image-credits'].map(path=>({url:base+path,changeFrequency:'monthly',priority:path===''?1:path==='/employers'?.9:.7}));}

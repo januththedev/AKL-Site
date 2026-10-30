@@ -1,0 +1,2 @@
+'use client';
+export default function ErrorPage({reset}:{reset:()=>void}){return <section className="setup-page"><div className="setup-card"><span className="eyebrow">LET’S TRY THAT AGAIN</span><h1>A brief interruption.</h1><p>We couldn’t load this page. You can try again or contact alkarrim@slt.lk.</p><button className="button button-primary" onClick={reset}>Try again ↗</button></div></section>;}
