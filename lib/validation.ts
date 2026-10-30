@@ -4,7 +4,9 @@ import { safeMediaPath, safePublicUrl } from './policy';
 const text = (max = 2000) => z.string().trim().min(1).max(max);
 const image = z.string().max(500).refine(safeMediaPath, 'Choose an approved local or uploaded image.');
 const page = z.object({ eyebrow: text(120), heading: text(150), accent: text(150), intro: text(1500), image });
+export const momentSchema = z.object({id:z.uuid(),title:text(120),image,thumbnail:image,alt:text(300),credit:text(250),location:z.string().trim().max(120),date:z.iso.date(),useInIntro:z.boolean(),permissionConfirmed:z.literal(true)}).strict();
 export const contentSchema = z.object({
+  moments: z.array(momentSchema).max(100).default([]),
   home: page, employers: page, about: page,
   settings: z.object({ brand: text(100), phone: text(60), email: z.email(), address: text(400), careersUrl: z.string().refine(safePublicUrl), facebookUrl: z.string().refine(safePublicUrl), profileUrl: z.string().max(500).refine(v => /^\/documents\/[a-z0-9-]+\.pdf$/.test(v) || safePublicUrl(v)) }),
   story: z.object({ heading: text(200), body: text(3000), closing: text(600) }),

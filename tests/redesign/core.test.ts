@@ -30,3 +30,25 @@ test('contact answers derive from the current released settings',()=>{const cont
 test('Sinhala and Tamil navigation route without a provider',()=>{assert.equal(directAnswer('රැකියා',defaultContent,'si')?.actions[0].id,'careers');assert.equal(directAnswer('வேலை',defaultContent,'ta')?.actions[0].id,'careers');});
 test('unknown questions return no fabricated deterministic fact',()=>{assert.equal(directAnswer('Who won the cricket match?',defaultContent),null);});
 test('retrieval excludes drafts and expired entries',()=>{const base:KnowledgeEntry={id:'K1',topic:'contact',locale:'en',question:'Office location Colombo',answer:'Colombo 05',aliases:[],source_refs:[{sourceId:'Profile',page:11}],actions:['contact'],state:'published',version:1};const matches=retrieve('Office location Colombo',[base,{...base,id:'K2',state:'draft'},{...base,id:'K3',valid_until:'2000-01-01T00:00:00Z'}]);assert.deepEqual(matches.map(x=>x.entry.id),['K1']);});
+
+import { companyYear, yearsOfExperience, COMPANY_NAME } from '../../lib/brand';
+import { introMoments } from '../../lib/moments';
+import { momentSchema } from '../../lib/validation';
+test('company years roll over at Sri Lankan New Year midnight without changing 1980',()=>{
+ assert.equal(companyYear(new Date('2026-12-31T18:29:59Z')),2026);
+ assert.equal(companyYear(new Date('2026-12-31T18:30:00Z')),2027);
+ assert.equal(yearsOfExperience(new Date('2027-01-01T00:00:00Z')),47);
+ assert.equal(COMPANY_NAME,'AL Karrim Lanka Consultants PVT LTD');
+});
+const moment={id:'7f5ceec5-132a-4210-83d5-58eb50bd02b6',title:'A real event',image:'/media/hero-team.webp',thumbnail:'/media/hero-team.webp',alt:'A team meeting outdoors',credit:'Company photographer',location:'Colombo',date:'2026-10-30',useInIntro:true,permissionConfirmed:true as const};
+test('moments need publication permission, valid dates, alt text and approved media',()=>{
+ assert.equal(momentSchema.safeParse(moment).success,true);
+ for(const bad of [{...moment,permissionConfirmed:false},{...moment,date:'2026-02-31'},{...moment,alt:''},{...moment,image:'https://evil.test/tracker'},{...moment,role:'super_admin'}])assert.equal(momentSchema.safeParse(bad).success,false);
+});
+test('old releases gain an empty moments collection and selected intro images retain order with an eight-image cap',()=>{
+ const {moments,...old}=defaultContent;
+ assert.deepEqual(contentSchema.parse(old).moments,[]);
+ const entries=Array.from({length:12},(_,i)=>({...moment,id:String(i),useInIntro:i!==0}));
+ assert.deepEqual(introMoments(entries).map(x=>x.id),['1','2','3','4','5','6','7','8']);
+ assert.deepEqual(introMoments(entries.map(x=>({...x,useInIntro:false}))),[]);
+});

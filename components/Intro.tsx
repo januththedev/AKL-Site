@@ -1,11 +1,15 @@
 'use client';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import { introMoments } from '@/lib/moments';
+import type { Moment } from '@/lib/types';
 
-const INTRO_VERSION = 'akl:intro:v4';
+const INTRO_VERSION = 'akl:intro:v5';
 const DURATION = 3;
 
-export function Intro() {
+export function Intro({moments=[]}:{moments?:Moment[]}) {
+  const photos=introMoments(moments);
+  const photoKey=photos.map(x=>x.id+x.thumbnail).join('|');
   const root = useRef<HTMLDivElement>(null);
   const finishRef = useRef<() => void>(() => {});
   const [playing, setPlaying] = useState(false);
@@ -50,10 +54,10 @@ export function Intro() {
     async function prepare() {
       image = new Image();
       image.decoding = 'async';
-      image.src = matchMedia('(max-width: 600px)').matches
+      image.src = photos.length ? photos[0].thumbnail : matchMedia('(max-width: 600px)').matches
         ? '/intro/atlas-mobile.webp' : '/intro/atlas-desktop.webp';
       // Decode one atlas, rather than requesting or animating 500 individual images.
-      try { await image.decode(); } catch { complete(); return; }
+      try { await Promise.all([image.decode(), ...photos.map(photo=>{const img=new Image();img.src=photo.thumbnail;return img.decode();})]); } catch { complete(); return; }
       if (disposed || done || document.hidden || reduced.matches) return;
       clearTimeout(readyTimeout);
       setPlaying(true);
@@ -64,14 +68,14 @@ export function Intro() {
         const black = root.current.querySelector('.intro-black');
         const title = root.current.querySelector('.intro-title');
         wall.style.backgroundImage = `url("${image!.src}")`;
-        lanes.forEach(lane => { lane.style.backgroundImage = `url("${image!.src}")`; });
+        lanes.forEach(lane => { lane.style.backgroundImage = `url("${photos.length?photos[Number(lane.dataset.index)%photos.length].thumbnail:image!.src}")`; });
         timeline = gsap.timeline({ onComplete: complete });
         timeline.set(black, { opacity: 0 }).set(title, { opacity: 0, y: 8 });
-        timeline.set(wall, { scale: 7, rotation: -9, opacity: .75 });
-        timeline.set(lanes, { yPercent: i => i % 2 ? -65 : 65, scale: 1.15, opacity: 0 });
+        timeline.set(wall, { scale: 2.4, rotation: -3, opacity: .75 });
+        timeline.set(lanes, { yPercent: i => i % 2 ? -18 : 18, scale: 1.05, opacity: 0 });
         timeline.to(lanes, { opacity: 1, duration: .16, stagger: .025 }, 0);
         lanes.forEach((lane, i) => {
-          timeline!.to(lane, { yPercent: i % 2 ? 55 : -55, duration: 1.55, ease: 'power2.inOut' }, i * .035);
+          timeline!.to(lane, { yPercent: i % 2 ? 18 : -18, duration: 1.9, ease: 'power2.inOut' }, i * .035);
         });
         timeline.to(wall, { scale: 1, rotation: 0, opacity: 1, duration: 1.65, ease: 'power3.inOut' }, .22);
         timeline.to(lanes, { opacity: 0, duration: .42, stagger: .025 }, 1.15);
@@ -103,18 +107,18 @@ export function Intro() {
       document.removeEventListener('visibilitychange', visibility);
       reduced.removeEventListener('change', mediaChange);
     };
-  }, [run]);
+  }, [run, photoKey]);
 
   return <div ref={root} className={`intro intro-mosaic ${playing ? 'is-playing' : ''}`}
     aria-hidden={!playing} data-intro-state={playing ? 'playing' : 'bypassed'} data-photo-tiles="500">
     <div className="intro-stage" aria-hidden="true">
-      <div className="intro-wall" />
+      <div className={`intro-wall ${photos.length?'has-moments':''}`}>{photos.length>0&&<div className="intro-live-grid">{Array.from({length:500},(_,i)=><span key={i} style={{backgroundImage:`url("${photos[i%photos.length].thumbnail}")`}}/>)}</div>}</div>
       <div className="intro-lanes">{Array.from({ length: 5 }, (_, i) =>
-        <div key={i} className="intro-lane" style={{ backgroundPosition: `${i * 25}% 50%` }} />)}</div>
-      <div className="intro-vignette" />
+        <div key={i} className={`intro-lane ${photos.length?'live-lane':''}`} data-index={i} style={{ backgroundPosition: `${i * 25}% 50%` }} />)}</div>
+      <div className="intro-vignette" /><div className="intro-cinema-label"><span>AL KARRIM LANKA</span><span>PEOPLE. PLACES. POSSIBILITY.</span></div>
     </div>
     <div className="intro-black" />
-    <p className="intro-title">AL-Karrim Lanka</p>
+    <p className="intro-title"><span>AL Karrim Lanka{' '}<span className="intro-legal">Consultants PVT LTD</span></span></p>
     {playing && <button className="intro-skip" onClick={() => finishRef.current()}>Skip intro ↗</button>}
   </div>;
 }

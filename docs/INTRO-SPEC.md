@@ -23,3 +23,7 @@ Playback starts only after atlas decode. The page stays usable during preparatio
 ## Remaining device verification
 
 Verify first visit and reload, Skip, Escape, reduced motion, slow/dead network, hidden-tab return and route changes on real iOS/Android and desktop browsers. Check final title against black at 2380–3000ms with a frame recording. The 500-crop atlas is a delivery optimization, not 500 independently shot photos.
+
+## Superseded by v5
+
+The later user instruction changes the ending to the full official company name: **AL Karrim Lanka Consultants PVT LTD**. See `MOMENTS-AND-GLASS.md` for the current smooth motion and published Moments image source. This v4 timeline remains the timing reference; v5 replaces its visual intensity and source selection.
