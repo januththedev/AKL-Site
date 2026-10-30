@@ -7,9 +7,39 @@ import type { Industry, Destination } from '@/lib/types';
 import { journey } from '@/content/default';
 
 export function MotionRoot() {
- const pathname=usePathname();
- useEffect(()=>{let dispose=()=>{};let cancelled=false;if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-  Promise.all([import('gsap'),import('gsap/ScrollTrigger')]).then(([{gsap},{ScrollTrigger}])=>{if(cancelled)return;gsap.registerPlugin(ScrollTrigger);const ctx=gsap.context(()=>{gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach(el=>{gsap.from(el,{y:28,opacity:0,duration:.85,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 92%',once:true}});});});dispose=()=>ctx.revert();});return()=>{cancelled=true;dispose();};},[pathname]);return null;
+ const pathname = usePathname();
+ useEffect(() => {
+  let cancelled = false;
+  let dispose = () => {};
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(([{ gsap }, { ScrollTrigger }]) => {
+   if (cancelled) return;
+   gsap.registerPlugin(ScrollTrigger);
+   const media = gsap.matchMedia();
+   const ctx = gsap.context(() => {
+    gsap.to('.reading-progress', { scaleX: 1, ease: 'none', scrollTrigger: {
+     trigger: document.documentElement, start: 'top top', end: 'bottom bottom', scrub: true,
+    }});
+    if (document.querySelector('.hero-photograph')) {
+     media.add('(min-width: 1000px)', () => {
+      gsap.fromTo('.hero-photograph>img', { yPercent: -5, scale: 1.1 }, {
+       yPercent: 5, scale: 1.1, ease: 'none', scrollTrigger: {
+        trigger: '.hero-photograph', start: 'top bottom', end: 'bottom top', scrub: true,
+       },
+      });
+     });
+    }
+    gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach(el => {
+     gsap.from(el, { y: 28, opacity: 0, duration: .85, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 92%', once: true },
+     });
+    });
+   });
+   dispose = () => { media.revert(); ctx.revert(); };
+  });
+  return () => { cancelled = true; dispose(); };
+ }, [pathname]);
+ return <div className="reading-progress" aria-hidden="true" />;
 }
 export function IndustryExplorer({industries}:{industries:Industry[]}) {
  const [active,setActive]=useState(0);const item=industries[active];
