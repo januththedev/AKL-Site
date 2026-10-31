@@ -1,8 +1,9 @@
 import type { Member, Role, SiteContent } from './types';
 
 export const MEMBER_LOCK = 6031980;
-export const elevatedCapabilities = ['members', 'settings', 'knowledge.approve', 'rollback', 'inquiries.export', 'inquiries.erase', 'audit', 'integrations'] as const;
-const routine = new Set(['dashboard','content.edit','content.publish','media','knowledge','inquiries','preview']);
+export const elevatedCapabilities = ['members', 'settings', 'knowledge.approve', 'rollback', 'inquiries.export', 'inquiries.erase', 'audit', 'integrations', 'portfolio.delete'] as const;
+// 'portfolio' covers list/create/edit/disable/enable of private portfolio links; permanent deletion ('portfolio.delete') is Super Admin only.
+const routine = new Set(['dashboard','content.edit','content.publish','media','knowledge','inquiries','preview','portfolio']);
 export function can(role: Role, capability: string) {
   if (routine.has(capability)) return role === 'admin' || role === 'super_admin';
   return role === 'super_admin' && elevatedCapabilities.some((item) => capability === item || capability.startsWith(`${item}.`));
@@ -20,7 +21,8 @@ export function safeMediaPath(value: string) {
   if (/^\/media\/[a-z0-9-]+\.webp$/.test(value)) return true;
   const base = process.env.PUBLIC_ASSET_BASE_URL;
   if (!base) return false;
-  try { const u = new URL(value); const b = new URL(base); return u.protocol === 'https:' && u.origin === b.origin && !u.username && !u.password; } catch { return false; }
+  if (!/^[A-Za-z0-9\-._~%/:]+$/.test(value)) return false; // no quotes/parens/spaces: safe inside CSS url("…")
+  try { const u = new URL(value); const b = new URL(base); return u.protocol === 'https:' && u.origin === b.origin && !u.username && !u.password && !u.search && !u.hash && u.href === value; } catch { return false; }
 }
 export function safePublicUrl(value: string) {
   try { const u = new URL(value); return u.protocol === 'https:' && !u.username && !u.password; } catch { return false; }

@@ -12,5 +12,8 @@ export type SiteContent = {
   industries: Industry[]; destinations: Destination[];
   story: { heading: string; body: string; closing: string };
 };
-export type Inquiry = { id: string; payload: Record<string, string | number>; status: string; created_at: string; assigned_to: string | null };
+export type Inquiry = { id: string; payload: Record<string, string | number>; status: string; created_at: string; assigned_to: string | null; portfolio_link_id?: string | null };
 export type Release = { id: string; message: string; created_at: string; published_by: string; manifest: { content: SiteContent; knowledge: KnowledgeEntry[] } };
+export type PortfolioStatus = 'active' | 'disabled' | 'expired';
+export type PortfolioLink = { id: string; slug: string; company_name: string; contact_name: string; country: string; sectors: string[]; roles: string[]; intro_message: string; show_clients: boolean; is_active: boolean; expires_at: string | null; view_count: number; last_viewed_at: string | null; created_by: string | null; created_at: string; updated_at: string };
+export type PortfolioLinkRow = PortfolioLink & { status: PortfolioStatus; inquiry_count: number; created_by_email: string | null };

@@ -19,6 +19,7 @@ NEON_AUTH_BASE_URL=<AKL Neon managed Auth branch URL>
 NEON_AUTH_COOKIE_SECRET=<locally generated secret of at least 32 characters>
 SITE_BASE_URL=<canonical application origin>
 BOOTSTRAP_OWNER_AUTH_USER_ID=<verified owner identity in this branch>
+BOOTSTRAP_OWNER_EMAIL=<owner email; may self-register only until the first Super Admin exists>
 
 STORAGE_ENDPOINT=<S3-compatible endpoint>
 STORAGE_REGION=auto
@@ -37,7 +38,7 @@ Do not reuse a database key from an unrelated project. None of these live creden
 ## Database and first owner
 
 1. Enable managed Neon Auth on the intended AKL branch and configure the exact trusted application origins.
-2. Create/verify the owner's identity through the supported Neon process. Do not invent a password seed in the website.
+2. Create/verify the owner's identity through the supported Neon process (or sign up at /admin/sign-in with BOOTSTRAP_OWNER_EMAIL — account creation is otherwise invitation-only). Do not invent a password seed in the website.
 3. Run `npm run db:migrate`. Migrations are checksummed and applied transactionally, never reset automatically on page load.
 4. Set `BOOTSTRAP_OWNER_AUTH_USER_ID` to the verified identity and run `npm run admin:bootstrap` once. The script checks the managed identity's verified email and refuses if an active Super Admin already exists.
 5. Sign in at `/admin/sign-in`. Add other staff through Super Admin invitations. Invitation links are single-use, expire after 48 hours and require the exact verified email. The UI provides a link for manual sharing; it does not claim an email was sent.
