@@ -1,0 +1,186 @@
+/* Opening v6 — "Through the globe". See components/Intro.tsx for the timeline. */
+
+/* Cover raised by the <head> boot script before first paint; JS swaps it for the curtain.
+   Failsafe: if JavaScript never starts, the cover and the opening fade away after 4 s. */
+html[data-intro='pending']::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 199;
+  background: #030b09;
+  animation: rv-failsafe 0.35s 4s forwards;
+}
+
+.rv {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  visibility: hidden;
+  pointer-events: none;
+  overflow: hidden;
+  contain: layout paint;
+  color: var(--ivory);
+}
+html[data-intro='pending'] .rv { visibility: visible; animation: rv-failsafe 0.35s 4s forwards; }
+.rv.is-active { visibility: visible; pointer-events: auto; }
+
+.rv-curtain {
+  position: absolute;
+  inset: 0;
+  --cx: 50%;
+  --cy: 45%;
+  --rx: 0.01px;
+  --ry: 0.01px;
+  background:
+    radial-gradient(60% 50% at 50% 42%, #0e3a2e 0%, #061a15 45%, #030b09 100%);
+}
+/* The globe becomes an aperture onto the live page */
+.rv.is-active .rv-curtain {
+  -webkit-mask-image: radial-gradient(ellipse var(--rx) var(--ry) at var(--cx) var(--cy), transparent 98.5%, #000 100%);
+  mask-image: radial-gradient(ellipse var(--rx) var(--ry) at var(--cx) var(--cy), transparent 98.5%, #000 100%);
+}
+/* faint film grain so the black feels like a lens, not a blank page */
+.rv-curtain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.rv-stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+}
+
+/* Square box matching the 512×512 logo; globe lines and photos are positioned in that space */
+.rv-mark {
+  --mark: min(62vw, 56vh, 560px);
+  position: relative;
+  width: var(--mark);
+  height: var(--mark);
+  margin-top: calc(var(--mark) * -0.12);
+  margin-bottom: calc(var(--mark) * -0.14);
+}
+.rv-photos {
+  position: absolute;
+  left: 6.93%;
+  top: 20.9%;
+  width: 86.13%;
+  height: 53.9%;
+  clip-path: ellipse(50% 50% at 50% 50%);
+  opacity: 0;
+}
+.rv-frame {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  filter: saturate(0.8) contrast(1.08) brightness(0.9);
+}
+.rv-photos::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(closest-side, transparent 55%, #030b09cc 100%), linear-gradient(#0b3d3240, #0b3d3240);
+}
+.rv-logo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  filter: drop-shadow(0 0 40px #88d8ae22);
+}
+.rv-globe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform-origin: 50% 47.85%;
+}
+.rv-globe ellipse,
+.rv-globe line {
+  vector-effect: non-scaling-stroke;
+  stroke: #88d8ae;
+  stroke-width: 1;
+  stroke-opacity: 0.55;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+.rv-globe .rv-outline { stroke: var(--gold); stroke-width: 1.6; stroke-opacity: 0.95; }
+/* Before JavaScript is ready the outline already starts drawing */
+html[data-intro='pending'] .rv-outline { animation: rv-draw 0.9s 0.05s cubic-bezier(0.65, 0, 0.35, 1) forwards; }
+
+.rv-name {
+  margin: 0;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: clamp(32px, 5.4vw, 78px);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+}
+.rv-name .rv-clip:last-child .rv-word { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.02em; color: var(--mint); }
+.rv-clip { display: inline-block; overflow: hidden; vertical-align: bottom; padding: 0 0.04em 0.1em; }
+.rv-word { display: inline-block; transform: translateY(110%); }
+.rv-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px 16px;
+  margin: 18px 0 0;
+  font-size: clamp(9px, 0.9vw, 11px);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: 0;
+}
+.rv-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+.rv-year { color: var(--gold); font-variant-numeric: tabular-nums; letter-spacing: 0.12em; }
+
+.rv-skip {
+  position: absolute;
+  right: 28px;
+  top: 26px;
+  z-index: 2;
+  color: #fff;
+  background: #0009;
+  border: 1px solid #ffffff50;
+  padding: 10px 16px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  backdrop-filter: blur(6px);
+}
+.rv-skip:hover { background: #000c; }
+
+/* Hero hand-off: hold the hero copy while the opening plays, animate it in as the globe opens */
+@media (prefers-reduced-motion: no-preference) {
+  .home-hero .hero-topline,
+  .home-hero .hero-copy > * {
+    transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 1.05s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .home-hero .hero-copy > *:nth-child(2) { transition-delay: 0.1s; }
+  .home-hero .hero-copy > *:nth-child(3) { transition-delay: 0.22s; }
+  .home-hero .hero-photograph { transition: transform 1.6s cubic-bezier(0.22, 1, 0.36, 1), filter 1.3s ease; }
+  html[data-intro='playing'] .home-hero .hero-topline,
+  html[data-intro='playing'] .home-hero .hero-copy > * { opacity: 0; transform: translateY(36px); }
+  html[data-intro='playing'] .home-hero .hero-photograph { transform: scale(1.06); filter: brightness(0.55) saturate(0.8); }
+}
+
+@keyframes rv-draw { to { stroke-dashoffset: 0; } }
+@keyframes rv-failsafe { to { opacity: 0; visibility: hidden; } }
+
+@media (max-width: 600px) {
+  .rv-mark { --mark: min(84vw, 50vh); }
+  .rv-skip { right: 16px; top: 16px; }
+}
