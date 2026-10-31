@@ -1,0 +1,305 @@
+/* Talent Routes: the AKL logo-globe as an illustrative route map.
+   Same visual language as the opening (components/intro.css): gold outline, thin mint graticule. */
+
+.talent-routes {
+  position: relative;
+  color: var(--ivory);
+  font-family: var(--sans);
+  overflow-x: clip;
+  contain: layout style;
+}
+
+/* Desktop: a lens floating over the destination photograph (replaces the old .route-map slot). */
+.destination-story > .talent-routes {
+  position: absolute;
+  right: 15px;
+  top: 20px;
+  width: min(47%, 590px);
+  z-index: 2;
+  padding: 16px 18px 12px;
+  background: linear-gradient(160deg, rgba(7, 25, 22, 0.62), rgba(7, 25, 22, 0.78));
+  border: 1px solid rgba(217, 184, 108, 0.18);
+  -webkit-backdrop-filter: blur(10px) saturate(1.15);
+  backdrop-filter: blur(10px) saturate(1.15);
+}
+
+/* Tilt wrapper: no layout cost, transform only. */
+.tr-stage {
+  position: relative;
+  aspect-ratio: 512 / 320;
+  --tr-rx: 0deg;
+  --tr-ry: 0deg;
+}
+.tr-stage[data-tilt='true'] {
+  transform: perspective(1100px) rotateX(var(--tr-rx)) rotateY(var(--tr-ry));
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: transform;
+}
+
+.tr-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+/* ---- Globe: lens, graticule, outline ---- */
+.tr-lens { stroke: none; }
+.tr-grid-line {
+  fill: none;
+  stroke: var(--mint);
+  stroke-width: 0.7;
+  stroke-opacity: 0.2;
+}
+.tr-tick {
+  fill: var(--mint);
+  fill-opacity: 0.42;
+  font-size: 7.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  font-family: var(--sans);
+}
+.tr-outline {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.6;
+  stroke-opacity: 0.95;
+}
+
+/* ---- Routes ---- */
+.tr-arc,
+.tr-glow,
+.tr-hot {
+  fill: none;
+  stroke-linecap: round;
+}
+.tr-arc {
+  stroke: var(--gold);
+  stroke-width: 1.1;
+  stroke-opacity: 0.3;
+  transition: stroke-opacity 0.5s ease;
+}
+.tr-route[data-state='all'] .tr-arc { stroke-opacity: 0.55; }
+.tr-route[data-state='on'] .tr-arc { stroke-opacity: 0.35; }
+
+/* Bright overlay that "draws" from Colombo whenever a route is selected. */
+.tr-glow,
+.tr-hot {
+  stroke: var(--gold);
+  stroke-dasharray: 1 2;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 0.95s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.4s ease;
+}
+.tr-glow { stroke-width: 9; opacity: 0; }
+.tr-hot { stroke-width: 2.4; }
+.tr-route[data-state='on'] .tr-hot { stroke-dashoffset: 0; }
+.tr-route[data-state='on'] .tr-glow { stroke-dashoffset: 0; opacity: 0.16; }
+
+/* ---- Pins (real buttons, HTML layer over the SVG) ---- */
+.tr-pinwrap {
+  position: absolute;
+  width: 0;
+  height: 0;
+  z-index: 1;
+}
+.tr-pinwrap[data-sel='true'] { z-index: 3; }
+.tr-pin {
+  position: absolute;
+  left: -14px;
+  top: -14px;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.tr-pin:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 4px;
+}
+.tr-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  border-radius: 50%;
+  background: var(--mint);
+  box-shadow: 0 0 0 3px rgba(136, 216, 174, 0.18);
+  transition: width 0.3s ease, height 0.3s ease, margin 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+.tr-pin:hover .tr-dot { box-shadow: 0 0 0 5px rgba(136, 216, 174, 0.28); }
+.tr-pin[aria-pressed='true'] .tr-dot {
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  background: var(--ivory);
+  box-shadow: 0 0 0 4px rgba(217, 184, 108, 0.55), 0 0 20px 2px rgba(217, 184, 108, 0.6);
+}
+.tr-pin[aria-pressed='true'] .tr-dot::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  animation: tr-ping 1.1s ease-out 1;
+}
+
+/* Colombo: gold, softly pulsing */
+.tr-origin .tr-dot { background: var(--gold); box-shadow: 0 0 0 3px rgba(217, 184, 108, 0.25); }
+.tr-origin .tr-pin[aria-pressed='true'] .tr-dot { background: var(--ivory); }
+.tr-pulse {
+  position: absolute;
+  left: -7px;
+  top: -7px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  background: rgba(217, 184, 108, 0.18);
+  pointer-events: none;
+  animation: tr-pulse 3.2s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+}
+.talent-routes[data-inview='false'] .tr-pulse { animation-play-state: paused; }
+/* Origin marker that is not itself a destination button */
+.tr-pinwrap.tr-origin:not([data-sel]) { pointer-events: none; }
+.tr-pinwrap.tr-origin:not([data-sel]) > .tr-dot { margin: -4px 0 0 -4px; }
+
+/* ---- Labels ---- */
+.tr-label {
+  position: absolute;
+  width: max-content;
+  max-width: 118px;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--muted);
+  pointer-events: none;
+  text-shadow: 0 1px 8px rgba(3, 11, 9, 0.9), 0 0 2px rgba(3, 11, 9, 0.8);
+  transition: color 0.3s ease;
+}
+.tr-label[data-side='e'] { left: 26px; top: 50%; transform: translateY(-50%); }
+.tr-label[data-side='w'] { right: 26px; top: 50%; transform: translateY(-50%); text-align: right; }
+.tr-label[data-side='n'] { bottom: 22px; left: 50%; transform: translateX(-50%); text-align: center; }
+.tr-label[data-side='s'] { top: 22px; left: 50%; transform: translateX(-50%); text-align: center; }
+.tr-label i {
+  font-style: normal;
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  margin-right: 0.7em;
+}
+.tr-label small {
+  display: block;
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, opacity 0.35s ease;
+}
+.tr-pin[aria-pressed='true'] .tr-label { color: var(--ivory); }
+.tr-pin[aria-pressed='true'] .tr-label small { max-height: 14px; opacity: 1; }
+.tr-pinwrap.tr-origin:not([data-sel]) .tr-label small { max-height: 14px; opacity: 0.85; }
+.tr-pinwrap.tr-origin:not([data-sel]) .tr-label { color: var(--ivory); }
+
+/* ---- Caption + live region ---- */
+.tr-caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin: 10px 0 0;
+  padding-top: 9px;
+  border-top: 1px solid rgba(217, 184, 108, 0.14);
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-shadow: 0 1px 6px rgba(3, 11, 9, 0.9);
+}
+.tr-caption span:first-child { color: var(--gold); white-space: nowrap; }
+.tr-caption span:last-child { text-align: right; letter-spacing: 0.14em; }
+.tr-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- Draw-in choreography (armed by JS only when motion is allowed) ---- */
+.tr-armed .tr-tick { opacity: 0; }
+.tr-armed .tr-outline,
+.tr-armed .tr-grid-line,
+.tr-armed .tr-arc {
+  stroke-dasharray: 1 2;
+  stroke-dashoffset: 1;
+}
+.tr-armed .tr-pinwrap { opacity: 0; visibility: hidden; }
+.tr-armed .tr-caption { opacity: 0; }
+.tr-armed .tr-route[data-state] .tr-hot,
+.tr-armed .tr-route[data-state] .tr-glow { stroke-dashoffset: 1; opacity: 0; }
+
+@keyframes tr-pulse {
+  0% { transform: scale(0.7); opacity: 0.9; }
+  70%, 100% { transform: scale(4.2); opacity: 0; }
+}
+@keyframes tr-ping {
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(3); opacity: 0; }
+}
+
+/* ---- Mobile / tablet: the map sits between the photograph and the tabs, in normal flow ---- */
+@media (max-width: 800px) {
+  .destination-story > .talent-routes {
+    position: relative;
+    right: auto;
+    top: auto;
+    width: 100%;
+    margin: 18px 0 0;
+    padding: 14px 12px 10px;
+    background: rgba(255, 255, 255, 0.02);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .tr-label { font-size: 9px; max-width: 96px; letter-spacing: 0.12em; }
+  .tr-label small { font-size: 7.5px; }
+  .tr-caption { flex-direction: column; gap: 4px; align-items: flex-start; }
+  .tr-caption span:last-child { text-align: left; }
+}
+@media (max-width: 560px) {
+  .tr-label small,
+  .tr-tick { display: none; }
+  .tr-label[data-side='e'] { left: 18px; }
+  .tr-label[data-side='w'] { right: 18px; }
+  .tr-label { max-width: 84px; }
+}
+@media (pointer: coarse) {
+  .tr-pin { left: -19px; top: -19px; width: 38px; height: 38px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tr-stage[data-tilt='true'] { transform: none; transition: none; }
+  .tr-pulse { animation: none; opacity: 0; }
+  .tr-pin[aria-pressed='true'] .tr-dot::after { animation: none; opacity: 0; }
+  .tr-arc, .tr-glow, .tr-hot, .tr-dot, .tr-label, .tr-label small { transition: none; }
+}

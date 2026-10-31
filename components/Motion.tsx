@@ -5,6 +5,7 @@ import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
 import type { Industry, Destination } from '@/lib/types';
 import { journey } from '@/content/default';
+import { TalentRoutes } from '@/components/TalentRoutes';
 
 export function MotionRoot() {
  const pathname = usePathname();
@@ -52,5 +53,5 @@ export function Journey() {
 }
 export function DestinationStory({destinations}:{destinations:Destination[]}) {
  const [selected,setSelected]=useState(0);const item=destinations[selected];
- return <div className="destination-story"><div className="destination-photo" key={item.slug}><img src={item.image} alt={`${item.title} destination illustration`} width="1600" height="1000" loading="lazy"/><div className="destination-overlay"/><div className="destination-copy"><span className="eyebrow">{item.region}</span><h3>{item.title}</h3><p>{item.description}</p></div></div><div className="route-map" aria-hidden="true"><svg viewBox="0 0 550 250" fill="none"><path d="M15 185C98 160 90 70 188 93S258 180 327 130S419 21 530 57" stroke="currentColor" strokeWidth="1" opacity=".25"/><path d="M15 185Q225 30 342 138" stroke="currentColor" strokeWidth="1.2" strokeDasharray="4 5"/><circle cx="342" cy="138" r="5" fill="currentColor"/><circle cx="15" cy="185" r="4" fill="currentColor"/><text x="355" y="145" fill="currentColor" fontSize="12">SRI LANKA</text><text x="20" y="215" fill="currentColor" fontSize="10">A WORLD OF CONNECTIONS</text></svg></div><div className="destination-tabs" role="group" aria-label="Explore destinations">{destinations.map((x,i)=><button key={x.slug} onClick={()=>setSelected(i)} aria-pressed={selected===i}><span>0{i+1}</span>{x.title}<ArrowUpRight size={17}/></button>)}</div></div>;
+ return <div className="destination-story"><div className="destination-photo" key={item.slug}><img src={item.image} alt={`${item.title} destination illustration`} width="1600" height="1000" loading="lazy"/><div className="destination-overlay"/><div className="destination-copy"><span className="eyebrow">{item.region}</span><h3>{item.title}</h3><p>{item.description}</p></div></div><TalentRoutes destinations={destinations} selected={selected} onSelect={setSelected}/><div className="destination-tabs" role="group" aria-label="Explore destinations">{destinations.map((x,i)=><button key={x.slug} onClick={()=>setSelected(i)} aria-pressed={selected===i}><span>0{i+1}</span>{x.title}<ArrowUpRight size={17}/></button>)}</div></div>;
 }
