@@ -16,7 +16,7 @@
  */
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import { introMoments } from '@/lib/moments';
+import { introPhotoSources } from '@/lib/moments';
 import { companyYear, FOUNDING_YEAR } from '@/lib/brand';
 import type { Moment } from '@/lib/types';
 import { INTRO_KEY } from '@/lib/intro';
@@ -35,8 +35,7 @@ const PARALLELS = [-0.8, -0.5, -0.2, 0.2, 0.5, 0.8].map(t => {
 });
 
 export function Intro({ moments = [] }: { moments?: Moment[] }) {
-  const photos = introMoments(moments).map(m => m.thumbnail);
-  const sources = (photos.length >= 3 ? photos : STOCK).slice(0, 6);
+  const sources = introPhotoSources(moments, STOCK);
   const sourceKey = sources.join('|');
   const root = useRef<HTMLDivElement>(null);
   const finishRef = useRef<() => void>(() => {});

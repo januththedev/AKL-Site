@@ -52,3 +52,15 @@ test('old releases gain an empty moments collection and selected intro images re
  assert.deepEqual(introMoments(entries).map(x=>x.id),['1','2','3','4','5','6','7','8']);
  assert.deepEqual(introMoments(entries.map(x=>({...x,useInIntro:false}))),[]);
 });
+
+import { introPhotoSources } from '../../lib/moments';
+test('one or two selected Moments photos are used instead of stock',()=>{
+ const first={...moment,thumbnail:'/media/hero-team.webp'},second={...moment,id:'second',thumbnail:'/media/hospitality.webp'};
+ assert.deepEqual(introPhotoSources([first],['/stock.webp']),[first.thumbnail]);
+ assert.deepEqual(introPhotoSources([first,second],['/stock.webp']),[first.thumbnail,second.thumbnail]);
+});
+test('intro uses stock only without selected Moments and keeps its six-frame limit',()=>{
+ assert.deepEqual(introPhotoSources([{...moment,useInIntro:false}],['/stock.webp']),['/stock.webp']);
+ const selected=Array.from({length:9},(_,i)=>({...moment,thumbnail:`/media/photo-${i}.webp`}));
+ assert.deepEqual(introPhotoSources(selected,['/stock.webp']),selected.slice(0,6).map(x=>x.thumbnail));
+});
