@@ -73,10 +73,22 @@ export function TalentRoutes({
       if (side === 'w' && m.x < GLOBE.w * 0.26) side = 'e';
       return { ...m, side };
     });
-    return { markers, origin: o, grid, homeIndex: home?.index ?? -1 };
+    // Nearby overseas pins share one visible marker at overview scale. The full list below
+    // always exposes every destination; selecting one makes it the cluster's representative.
+    const groups: Marker[][] = [];
+    for (const marker of markers) {
+      const group = !marker.isOrigin && groups.find(g => !g[0].isOrigin && g.some(m => Math.hypot(m.x - marker.x, m.y - marker.y) < 32));
+      if (group) group.push(marker); else groups.push([marker]);
+    }
+    return { markers, groups, origin: o, grid, homeIndex: home?.index ?? -1 };
   }, [destinations]);
 
   const { markers, origin, grid, homeIndex } = model;
+  const visibleMarkers = model.groups.map(group => ({
+    ...(group.find(m => m.index === selected) || group.find(m => /gulf|region/i.test(destinations[m.index].slug)) || group[0]),
+    count: group.length,
+    key: group.map(m => m.index).join('-'),
+  }));
   const current = destinations[selected];
   const onMap = markers.some(m => m.index === selected);
   const tabStop = onMap ? selected : markers[0]?.index;
@@ -120,17 +132,17 @@ export function TalentRoutes({
             },
           });
           tl.fromTo(q('.tr-outline'), { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.3, ease: 'power2.inOut' }, 0)
-            .fromTo(q('.tr-grid-line'), { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.2, ease: 'power2.inOut', stagger: 0.05 }, 0.25)
-            .fromTo(q('.tr-caption'), { opacity: 0 }, { opacity: 1, duration: 0.8, ease: 'power1.out' }, 0.9);
-          const t0 = 1.25;
+            .fromTo(q('.tr-grid-line'), { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.75, ease: 'power2.inOut', stagger: 0.025 }, 0.1)
+            .fromTo(q('.tr-caption'), { opacity: 0 }, { opacity: 1, duration: 0.35, ease: 'power1.out' }, 0.25);
+          const t0 = 0.4;
           let r = 0;
           pins.forEach(pin => {
             const isHome = pin.classList.contains('tr-origin');
-            const at = isHome ? t0 - 0.15 : t0 + 0.8 + r++ * 0.32;
-            tl.fromTo(pin, { autoAlpha: 0, scale: 0.2 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: 'back.out(2.4)' }, at);
+            const at = isHome ? t0 - 0.1 : t0 + Math.min(r++ * 0.055, 0.4);
+            tl.fromTo(pin, { autoAlpha: 0, scale: 0.75 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: 'power2.out' }, at);
           });
           arcs.forEach((arc, i) => {
-            tl.fromTo(arc, { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.05, ease: 'power2.out' }, t0 + i * 0.32);
+            tl.fromTo(arc, { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.8, ease: 'power2.out' }, t0 + Math.min(i * 0.04, 0.25));
           });
           ScrollTrigger.create({ trigger: root, start: 'top 82%', once: true, onEnter: () => tl.play() });
         }, root);
@@ -180,7 +192,7 @@ export function TalentRoutes({
   };
 
   const pinKeys = (e: KeyboardEvent<HTMLDivElement>) => {
-    const order = markers.filter(m => !m.isOrigin || homeIndex >= 0).map(m => m.index);
+    const order = visibleMarkers.filter(m => !m.isOrigin || homeIndex >= 0).map(m => m.index);
     const at = order.findIndex(i => pinRefs.current[i] === document.activeElement);
     if (at < 0) return;
     let next = at;
@@ -254,17 +266,17 @@ export function TalentRoutes({
           </div>
         )}
 
-        {markers.map(m => {
+        {visibleMarkers.map(m => {
           const dest = destinations[m.index];
           const on = m.index === selected;
           return (
-            <div key={m.index} className={`tr-pinwrap${m.isOrigin ? ' tr-origin' : ''}`} style={style(m)} data-sel={on}>
+            <div key={m.key} className={`tr-pinwrap${m.isOrigin ? ' tr-origin' : ''}`} style={style(m)} data-sel={on}>
               {m.isOrigin && <span className="tr-pulse" aria-hidden="true" />}
               <button
                 type="button"
                 ref={el => { pinRefs.current[m.index] = el; }}
                 className="tr-pin"
-                aria-label={`${dest.title} — select route`}
+                aria-label={`${dest.title} — select route${m.count > 1 ? `. ${m.count} nearby destinations available in the list below` : ''}`}
                 aria-pressed={on}
                 tabIndex={m.index === tabStop ? 0 : -1}
                 onFocus={() => onSelect(m.index)}
@@ -272,11 +284,12 @@ export function TalentRoutes({
                 onPointerEnter={e => {
                   if (e.pointerType !== 'mouse') return;
                   window.clearTimeout(hoverTimer.current);
-                  hoverTimer.current = window.setTimeout(() => onSelect(m.index), 90);
+                  hoverTimer.current = window.setTimeout(() => onSelect(m.index), 180);
                 }}
                 onPointerLeave={() => window.clearTimeout(hoverTimer.current)}
               >
                 <span className="tr-dot" aria-hidden="true" />
+                {m.count > 1 && <span className="tr-cluster-count" aria-hidden="true">{m.count}</span>}
                 <span className="tr-label" data-side={m.side} aria-hidden="true">
                   <i>{num(m.index)}</i>{dest.title}
                   <small>{m.isOrigin ? 'Colombo · origin' : dest.region}</small>
@@ -289,7 +302,7 @@ export function TalentRoutes({
 
       <p className="tr-caption">
         <span>A world of connections</span>
-        <span>Illustrative routes from Colombo · not live vacancies</span>
+        <span>From Colombo · explore destinations below</span>
       </p>
       <p className="tr-sr" role="status" aria-live="polite">
         {current ? `Selected: ${current.title}, ${current.region}.` : ''}

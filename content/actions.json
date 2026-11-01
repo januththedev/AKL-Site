@@ -63,6 +63,10 @@
       "type": "managed_public_asset",
       "href": null,
       "requires": "approved_public_profile_asset"
+    },
+    "clients": {
+      "type": "internal",
+      "href": "/clients"
     }
   },
   "rules": [

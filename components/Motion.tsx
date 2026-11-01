@@ -52,6 +52,17 @@ export function Journey() {
  return <div ref={root} className="journey"><div className="journey-visual"><img src={active>1?'/media/airport.webp':'/media/port-team.webp'} alt="Illustrative international recruitment journey" width="1000" height="900" loading="lazy"/><div className="journey-visual-label"><span>FROM FIRST CONTACT</span><span>TO A NEW CHAPTER.</span></div></div><div className="journey-steps">{journey.map((x,i)=><div key={x.label} className={`journey-step ${i===active?'active':''}`}><span className="journey-index">0{i+1}</span><div><span className="eyebrow">{x.label}</span><h3>{x.title}</h3><p>{x.description}</p></div></div>)}</div></div>;
 }
 export function DestinationStory({destinations}:{destinations:Destination[]}) {
- const [selected,setSelected]=useState(0);const item=destinations[selected];
- return <div className="destination-story"><div className="destination-photo" key={item.slug}><img src={item.image} alt={`${item.title} destination illustration`} width="1600" height="1000" loading="lazy"/><div className="destination-overlay"/><div className="destination-copy"><span className="eyebrow">{item.region}</span><h3>{item.title}</h3><p>{item.description}</p></div></div><TalentRoutes destinations={destinations} selected={selected} onSelect={setSelected}/><div className="destination-tabs" role="group" aria-label="Explore destinations">{destinations.map((x,i)=><button key={x.slug} onClick={()=>setSelected(i)} aria-pressed={selected===i}><span>0{i+1}</span>{x.title}<ArrowUpRight size={17}/></button>)}</div></div>;
+ const [selected,setSelected]=useState(0);
+ const item=destinations[selected] || destinations[0];
+ const [copy,setCopy]=useState(item);
+ const [frames,setFrames]=useState([item]);
+ useEffect(()=>{
+  let cancelled=false;
+  const image=new Image();
+  image.src=item.image;
+  const show=()=>{if(cancelled)return;setCopy(item);setFrames(previous=>previous.at(-1)?.image===item.image?[item]:[previous.at(-1)!,item]);};
+  image.decode().then(show,()=>{if(!cancelled)setCopy(item);});
+  return()=>{cancelled=true;};
+ },[item]);
+ return <div className="destination-story"><div className="destination-photo">{frames.map((frame,index)=><img className={frames.length>1&&index===frames.length-1?'destination-photo-enter':''} key={frame.image} src={frame.image} alt={`${frame.title} — illustrative photograph`} width="1600" height="1000" loading="lazy" onAnimationEnd={()=>setFrames(previous=>previous.length>1?[previous.at(-1)!]:previous)}/>)}<div className="destination-overlay"/><div className="destination-copy" key={copy.slug}><span className="eyebrow">{copy.region}</span><h3>{copy.title}</h3><p>{copy.description}</p></div><span className="destination-photo-caption">ILLUSTRATIVE PHOTOGRAPH / OUR INTERNATIONAL REACH</span></div><TalentRoutes destinations={destinations} selected={selected} onSelect={setSelected}/><div className="destination-tabs" role="group" aria-label="Explore destinations">{destinations.map((x,i)=><button key={x.slug} onClick={()=>setSelected(i)} aria-pressed={selected===i}><span>{String(i+1).padStart(2,'0')}</span>{x.title}<ArrowUpRight size={17}/></button>)}</div></div>;
 }

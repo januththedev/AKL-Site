@@ -1,14 +1,14 @@
 'use client';
 /**
- * Opening v6 — "Through the globe".
+ * Opening v7 — "A world of relationships".
  *
  * 1. The AKL globe draws itself in thin lines on black (geometry measured from the official logo).
- * 2. Real photographs flicker inside the globe; the official logo lands exactly on the drawn lines.
+ * 2. Verified client marks assemble inside the globe; the AKL mark lands on the drawn lines.
  * 3. Company name rises, the year counter runs 1980 → this year.
  * 4. The globe becomes an aperture: the live homepage appears inside it, then the aperture
  *    opens to full screen while the hero copy animates in. Total ≈ 2.9 s.
  *
- * No video, no loading gate: only the 40–170 KB logo plus small photos that are used if
+ * No video, no loading gate: only the AKL mark plus 85 KB of self-hosted client assets used if
  * already decoded. A tiny inline script (lib/intro.ts, in the root layout <head>) raises the curtain before first paint
  * so the page never flashes, and a CSS failsafe removes the curtain if JavaScript never runs.
  * Bypassed for: reduced motion, Save-Data/2G, crawlers, repeat visits in the same tab session.
@@ -16,13 +16,12 @@
  */
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import { introPhotoSources } from '@/lib/moments';
+import clientLogos from '@/content/client-logos.json';
 import { companyYear, FOUNDING_YEAR } from '@/lib/brand';
-import type { Moment } from '@/lib/types';
 import { INTRO_KEY } from '@/lib/intro';
 import './intro.css';
 
-const STOCK = ['/intro/hero-team.webp', '/intro/port-team.webp', '/intro/welding.webp', '/intro/hospitality.webp', '/intro/dubai-night.webp', '/intro/colombo-dusk.webp'];
+const sources = clientLogos.map(logo => logo.src);
 const LOGO = '/brand/AKL-Official-Logo-512.png';
 
 /* Globe geometry in the 512×512 logo coordinate space (measured from AKL-Official-Logo-512.png). */
@@ -34,9 +33,7 @@ const PARALLELS = [-0.8, -0.5, -0.2, 0.2, 0.5, 0.8].map(t => {
   return { y, x1: G.cx - half, x2: G.cx + half };
 });
 
-export function Intro({ moments = [] }: { moments?: Moment[] }) {
-  const sources = introPhotoSources(moments, STOCK);
-  const sourceKey = sources.join('|');
+export function Intro() {
   const root = useRef<HTMLDivElement>(null);
   const finishRef = useRef<() => void>(() => {});
   const [active, setActive] = useState(false);
@@ -64,7 +61,7 @@ export function Intro({ moments = [] }: { moments?: Moment[] }) {
     let tl: gsap.core.Timeline | undefined;
     const q = gsap.utils.selector(node);
 
-    // Use photos only if they decode quickly; the reveal never waits for them.
+    // Client logos are decorative: a slow asset must never hold the opening or the page.
     const decoded = new Set<string>();
     sources.forEach(src => {
       const img = new Image();
@@ -119,7 +116,7 @@ export function Intro({ moments = [] }: { moments?: Moment[] }) {
       gsap.set(outline, { strokeDasharray: 1, strokeDashoffset: Number.isFinite(drawn) ? Math.min(1, Math.max(0, drawn)) : 1 });
       gsap.set(lines, { strokeDasharray: 1, strokeDashoffset: 1 });
       gsap.set(q('.rv-photos'), { opacity: 0 });
-      gsap.set(frames, { opacity: 0, scale: 1.18 });
+      gsap.set(frames, { opacity: 0, y: 12, scale: 0.96 });
       gsap.set(q('.rv-logo'), { opacity: 0, scale: 0.94 });
       gsap.set(q('.rv-word'), { y: 0, yPercent: 110 }); // y:0 drops the CSS pre-paint offset
       gsap.set(q('.rv-meta'), { opacity: 0, y: 10 });
@@ -128,17 +125,15 @@ export function Intro({ moments = [] }: { moments?: Moment[] }) {
       // 1 — draw the globe
       tl.to(outline, { strokeDashoffset: 0, duration: 0.7, ease: 'power2.inOut' }, 0)
         .to(lines, { strokeDashoffset: 0, duration: 0.55, stagger: 0.035, ease: 'power2.out' }, 0.14);
-      // 2 — photographs inside the globe (only those already decoded)
+      // 2 — a constellation of real client marks, held together rather than flashing frames.
       tl.to(q('.rv-photos'), { opacity: 1, duration: 0.25 }, 0.3);
       frames.forEach((frame, i) => {
-        const at = 0.3 + i * 0.16;
-        tl!.call(() => { if (!decoded.has(frame.dataset.src || '')) frame.style.display = 'none'; }, [], at - 0.01)
-          .to(frame, { opacity: 0.85, scale: 1, duration: 0.32, ease: 'power2.out' }, at)
-          .to(frame, { opacity: 0, duration: 0.2 }, at + 0.26);
+        const at = 0.3 + i * 0.045;
+        tl!.to(frame, { opacity: () => decoded.has(frame.dataset.src || '') ? 1 : 0, y: 0, scale: 1, duration: 0.3, ease: 'power2.out' }, at);
       });
       // 3 — official logo lands on the drawing, name rises, years count
-      tl.to(q('.rv-logo'), { opacity: 1, scale: 1, duration: 0.45 }, 1.02)
-        .to(q('.rv-photos'), { opacity: 0, duration: 0.3 }, 1.15)
+      tl.to(q('.rv-logo'), { opacity: 1, scale: 1, duration: 0.45 }, 1.25)
+        .to(q('.rv-photos'), { opacity: 0, duration: 0.3 }, 1.2)
         .to(q('.rv-word'), { yPercent: 0, duration: 0.55, stagger: 0.06 }, 1.08)
         .to(q('.rv-meta'), { opacity: 1, y: 0, duration: 0.4 }, 1.25)
         .fromTo({ v: FOUNDING_YEAR }, { v: FOUNDING_YEAR }, {
@@ -166,17 +161,17 @@ export function Intro({ moments = [] }: { moments?: Moment[] }) {
       reduced.removeEventListener('change', onReduced);
       if (!done) html.removeAttribute('data-intro');
     };
-    // sources are captured by key; year is stable for the session
+    // Client assets are module constants; year is stable for the session.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [run, sourceKey]);
+  }, [run]);
 
   return (
-    <div ref={root} className={`rv ${active ? 'is-active' : ''}`} aria-hidden="true" data-intro-version="v6">
-      <div className="rv-curtain" />
-      <div className="rv-stage">
+    <div ref={root} className={`rv ${active ? 'is-active' : ''}`} aria-hidden={!active} data-intro-version="v7-client-logos">
+      <div className="rv-curtain" aria-hidden="true" />
+      <div className="rv-stage" aria-hidden="true">
         <div className="rv-mark">
           <div className="rv-photos">
-            {sources.map(src => <div key={src} className="rv-frame" data-src={src} style={{ backgroundImage: `url("${src}")` }} />)}
+            <div className="rv-client-grid">{clientLogos.map(logo => <div key={logo.id} className="rv-frame" data-src={logo.src} data-surface={logo.surface}><img src={logo.src} alt="" width={logo.width} height={logo.height} decoding="async" /></div>)}</div>
           </div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img className="rv-logo" src={LOGO} alt="" width={512} height={512} decoding="async" />

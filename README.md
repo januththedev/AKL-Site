@@ -15,12 +15,13 @@ npm run build
 npm run start
 ```
 
-The homepage uses a **still photograph**. A separate skippable **three-second HTML intro** ends on black with **AL-Karrim Lanka**. Vacancies remain on [IntellixHR](https://alk.intellixhr.com/careers).
+The homepage uses a **still photograph**. A separate skippable **three-second HTML intro** assembles eight verified client marks inside the AKL globe, resolves to the company name, then opens into the page. Vacancies remain on [IntellixHR](https://alk.intellixhr.com/careers).
 
 ## Main routes
 
 - `/` — photographic company story and industry/destination interactions.
 - `/employers` — shareable workforce portfolio, company profile and inquiry flow.
+- `/clients` — selected verified client logos and the complete directory of 178 unique names transcribed from the November 2025 company profile.
 - `/about`, `/services`, `/industries`, `/destinations`, `/recruitment`, `/contact`.
 - `/admin` — invite-only staff workspace with Admin and Super Admin roles.
 

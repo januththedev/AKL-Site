@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next';
+import clientLogos from './content/client-logos.json';
 
 const production = process.env.NODE_ENV === 'production';
 const origin = (value?: string) => { try { return value ? new URL(value).origin : ''; } catch { return ''; } };
@@ -62,6 +63,8 @@ const nextConfig: NextConfig = {
       { source: '/:path*', headers: securityHeaders },
       { source: '/media/:path*', headers: assetCache },
       { source: '/brand/:path*', headers: assetCache },
+      // Cache the files, not the dynamic /clients page that shares this prefix.
+      ...clientLogos.map(logo => ({ source: logo.src, headers: assetCache })),
       { source: '/intro/:path*', headers: assetCache },
       { source: '/documents/:path*', headers: assetCache },
     ];

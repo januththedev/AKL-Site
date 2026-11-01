@@ -1,4 +1,22 @@
-# Three-second opening — v4, 500 photo crops
+# Current opening — v7, client relationships
+
+The live opening is now **A world of relationships** in `components/Intro.tsx` and `components/intro.css`. It preserves the v6 logo-globe draw, AKL wordmark, automatic year counter and aperture into the still-photo homepage. The earlier photo montage is replaced by eight verified, self-hosted client marks from `content/client-logos.json`.
+
+- 0–700ms: thin globe outline and graticule draw on emerald-black.
+- 300–900ms: eight client marks assemble inside the globe in a restrained four-by-two composition.
+- 1080–1700ms: company name and official AKL mark rise as the client marks dissolve.
+- 1250–1850ms: the founding-year counter resolves to the current Sri Lankan calendar year.
+- 1950–2900ms: the globe becomes an aperture and hands off to the live homepage.
+
+The eight client files total approximately 85 KB, and retain their original brand colours. Light marks use dark plates; dark marks use white plates. Source and company-identity notes are in `docs/CLIENT-LOGO-SOURCES.md`. Client relationships are documented by the PDF; the PDF itself contains names, not logo files.
+
+No video, audio, photo atlas, remote image service or loading gate is required for this opening. Undecoded decorative assets are skipped. Reduced motion, Save-Data/2G, Escape, Tab, Skip, wheel/touch scroll, hidden-tab handling, the CSS failsafe and the runtime watchdog remain. The v7 session key shows the revised opening once per tab session. Replay remains available in the footer.
+
+Moments photos remain in the published gallery and scroll effects; the opening no longer uses their historical `useInIntro` flags. Stored flags and old helper functions are retained for release compatibility, while the obsolete admin checkboxes are removed.
+
+## Historical v4 specification, superseded
+
+### Three-second opening — v4, 500 photo crops
 
 The homepage hero remains a still photograph. The opening is an HTML/CSS/GSAP composition, not a video download. Exact final text: **AL-Karrim Lanka**, white on pure black.
 

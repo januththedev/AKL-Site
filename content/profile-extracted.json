@@ -1,0 +1,1555 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "id": "company-profile-2025-11",
+    "title": "Al-Karrim Lanka Company Profile",
+    "edition": "November 2025 (filename)",
+    "documentUrl": "/documents/company-profile-nov2025.pdf",
+    "pageCount": 11,
+    "sha256": "42959c40c4c7aedd821de174045b65985bb558bfc510be135a97b5279f6154c7",
+    "extractedOn": "2026-11-01",
+    "method": "All 11 pages rendered and visually reviewed; client columns rendered at 4000px, green-channel contrast OCR followed by visual transcription review."
+  },
+  "company": {
+    "displayName": "AL Karrim Lanka Consultants PVT LTD",
+    "profileBrand": "AL-KARRIM LANKA Consultants (Pvt) Ltd",
+    "bodyNameVariant": "Al-Karrim Lanka Consultant (Pvt) Ltd.",
+    "origin": "Sri Lanka",
+    "tagline": {
+      "text": "Placing the right talent in the right role, with the right skills, at the right time.",
+      "sourcePage": 1
+    },
+    "founded": {
+      "year": 1980,
+      "month": 8,
+      "sourcePages": [
+        3,
+        4
+      ]
+    }
+  },
+  "history": {
+    "sourcePage": 4,
+    "summary": "Founded in August 1980 to connect Sri Lankan workforce capability with global employment opportunities. Initial placements focused on the Gulf Region before the company expanded into South Asia, Europe, Malaysia and Australia.",
+    "principles": [
+      "Reliability",
+      "Professionalism",
+      "Ethical recruitment practices"
+    ]
+  },
+  "services": [
+    {
+      "id": "overseas-manpower-recruitment",
+      "title": "Overseas Manpower Recruitment",
+      "description": "Deployment of qualified Sri Lankan workers to the Middle East, Europe, Asia, and Australia.",
+      "sourcePage": 5
+    },
+    {
+      "id": "industry-specific-talent-acquisition",
+      "title": "Industry-Specific Talent Acquisition",
+      "description": "Recruitment for industries such as hospitality, construction, engineering, automotive, IT, manufacturing, and logistics.",
+      "sourcePage": 5
+    },
+    {
+      "id": "screening-trade-testing",
+      "title": "Screening & Trade Testing",
+      "description": "Comprehensive evaluation of candidates, including skill verification and trade test coordination.",
+      "sourcePage": 5
+    },
+    {
+      "id": "documentation-visa-processing",
+      "title": "Documentation & Visa Processing",
+      "description": "Assistance in drafting employment contracts, processing visa documentation, and coordinating the requirements relevant to each engagement.",
+      "sourcePage": 5,
+      "editorialNote": "Paraphrased to avoid turning the profile's full-adherence wording into a blanket legal guarantee."
+    }
+  ],
+  "industries": {
+    "names": [
+      "Hospitality",
+      "Construction",
+      "Engineering",
+      "Automotive",
+      "Information technology",
+      "Manufacturing",
+      "Logistics"
+    ],
+    "sourcePages": [
+      5,
+      6
+    ]
+  },
+  "workforceCategories": {
+    "names": [
+      "Professional",
+      "Skilled",
+      "Semi-skilled",
+      "Unskilled"
+    ],
+    "sourcePages": [
+      5,
+      11
+    ],
+    "editorialAlternative": "Professional, skilled, semi-skilled and general workforce roles"
+  },
+  "reach": [
+    {
+      "name": "Gulf Region",
+      "kind": "region",
+      "sourcePages": [
+        4
+      ]
+    },
+    {
+      "name": "Middle East",
+      "kind": "region",
+      "sourcePages": [
+        5
+      ]
+    },
+    {
+      "name": "South Asia",
+      "kind": "region",
+      "sourcePages": [
+        4
+      ]
+    },
+    {
+      "name": "Asia",
+      "kind": "region",
+      "sourcePages": [
+        5
+      ]
+    },
+    {
+      "name": "Europe",
+      "kind": "region",
+      "sourcePages": [
+        4,
+        5
+      ]
+    },
+    {
+      "name": "Malaysia",
+      "kind": "country",
+      "sourcePages": [
+        4
+      ]
+    },
+    {
+      "name": "Australia",
+      "kind": "country",
+      "sourcePages": [
+        4,
+        5
+      ]
+    }
+  ],
+  "clientRelationships": {
+    "sourcePage": 7,
+    "summary": "Qualified Sri Lankan manpower, transparent processes, timely mobilisation and post-deployment support. The profile describes recruitment for both large project teams and specialised technical staff, tailored to client operational goals and regional requirements.",
+    "principles": [
+      "Mutual respect",
+      "Shared success",
+      "Commitment to excellence"
+    ],
+    "supportStages": [
+      "Candidate sourcing",
+      "Screening and skill verification",
+      "Documentation",
+      "Travel coordination",
+      "Mobilisation",
+      "Post-deployment follow-up"
+    ],
+    "sourcePages": [
+      5,
+      6,
+      7
+    ]
+  },
+  "contact": {
+    "sourcePage": 11,
+    "address": "# 10/1, Duplication Road, Colombo 5, Sri Lanka",
+    "phonePrinted": "+94-112-592551",
+    "phoneE164": "+94112592551",
+    "email": "alkarrim@slt.lk",
+    "websitePrinted": "www.al-karrim.net",
+    "website": "https://al-karrim.net/",
+    "socialHandle": "alkarrimlanka603",
+    "socialIcons": [
+      "Facebook",
+      "Instagram",
+      "LinkedIn"
+    ],
+    "socialUrlsVerified": false,
+    "inquirySummary": "Employer inquiries for professional, skilled and general workforce needs, including large-scale deployments and niche talent."
+  },
+  "clients": [
+    {
+      "id": "profile-client-001",
+      "name": "A.BIN TALEB CO.FOR CONTRACTING OPERATION & MAINTENANCE",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 1
+    },
+    {
+      "id": "profile-client-002",
+      "name": "A.BIN TALEB COMMERCIAL & INDUSTRIAL COMPANY",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 2
+    },
+    {
+      "id": "profile-client-003",
+      "name": "ABR AL JAWDAH FACTORY FOR CEMENT PRODUCTS",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 3
+    },
+    {
+      "id": "profile-client-004",
+      "name": "ABU DHABI NATIONAL HOTELS CO.",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 4
+    },
+    {
+      "id": "profile-client-005",
+      "name": "ABU DHABI SHIPPING BUILDING",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 5
+    },
+    {
+      "id": "profile-client-006",
+      "name": "ACTION INTERNATIONAL DRILLING SERVICES & DEWATERING LLC",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 6
+    },
+    {
+      "id": "profile-client-007",
+      "name": "ADEL AL HARBI CUSTOMS CLEARANCE EST.",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 7
+    },
+    {
+      "id": "profile-client-008",
+      "name": "AGILITY ( ABUDHABI ) PJSC",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 8
+    },
+    {
+      "id": "profile-client-009",
+      "name": "AL ABEER INTERNATIONAL MEDICAL CO.LTD.",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 9
+    },
+    {
+      "id": "profile-client-010",
+      "name": "AL AMANA TECH EST FOR CONTRACTING",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 10
+    },
+    {
+      "id": "profile-client-011",
+      "name": "AL EISAL INTERNATIONAL",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 11
+    },
+    {
+      "id": "profile-client-012",
+      "name": "AL EWAN MEDICAL COMPANY",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 12
+    },
+    {
+      "id": "profile-client-013",
+      "name": "AL GHAZAL ALABYAD TECHNICAL SERVICES",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 13
+    },
+    {
+      "id": "profile-client-014",
+      "name": "AL HARAMAIN COMPANY",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 14
+    },
+    {
+      "id": "profile-client-015",
+      "name": "AL HASSAN TRADING & CONTRACTING EST.",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 15
+    },
+    {
+      "id": "profile-client-016",
+      "name": "AL JALHAMI TRADING & CONTRACTING EST.",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 16
+    },
+    {
+      "id": "profile-client-017",
+      "name": "AL JOULAN TRADING & CONTRACTING",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 17
+    },
+    {
+      "id": "profile-client-018",
+      "name": "AL KARAM AL ARABI FOR CATERING SERVICES LIMITED",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 18
+    },
+    {
+      "id": "profile-client-019",
+      "name": "AL KAWTHER INDUSTRIES CO .LTD",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 19
+    },
+    {
+      "id": "profile-client-020",
+      "name": "AL MAJD WORKSHOP",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 20
+    },
+    {
+      "id": "profile-client-021",
+      "name": "AL MANA GROUP WLL",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 21
+    },
+    {
+      "id": "profile-client-022",
+      "name": "AL MEER SAUDI TECHNICAL SERVICES CO.,",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 22
+    },
+    {
+      "id": "profile-client-023",
+      "name": "AL MILADI GLOBAL MANPOWER SERVICES",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 23
+    },
+    {
+      "id": "profile-client-024",
+      "name": "AL MUHAIDIB CONTRACTING COMPANY",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 24
+    },
+    {
+      "id": "profile-client-025",
+      "name": "AL QARYAN GROUP FOR TRADING, INDUSTRIAL & CONTRACTING",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 25
+    },
+    {
+      "id": "profile-client-026",
+      "name": "AL RAYAH AL AHTRAFIYAH COMPANY(PROFESSIONAL CARE FACILITY MANAGEMENT)(LAVNDRY)",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 26
+    },
+    {
+      "id": "profile-client-027",
+      "name": "AL SAJOW EST FOR CONTRACTING",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 27
+    },
+    {
+      "id": "profile-client-028",
+      "name": "AL SALAMAH INTERNATIONAL TRADING COMPANY",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 28
+    },
+    {
+      "id": "profile-client-029",
+      "name": "AL TAKAMOL AL HADITH CONT.CO",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 29
+    },
+    {
+      "id": "profile-client-030",
+      "name": "ALATAS BIGLIFT CO LTD",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 30
+    },
+    {
+      "id": "profile-client-031",
+      "name": "ALDOOR EXECUTIVE FOR CATERING(ALDOOR FOR CATERING)",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 31
+    },
+    {
+      "id": "profile-client-032",
+      "name": "ALEWAN MEDICAL COMPANY",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 32
+    },
+    {
+      "id": "profile-client-033",
+      "name": "ALFALAK MANPOWER SERVICES CO.",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 33
+    },
+    {
+      "id": "profile-client-034",
+      "name": "AL-MAWARID FOREIGN RECRUITMENT CO.",
+      "sourcePage": 8,
+      "sourceColumn": 1,
+      "sourceRow": 34
+    },
+    {
+      "id": "profile-client-035",
+      "name": "ALMEER SAUDI TECHNICAL SERVICES CO.,W.L.L.",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 1
+    },
+    {
+      "id": "profile-client-036",
+      "name": "ALOUSH AL AJMI TRADE EST",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 2
+    },
+    {
+      "id": "profile-client-037",
+      "name": "AL-SAFAT DHIAFA COMPANY",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 3
+    },
+    {
+      "id": "profile-client-038",
+      "name": "ALSHAMMASI COMPANY & THEIR PARTNERS",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 4
+    },
+    {
+      "id": "profile-client-039",
+      "name": "AL-WAEDAH SUPPLIES TRADING CO",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 5
+    },
+    {
+      "id": "profile-client-040",
+      "name": "AMIANTIT QATAR PIPES COMPANY WLL",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 6
+    },
+    {
+      "id": "profile-client-041",
+      "name": "ANSAB GENERAL CONTRACTNG COMPANY",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 7
+    },
+    {
+      "id": "profile-client-042",
+      "name": "ARABIAN EQUIPMENT TRADING ESTABLISHMENT",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 8
+    },
+    {
+      "id": "profile-client-043",
+      "name": "ARABIAN INDUSTRIAL CO. LLC",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 9
+    },
+    {
+      "id": "profile-client-044",
+      "name": "ARZAM FOR TRADING & CONTRACTING",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 10
+    },
+    {
+      "id": "profile-client-045",
+      "name": "AUTOMATIC POULTRY SLAUGHTERHOUSE EST.",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 11
+    },
+    {
+      "id": "profile-client-046",
+      "name": "BAB AL WOROD FOR CONTRACTING",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 12
+    },
+    {
+      "id": "profile-client-047",
+      "name": "BADER SAEED ALGHAMDI CONT.EST.",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 13
+    },
+    {
+      "id": "profile-client-048",
+      "name": "BIG3 TRADING & CONTRACTING WLL",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 14
+    },
+    {
+      "id": "profile-client-049",
+      "name": "BIN SAMMAR CONTRACTING EST",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 15
+    },
+    {
+      "id": "profile-client-050",
+      "name": "BOODAI INC GENERAL TRADING & CONT.",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 16
+    },
+    {
+      "id": "profile-client-051",
+      "name": "BOSLA AL-BUNYAN CONTRACTING COMPANY",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 17
+    },
+    {
+      "id": "profile-client-052",
+      "name": "COBRA FASHION WORKSHOP",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 18
+    },
+    {
+      "id": "profile-client-053",
+      "name": "COMPANY AL TAIR AL ABEEDH FOR CONTRACTING",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 19
+    },
+    {
+      "id": "profile-client-054",
+      "name": "CONTROL CONTRACTING & TRADING CO. PVT.",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 20
+    },
+    {
+      "id": "profile-client-055",
+      "name": "CRYSTAL CONTRACTING EST",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 21
+    },
+    {
+      "id": "profile-client-056",
+      "name": "DAR ALKHIRAN RESTAURANT L.L.C.",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 22
+    },
+    {
+      "id": "profile-client-057",
+      "name": "DELTA AL-BIHAR EST",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 23
+    },
+    {
+      "id": "profile-client-058",
+      "name": "DESERT WALL MANPOWER & RECRUTMENT AGENCY",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 24
+    },
+    {
+      "id": "profile-client-059",
+      "name": "DEYAAR FACILITIES MANAGEMENT L.L.C.",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 25
+    },
+    {
+      "id": "profile-client-060",
+      "name": "DHAFER M. AL-ZLIAQ & PARTNERS GEN, CONT.",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 26
+    },
+    {
+      "id": "profile-client-061",
+      "name": "DOOSAN CORPORATION",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 27
+    },
+    {
+      "id": "profile-client-062",
+      "name": "DURAR ALJOUD",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 28
+    },
+    {
+      "id": "profile-client-063",
+      "name": "EASTERN RECRUITMENT COMPANY",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 29
+    },
+    {
+      "id": "profile-client-064",
+      "name": "ELECTRIC WORLD",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 30
+    },
+    {
+      "id": "profile-client-065",
+      "name": "ELITE GLOBAL CATERING COMPANY LLC",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 31
+    },
+    {
+      "id": "profile-client-066",
+      "name": "EMDAD HR COMPANY",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 32
+    },
+    {
+      "id": "profile-client-067",
+      "name": "EMERGING ENERGY CONTRACTING EST",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 33
+    },
+    {
+      "id": "profile-client-068",
+      "name": "ENGINEERING MAINTANANCE COMPANY (EMCO QATAR)",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 34
+    },
+    {
+      "id": "profile-client-069",
+      "name": "ENVIRONMENTAL TESTING & LABORATORIES LTD CO.",
+      "sourcePage": 8,
+      "sourceColumn": 2,
+      "sourceRow": 35
+    },
+    {
+      "id": "profile-client-070",
+      "name": "ESAIKER MESHAL AL SHAIBANI",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 1
+    },
+    {
+      "id": "profile-client-071",
+      "name": "EXQUISITE TRADING L L C",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 2
+    },
+    {
+      "id": "profile-client-072",
+      "name": "FACILITIES MANAGEMENT COMPANY.(FACILITIES MANAGEMENT CO.FOR INVESTMENT)",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 3
+    },
+    {
+      "id": "profile-client-073",
+      "name": "FACTORY TECHNICAL SECRETARIAT BUILDING MATERIALS(AL AMANA TECHNOLOGY FACTORY)",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 4
+    },
+    {
+      "id": "profile-client-074",
+      "name": "FAHAD BIN TALAL AL-OTAIBI CONTRACTING EST",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 5
+    },
+    {
+      "id": "profile-client-075",
+      "name": "FISAL HUSSAIN AL AHMED GENARAL CONT EST",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 6
+    },
+    {
+      "id": "profile-client-076",
+      "name": "FLEXIBLE RUBBER FACTORY LLC",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 7
+    },
+    {
+      "id": "profile-client-077",
+      "name": "FORSAN FOODS & CONSUMER PRODUCTS CO.LTD",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 8
+    },
+    {
+      "id": "profile-client-078",
+      "name": "FORST MASTER GENERAL CONTRACTING ESTABLISHMENT",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 9
+    },
+    {
+      "id": "profile-client-079",
+      "name": "FUTURE CHIPS ENGINEERING",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 10
+    },
+    {
+      "id": "profile-client-080",
+      "name": "GENERAL AGENCIES & CONTRACTING (SHOBOKSHI-GAC)",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 11
+    },
+    {
+      "id": "profile-client-081",
+      "name": "GLOBAL EMIRATES SERVICES CO. L L C",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 12
+    },
+    {
+      "id": "profile-client-082",
+      "name": "GOLF EAST CONTRACTING",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 13
+    },
+    {
+      "id": "profile-client-083",
+      "name": "GS CONSTRUCTION ARABIA CO LTD.",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 14
+    },
+    {
+      "id": "profile-client-084",
+      "name": "GULF CATERING CO.(GULF CATERING CO.BRANCH)",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 15
+    },
+    {
+      "id": "profile-client-085",
+      "name": "GULF COAST CONSULTANCY",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 16
+    },
+    {
+      "id": "profile-client-086",
+      "name": "GULF SUPPLIES & COMMERCIAL SERVICES CO.WLL",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 17
+    },
+    {
+      "id": "profile-client-087",
+      "name": "HAJJAN DRILLING COMPANY",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 18
+    },
+    {
+      "id": "profile-client-088",
+      "name": "HAMAD ALI AL SAGRI FARM",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 19
+    },
+    {
+      "id": "profile-client-089",
+      "name": "HAMAD ALI AL SAGRI HOLDING COMPANY",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 20
+    },
+    {
+      "id": "profile-client-090",
+      "name": "HAMAD BIN ALI ALSAGRI HOLDING COMPANY",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 21
+    },
+    {
+      "id": "profile-client-091",
+      "name": "HANDS SERVICES CO. W.L.L.",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 22
+    },
+    {
+      "id": "profile-client-092",
+      "name": "HASIBATH INFORMATION TECHNOLOGIES CO. K.S.C.",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 23
+    },
+    {
+      "id": "profile-client-093",
+      "name": "IBRAHIM F. IBRAHIM AL TAMIMI EST.",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 24
+    },
+    {
+      "id": "profile-client-094",
+      "name": "IBRAHIM H.M.AL MWALA AL OMARI",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 25
+    },
+    {
+      "id": "profile-client-095",
+      "name": "IBRAHIM YOUSIF KURDI",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 26
+    },
+    {
+      "id": "profile-client-096",
+      "name": "IBRAHIM YOUSIF KURDI OF FOOD & FINE PASTRIES MANUFACTURING COMPANY (SUNBULAH)",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 27
+    },
+    {
+      "id": "profile-client-097",
+      "name": "INSPECTION CONTRACTING EST",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 28
+    },
+    {
+      "id": "profile-client-098",
+      "name": "INTERNATIONAL START POINT FACTORY",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 29
+    },
+    {
+      "id": "profile-client-099",
+      "name": "JABER & SAEED SHAFI AL HAJRI CONT.CO (JASCO)",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 30
+    },
+    {
+      "id": "profile-client-100",
+      "name": "JADARA MINERAL FOR INDUSTRY COMPANY",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 31
+    },
+    {
+      "id": "profile-client-101",
+      "name": "JAL HUMAN RESOURCES CO",
+      "sourcePage": 8,
+      "sourceColumn": 3,
+      "sourceRow": 32
+    },
+    {
+      "id": "profile-client-102",
+      "name": "JAWA HUMAN RESOURCES COMPANY",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 1
+    },
+    {
+      "id": "profile-client-103",
+      "name": "JAWDAH CABLES CO.",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 2
+    },
+    {
+      "id": "profile-client-104",
+      "name": "JEDDAH CABALE COMPANY LTD",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 3
+    },
+    {
+      "id": "profile-client-105",
+      "name": "JELAZ FOR TRADING & CONTRACTING",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 4
+    },
+    {
+      "id": "profile-client-106",
+      "name": "JOURNEY RAPID LTD",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 5
+    },
+    {
+      "id": "profile-client-107",
+      "name": "KATRAT AL LOLO TRADING EST.",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 6
+    },
+    {
+      "id": "profile-client-108",
+      "name": "KDDB GENERAL TRADING & CONTRACTING CO. W.L.L.",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 7
+    },
+    {
+      "id": "profile-client-109",
+      "name": "LABOUR TECH SDN BHD",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 8
+    },
+    {
+      "id": "profile-client-110",
+      "name": "LEWAN GENERAL TRADING CO.",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 9
+    },
+    {
+      "id": "profile-client-111",
+      "name": "LODIGE SYSTEMS MIDDLE EAST L.L.C/LODIGE INDUSTRIES",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 10
+    },
+    {
+      "id": "profile-client-112",
+      "name": "LOGISTICS SUPPORT MAINTENANCE EST",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 11
+    },
+    {
+      "id": "profile-client-113",
+      "name": "MADAR MAINTENANCE FOR TRADING SERVICES CO",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 12
+    },
+    {
+      "id": "profile-client-114",
+      "name": "MAYSOR RESTAURANTS",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 13
+    },
+    {
+      "id": "profile-client-115",
+      "name": "MIDDLE EAST SPECIALIZED CABLES CO. (MESC)",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 14
+    },
+    {
+      "id": "profile-client-116",
+      "name": "MIRRIKH CONTRACTING",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 15
+    },
+    {
+      "id": "profile-client-117",
+      "name": "MOATH HUSSAIN AL AHMED",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 16
+    },
+    {
+      "id": "profile-client-118",
+      "name": "MODERN BUS COMPANY LIMITED",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 17
+    },
+    {
+      "id": "profile-client-119",
+      "name": "MODERN PRECISION ENGINEERING FACTORY",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 18
+    },
+    {
+      "id": "profile-client-120",
+      "name": "MOHAMMED ALI AL -SUWAILEM CO. GENERAL CONTRACTING (MASCO GENERAL CONTRACTING)",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 19
+    },
+    {
+      "id": "profile-client-121",
+      "name": "MOHAMMED M ALARJI CONT EST(COMPANY)",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 20
+    },
+    {
+      "id": "profile-client-122",
+      "name": "MOHSEN BIN MAHFOOZ EST",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 21
+    },
+    {
+      "id": "profile-client-123",
+      "name": "MULTIPLEX INTERNATIONAL LLC",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 22
+    },
+    {
+      "id": "profile-client-124",
+      "name": "MUNAIRAH NASSER ALSEHLI EST",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 23
+    },
+    {
+      "id": "profile-client-125",
+      "name": "NAHJ ALKHYAL TRADING CO (ABDULLAH AL OTHAIM FASHION CO)",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 24
+    },
+    {
+      "id": "profile-client-126",
+      "name": "NASER MOHAMMED AL SAYER ASPHALT PRODUCTION CO WLL",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 25
+    },
+    {
+      "id": "profile-client-127",
+      "name": "NASER MOHAMMED AL SAYER READY MIX CONCRETE CO. W.L.L.",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 26
+    },
+    {
+      "id": "profile-client-128",
+      "name": "NATIONAL CATERING COMPANY LIMITED SOLE PROPRI",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 27
+    },
+    {
+      "id": "profile-client-129",
+      "name": "NEW FUTURE GEN. CONT.EST.",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 28
+    },
+    {
+      "id": "profile-client-130",
+      "name": "NEW REST GULF LLC",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 29
+    },
+    {
+      "id": "profile-client-131",
+      "name": "ONE VISION CO. LTD",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 30
+    },
+    {
+      "id": "profile-client-132",
+      "name": "PETROMIN CORPORATION",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 31
+    },
+    {
+      "id": "profile-client-133",
+      "name": "PLANT - TECH ARABIA CO LTD",
+      "sourcePage": 9,
+      "sourceColumn": 1,
+      "sourceRow": 32
+    },
+    {
+      "id": "profile-client-134",
+      "name": "POLY TECH MAINTENANCE AND INDUSTRIAL OPERATION CO. LTD",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 1
+    },
+    {
+      "id": "profile-client-135",
+      "name": "PRIMA INTERNATIONAL COMPANY",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 2
+    },
+    {
+      "id": "profile-client-136",
+      "name": "PROFESSIONAL BUSINESS EST",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 3
+    },
+    {
+      "id": "profile-client-137",
+      "name": "PROGRESSIVE SOLUTIONS CORPORATION FOR GENERAL CONTRACTING",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 4
+    },
+    {
+      "id": "profile-client-138",
+      "name": "NAWAF BATHI MARZOQ ALMUTAIRI ESTABLISHMENT FOR GENERAL CONTRACTING)",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 5
+    },
+    {
+      "id": "profile-client-139",
+      "name": "PUBLIC TRANSPORTATION CO.",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 6
+    },
+    {
+      "id": "profile-client-140",
+      "name": "QATAR STAR SERVICES LLC",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 7
+    },
+    {
+      "id": "profile-client-141",
+      "name": "RAL INTERNATIONAL COMPANY...",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 8
+    },
+    {
+      "id": "profile-client-142",
+      "name": "RESOURCES PROMISE COMPANY",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 9
+    },
+    {
+      "id": "profile-client-143",
+      "name": "RETAJ AL BAHRAIN GENERAL CONT.",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 10
+    },
+    {
+      "id": "profile-client-144",
+      "name": "RIYADH CABLES GROUP OF COMPANIES",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 11
+    },
+    {
+      "id": "profile-client-145",
+      "name": "RS POLYMER SDN BHD",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 12
+    },
+    {
+      "id": "profile-client-146",
+      "name": "RUKAN AL QASOOR TRADING EST",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 13
+    },
+    {
+      "id": "profile-client-147",
+      "name": "RYBOA HAIMA TRAD.CO.LLC",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 14
+    },
+    {
+      "id": "profile-client-148",
+      "name": "SAFARI COMPANY LIMITED",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 15
+    },
+    {
+      "id": "profile-client-149",
+      "name": "SAJAM CONTRACTING EST.",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 16
+    },
+    {
+      "id": "profile-client-150",
+      "name": "SALEM M.HADI AL-ZLAIQ & SONS CONT. CO.(SZCC)",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 17
+    },
+    {
+      "id": "profile-client-151",
+      "name": "SAMSUNG C&T CORPORATION OF SAUDI ARABIA",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 18
+    },
+    {
+      "id": "profile-client-152",
+      "name": "SAUDI ARABIAN COMPANY FOR FOOD & RESTAURANTS",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 19
+    },
+    {
+      "id": "profile-client-153",
+      "name": "SAUDI ARABIAN TRADING & CONSTRUCTION COMPANY",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 20
+    },
+    {
+      "id": "profile-client-154",
+      "name": "SAUDI MANPOWER SOLUTIONS CO.(SMASCO)",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 21
+    },
+    {
+      "id": "profile-client-155",
+      "name": "SAUDI MEDICAL SYSTEMS COMPANY LIMITED",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 22
+    },
+    {
+      "id": "profile-client-156",
+      "name": "SAUDI MODERN COMPANY FOR CABLE INDUSTRIES LTD",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 23
+    },
+    {
+      "id": "profile-client-157",
+      "name": "SAUDI PUBLIC TRANSPORT COMPANY.(SAPTCO)",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 24
+    },
+    {
+      "id": "profile-client-158",
+      "name": "SEA SAFETY MARINE SERVICES CO.LLC",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 25
+    },
+    {
+      "id": "profile-client-159",
+      "name": "SEDER GROUP TRADING & CONTRACTING CO.",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 26
+    },
+    {
+      "id": "profile-client-160",
+      "name": "SHADI FACTORY FOR PLASTIC.",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 27
+    },
+    {
+      "id": "profile-client-161",
+      "name": "SHINE KLEEN SDN BHD",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 28
+    },
+    {
+      "id": "profile-client-162",
+      "name": "SHOBOKSHI DEVELOPMENT & TRADING CO.",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 29
+    },
+    {
+      "id": "profile-client-163",
+      "name": "SMART HOUSE FOR PRE FABRICATED BUILDINGS & FACTORY",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 30
+    },
+    {
+      "id": "profile-client-164",
+      "name": "SOLAS MARINE SERVICES CO. (L.L.C)",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 31
+    },
+    {
+      "id": "profile-client-165",
+      "name": "SOLB STEEL COMPANY",
+      "sourcePage": 9,
+      "sourceColumn": 2,
+      "sourceRow": 32
+    },
+    {
+      "id": "profile-client-166",
+      "name": "SRI LANKAN INTERNATIONAL SCHOOL -RIYADH(SERILANKA INT,L SCHOOL)",
+      "sourcePage": 9,
+      "sourceColumn": 3,
+      "sourceRow": 1
+    },
+    {
+      "id": "profile-client-167",
+      "name": "STERLING NATIONAL TRADING EST.",
+      "sourcePage": 9,
+      "sourceColumn": 3,
+      "sourceRow": 2
+    },
+    {
+      "id": "profile-client-168",
+      "name": "SUCCESS WINDOW CO.(SUCCESS INTERNATIONAL SCHOOLS)",
+      "sourcePage": 9,
+      "sourceColumn": 3,
+      "sourceRow": 3
+    },
+    {
+      "id": "profile-client-169",
+      "name": "SULAIMAN FALEH AL ANAZY EST",
+      "sourcePage": 9,
+      "sourceColumn": 3,
+      "sourceRow": 4
+    },
+    {
+      "id": "profile-client-170",
+      "name": "SULIMAN F. AL ANAZI EST CONTRACTING",
+      "sourcePage": 9,
+      "sourceColumn": 3,
+      "sourceRow": 5
+    },
+    {
+      "id": "profile-client-171",
+      "name": "SURF N TURF RESTAURENT",
+      "sourcePage": 9,
+      "sourceColumn": 3,
+      "sourceRow": 6
+    },
+    {
+      "id": "profile-client-172",
+      "name": "TARGET CONSTRUCTION SAUDI ARABIA",
+      "sourcePage": 9,
+      "sourceColumn": 3,
+      "sourceRow": 7
+    },
+    {
+      "id": "profile-client-173",
+      "name": "UNITED CATERING CO.",
+      "sourcePage": 9,
+      "sourceColumn": 3,
+      "sourceRow": 8
+    },
+    {
+      "id": "profile-client-174",
+      "name": "UNITED FOODS COMPANY",
+      "sourcePage": 9,
+      "sourceColumn": 3,
+      "sourceRow": 9
+    },
+    {
+      "id": "profile-client-175",
+      "name": "WASITA EMIRATES CATERING SERVICES L L C",
+      "sourcePage": 9,
+      "sourceColumn": 3,
+      "sourceRow": 10
+    },
+    {
+      "id": "profile-client-176",
+      "name": "WJEEN INTERNATIONAL COMPANY LTD",
+      "sourcePage": 9,
+      "sourceColumn": 3,
+      "sourceRow": 11
+    },
+    {
+      "id": "profile-client-177",
+      "name": "WOODEN BAKERY COMPANY LTD(MKHABZ ALHATAB CO. LTD)",
+      "sourcePage": 9,
+      "sourceColumn": 3,
+      "sourceRow": 12
+    },
+    {
+      "id": "profile-client-178",
+      "name": "ZAWYAT AL MOKNATAT EST",
+      "sourcePage": 9,
+      "sourceColumn": 3,
+      "sourceRow": 14
+    }
+  ],
+  "extraction": {
+    "clientSourcePages": [
+      8,
+      9
+    ],
+    "sourceHeading": "Top 100+ Clients",
+    "sourceRowCount": 179,
+    "uniqueNameCount": 178,
+    "duplicateRows": [
+      {
+        "name": "WOODEN BAKERY COMPANY LTD(MKHABZ ALHATAB CO. LTD)",
+        "sourcePage": 9,
+        "sourceColumn": 3,
+        "sourceRow": 13,
+        "keptId": "profile-client-177"
+      }
+    ],
+    "relationshipQualification": "Listed in the November 2025 company profile; dates and current contract status are not specified.",
+    "logoNote": "No client logos appear in this PDF; pages 8-9 contain names only. Brand logos require a separately verified asset source.",
+    "namePolicy": "Source spellings retained; whitespace around wrapped lines normalised. Similar names retained as distinct entries unless exactly duplicated. Names do not establish country, current engagement or endorsement.",
+    "uncertainties": [
+      "The PDF does not provide a complete country-by-country deployment list. Europe, Asia and the Gulf are regional descriptions; do not turn them into invented country pins.",
+      "Current licence validity and award dates are not established by the November 2025 profile.",
+      "AL EWAN MEDICAL COMPANY and ALEWAN MEDICAL COMPANY may refer to the same organisation but are retained as separately printed entries.",
+      "AL MEER SAUDI TECHNICAL SERVICES CO., and ALMEER SAUDI TECHNICAL SERVICES CO.,W.L.L. may be variants; retained separately pending company confirmation.",
+      "Several client names contain apparent typographical errors or truncation in the source. They are preserved rather than silently changing legal identities.",
+      "National Catering Company entry ends with SOLE PROPRI in the printed source.",
+      "The RAL INTERNATIONAL COMPANY entry ends with an ellipsis in the printed source.",
+      "The company body text uses Consultant (singular), while the cover and user-approved name use Consultants (plural). The site should preserve the user-approved legal branding.",
+      "The profile shows one social handle beside Facebook, Instagram and LinkedIn icons; it does not provide three verified profile URLs."
+    ]
+  },
+  "reportedDeployments": {
+    "value": 125000,
+    "qualifier": "more than",
+    "description": "successful deployments reported in the November 2025 company profile",
+    "sourcePages": [
+      4,
+      6
+    ],
+    "evidenceStatus": "company-profile-historical-claim",
+    "isLiveCounter": false
+  },
+  "licence": {
+    "number": "603",
+    "issuingBody": "Sri Lanka Bureau of Foreign Employment",
+    "description": "The profile describes the agency as Sri Lankan Government-approved and licensed under Labour License No. 603.",
+    "sourcePages": [
+      3,
+      6
+    ],
+    "currentValidityVerified": false
+  },
+  "recognition": [
+    {
+      "name": "Excellence Award",
+      "sourcePages": [
+        3,
+        6
+      ],
+      "year": null,
+      "evidenceStatus": "company-profile-claim"
+    },
+    {
+      "name": "Most Outstanding Recruitment Agency",
+      "sourcePages": [
+        3
+      ],
+      "year": null,
+      "evidenceStatus": "company-profile-claim"
+    }
+  ],
+  "whyChooseUs": [
+    {
+      "title": "Proven Track Record",
+      "summary": "The company profile reports more than 125,000 successful overseas placements and a recruitment history beginning in 1980.",
+      "sourcePage": 6,
+      "claimType": "historical-profile-claim"
+    },
+    {
+      "title": "Government-Approved & Globally Recognized",
+      "summary": "The profile records SLBFE License No. 603 and national honours including the Excellence Award, alongside a commitment to compliance, ethics and professionalism.",
+      "sourcePage": 6,
+      "claimType": "profile-credential-claim",
+      "currentValidityVerified": false
+    },
+    {
+      "title": "Industry-Specific Expertise",
+      "summary": "Sourcing manpower across hospitality, construction, engineering, automotive, IT and other sectors, with candidates matched to operational needs.",
+      "sourcePage": 6
+    },
+    {
+      "title": "Customized Recruitment Solutions",
+      "summary": "Support tailored to each client, from candidate sourcing to documentation, travel coordination and post-deployment follow-up.",
+      "sourcePage": 6
+    }
+  ],
+  "chairman": {
+    "name": "C. Mohamed Nassar",
+    "profilePrintedName": "C.Mohamed Nassar",
+    "title": "Chairman / MD",
+    "sourcePage": 10,
+    "messageParagraphs": [
+      "For over four decades, Al-Karrim Lanka has proudly served as a bridge between opportunity and talent - connecting global employers with Sri Lanka's skilled, hardworking, and adaptable workforce. Our engineers, technicians, and tradespeople are respected worldwide for their professionalism, resilience, and ability to thrive in multicultural environments.",
+      "We believe in the power of strategic partnerships. By aligning with organizations that value quality manpower, we help drive productivity while uplifting the prospects of Sri Lankan workers. Many of our candidates bring overseas experience with multinational firms, yet remain competitively positioned - ready to contribute from day one.",
+      "As Chairman, I see a bright and promising future in this mission. Our commitment to confidentiality, operational excellence, and client satisfaction remains unwavering. We invite you to experience the Al-Karrim Lanka difference - where integrity meets impact, and recruitment becomes a catalyst for mutual growth."
+    ],
+    "themes": [
+      "Sri Lankan workforce capability",
+      "Engineers, technicians and tradespeople",
+      "Professionalism and resilience",
+      "Multicultural experience",
+      "Strategic partnerships",
+      "Productivity",
+      "Worker opportunity",
+      "Confidentiality",
+      "Operational excellence",
+      "Client satisfaction"
+    ]
+  }
+}

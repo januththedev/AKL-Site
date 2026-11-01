@@ -25,10 +25,10 @@ export const defaultContent: SiteContent = {
 };
 
 export const services = [
-  { number: '01', title: 'Overseas recruitment', description: 'Connecting Sri Lankan professionals and workforce teams with international employers, across professional, skilled and semi-skilled workforce categories.' },
+  { number: '01', title: 'Overseas recruitment', description: 'Connecting Sri Lankan professionals and workforce teams with employers across the Middle East, Europe, Asia and Australia, covering professional, skilled, semi-skilled and general workforce requirements.' },
   { number: '02', title: 'Industry-specific talent', description: 'A sector-focused approach to understanding your requirements and coordinating relevant candidate sourcing.' },
   { number: '03', title: 'Screening & trade testing', description: 'Candidate screening, skill verification and trade-test coordination, tailored to the actual role and engagement.' },
-  { number: '04', title: 'Documentation & mobilisation', description: 'Coordination of recruitment documentation and visa-processing assistance. Specific requirements and outcomes need case-by-case confirmation.' },
+  { number: '04', title: 'Documentation & mobilisation', description: 'Employment-contract preparation, visa-documentation assistance, travel coordination and mobilisation, shaped around the requirements of each engagement.' },
 ];
 export const journey = [
   { title: 'A conversation.', label: 'Inquiry', description: 'We start with the people you need, the work ahead, and the requirements that matter to your business.' },

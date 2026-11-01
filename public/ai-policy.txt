@@ -1,0 +1,22 @@
+AL Karrim Lanka Consultants PVT LTD - Automated Access Policy
+
+This website is published for people seeking company information, recruitment
+services, client references and career directions.
+
+The operator does not authorize automated AI collection, model training, bulk
+extraction of the client directory, or reproduction of this website's original
+copy, design and presentation without prior written permission.
+
+Declared AI crawlers and user-directed AI fetchers are restricted in robots.txt
+and at the application's request boundary. This policy expresses the operator's
+preferences; it does not control an external AI model or prevent every scraper.
+
+Ordinary browsing, accessibility tools and conventional search discovery remain
+available. The site's own AKL Guide is authorized to answer limited recruitment
+and company-information questions using its reviewed public information.
+
+Client names and logos belong to their respective owners. Their appearance is a
+reference to relationships documented in the company profile, not a transfer of
+rights in those marks or a claim of current endorsement.
+
+For permission or company inquiries: alkarrim@slt.lk

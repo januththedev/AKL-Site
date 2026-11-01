@@ -173,11 +173,11 @@
     {
       "id": "F012",
       "topic": "leadership",
-      "text": "The profile identifies C. Mohamed Nassar as Chairman / MD; confirm exact name/title against page 10 before publication.",
+      "text": "The November 2025 profile names C. Mohamed Nassar as Chairman / MD in the message on page 10.",
       "locale": "en",
       "sourceId": "SRC-PROFILE-202511",
       "page": 10,
-      "evidenceStatus": "requires_name_proofread",
+      "evidenceStatus": "visually_verified_source_attribution",
       "editorialStatus": "draft",
       "public": true,
       "reviewedBy": null,

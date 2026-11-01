@@ -1,5 +1,5 @@
 /** Session key for the opening. Bump the version to show a redesigned opening once more. */
-export const INTRO_KEY = 'akl:intro:v6';
+export const INTRO_KEY = 'akl:intro:v7-client-logos';
 
 /**
  * Render-blocking decision run in <head> before first paint (homepage only).
