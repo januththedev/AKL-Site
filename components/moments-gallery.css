@@ -1,0 +1,15 @@
+/* Native aspect ratios: a portrait stays a portrait, a landscape stays a landscape. */
+.moments-collection .moments-grid{display:block;columns:2;column-gap:6%;}
+.moments-collection .moment{display:inline-block;vertical-align:top;break-inside:avoid;width:100%;padding:0;margin:0 0 65px}
+.moments-collection .moment:nth-child(even){padding-top:0}
+.moments-collection .moment .moment-photo{aspect-ratio:auto;border-radius:5px;overflow:hidden;background:#17372d}
+.moments-collection .moment-photo>img{position:static;display:block;width:100%;height:auto;object-fit:contain;transform:none!important}
+.moments-collection .moment-glass{left:auto;right:17px;bottom:17px;gap:18px;padding:12px 15px;background:#07191670;font-size:8px}
+.moments-collection .moment h3{font-size:clamp(20px,2.3vw,31px);line-height:1.25}
+.moments-collection .moment>figcaption{margin-top:20px}
+.moments-collection .moment-photo:focus-visible{outline:2px solid var(--mint);outline-offset:6px}
+.moments-collection .moment-photo:focus-visible .moment-glass{background:#071916aa}
+.moments-collection .moment-lightbox img{height:auto;object-fit:contain}
+@media(max-width:700px){.moments-collection .moments-grid{column-gap:6%}.moments-collection .moment{margin-bottom:40px}.moments-collection .moment h3{font-size:21px}.moments-collection .moment-glass{right:12px;bottom:12px;padding:10px 12px;font-size:7px}.moments-collection .moment>figcaption{margin-top:16px}}
+@media(max-width:540px){.moments-collection .moments-grid{columns:1}.moments-collection .moment{margin-bottom:38px}.moments-collection .moment h3{font-size:25px}.moments-collection .moment-glass{right:15px;bottom:15px}}
+@media print{.moments-collection .moments-grid{columns:2}.moments-collection .moment-glass{display:none}.moments-collection .moment{break-inside:avoid}}

@@ -67,6 +67,6 @@ async function composition(width, height, portrait) {
   const coreH = core.length === 4 ? th*2+gap : th;
   return {width,height,centerX:centerX/width,centerY:centerY/height,initialScale:Math.min((width-70)/coreW,(height-120)/coreH),layers:assets,totalBytes:assets.reduce((sum,asset)=>sum+asset.bytes,0)};
 }
-const manifest = {version,duration:6000,logoCount:logos.length,targetLogoCount:100,logoIds:logos.map(logo=>logo.id),missingPriority:priority.filter(id=>!unique.has(id)),exactSequenceReady:priority.every(id=>unique.has(id))&&logos.length===100,landscape:await composition(1280,720,false),portrait:await composition(640,800,true)};
+const manifest = {version,duration:2000,logoCount:logos.length,targetLogoCount:100,logoIds:logos.map(logo=>logo.id),missingPriority:priority.filter(id=>!unique.has(id)),exactSequenceReady:priority.every(id=>unique.has(id))&&logos.length===100,landscape:await composition(1280,720,false),portrait:await composition(640,800,true)};
 await writeFile(path.join(root,'content/client-scene.json'),JSON.stringify(manifest,null,2)+'\n');
 console.log(JSON.stringify({version,logos:logos.length,landscapeBytes:manifest.landscape.totalBytes,portraitBytes:manifest.portrait.totalBytes}));

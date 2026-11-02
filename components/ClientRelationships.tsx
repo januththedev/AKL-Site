@@ -9,7 +9,7 @@ type Phase = 'waiting' | 'playing' | 'paused' | 'ended' | 'static';
 const RUN_EVENT = 'akl:relationships-run';
 
 /** Four small artwork layers; the camera, blur and typography are animated in code. */
-export function ClientRelationships({ variant = 'primary' }: { variant?: 'primary' | 'supporting' | 'teaser' }) {
+export function ClientRelationships({ variant = 'primary', advanceTo }: { variant?: 'primary' | 'supporting' | 'teaser'; advanceTo?: string }) {
   const id = useId();
   const root = useRef<HTMLDivElement>(null);
   const replay = useRef(() => {});
@@ -24,7 +24,7 @@ export function ClientRelationships({ variant = 'primary' }: { variant?: 'primar
     const portrait = matchMedia('(max-width: 700px)');
     let animations: Animation[] = [];
     let disposed = false, visible = false, prepared = false, preparing = false, started = false, ended = false;
-    let userPaused = false, decodeEpoch = 0, runEpoch = 0, resumeAt = 0, resizeFrame = 0;
+    let userPaused = false, decodeEpoch = 0, runEpoch = 0, resumeAt = 0, resizeFrame = 0, advanced = false;
     const images = [...element.querySelectorAll('img')];
     const cancel = () => { runEpoch++; animations.forEach(animation => animation.cancel()); animations = []; };
     const pause = (manual = false) => {
@@ -49,30 +49,42 @@ export function ClientRelationships({ variant = 'primary' }: { variant?: 'primar
       const transform = (scale: number, centering: number) => `translate(${-(layout.centerX-.5)*100*scale*centering}%, ${-(layout.centerY-.5)*100*scale*centering}%) scale(${scale})`;
       const camera = animate('.relationship-camera', [
         {transform:transform(layout.initialScale,1),offset:0},
-        {transform:transform(layout.initialScale,1),offset:.15,easing:'cubic-bezier(.3,.7,.2,1)'},
-        {transform:transform(Math.max(1.6,layout.initialScale*.62),.48),offset:.32,easing:'cubic-bezier(.3,.7,.2,1)'},
-        {transform:transform(1,0),offset:.52},
+        {transform:transform(layout.initialScale,1),offset:.10,easing:'cubic-bezier(.3,.7,.2,1)'},
+        {transform:transform(Math.max(1.6,layout.initialScale*.62),.48),offset:.27,easing:'cubic-bezier(.3,.7,.2,1)'},
+        {transform:transform(1,0),offset:.46},
         {transform:transform(1,0),offset:1},
       ]);
       animate('.relationship-artwork', [
-        {opacity:1,filter:'blur(0px)',offset:0}, {opacity:1,filter:'blur(0px)',offset:.52},
-        {opacity:.1,filter:'blur(6px)',offset:.64}, {opacity:.1,filter:'blur(6px)',offset:1},
+        {opacity:1,filter:'blur(0px)',offset:0}, {opacity:1,filter:'blur(0px)',offset:.46},
+        {opacity:.1,filter:'blur(6px)',offset:.57}, {opacity:.1,filter:'blur(6px)',offset:1},
       ]);
-      for (const [group,start,end] of [['lodige',.16,.23],['ring',.19,.31],['outer',.34,.43]] as const) {
+      for (const [group,start,end] of [['lodige',.10,.17],['ring',.14,.25],['outer',.27,.38]] as const) {
         animate(`[data-logo-layer="${group}"]`, [{opacity:0,offset:0},{opacity:0,offset:start},{opacity:1,offset:end},{opacity:1,offset:1}]);
       }
-      animate('.relationship-darkening', [{opacity:0,offset:0},{opacity:0,offset:.52},{opacity:.9,offset:.64},{opacity:.96,offset:1}]);
+      animate('.relationship-darkening', [{opacity:0,offset:0},{opacity:0,offset:.46},{opacity:.9,offset:.57},{opacity:.96,offset:1}]);
       animate('.relationship-message-copy', [
-        {opacity:0,transform:'translateY(8px)',offset:0},{opacity:0,transform:'translateY(8px)',offset:.61},
-        {opacity:1,transform:'translateY(0)',offset:.67},{opacity:1,transform:'translateY(0)',offset:.83},
-        {opacity:0,transform:'translateY(-4px)',offset:.87},{opacity:0,offset:1},
+        {opacity:0,transform:'translateY(8px)',offset:0},{opacity:0,transform:'translateY(8px)',offset:.50},
+        {opacity:1,transform:'translateY(0)',offset:.56},{opacity:1,transform:'translateY(0)',offset:.71},
+        {opacity:0,transform:'translateY(-4px)',offset:.76},{opacity:0,offset:1},
       ]);
-      animate('.relationship-brand-copy', [{opacity:0,transform:'translateY(6px)',offset:0},{opacity:0,transform:'translateY(6px)',offset:.86},{opacity:1,transform:'translateY(0)',offset:.94},{opacity:1,offset:1}]);
+      animate('.relationship-brand-copy', [{opacity:0,transform:'translateY(6px)',offset:0},{opacity:0,transform:'translateY(6px)',offset:.74},{opacity:1,transform:'translateY(0)',offset:.82},{opacity:1,offset:1}]);
       const startTime = document.timeline.currentTime;
       if (typeof startTime === 'number') animations.forEach(animation => { animation.startTime = startTime - resumeAt; });
       resumeAt = 0;
       void camera?.finished.then(() => {
-        if (!disposed && run === runEpoch) { ended = true; setPhase('ended'); }
+        if (disposed || run !== runEpoch) return;
+        ended = true;
+        setPhase('ended');
+        const next = advanceTo ? document.getElementById(advanceTo) : null;
+        // One handoff per visit. Replays stay under the visitor's control.
+        if (!advanced && next && visible && !document.hidden && element.getBoundingClientRect().bottom > 0) {
+          advanced = true;
+          if (element.contains(document.activeElement)) {
+            const heading = next.querySelector<HTMLElement>('h2');
+            if (heading) { heading.tabIndex = -1; heading.focus({ preventScroll: true }); }
+          }
+          next.scrollIntoView({ behavior: reduced.matches ? 'instant' : 'smooth', block: 'start' });
+        }
       }).catch(() => { /* Cancellation restores the readable static composition. */ });
     };
     const prepare = async () => {
@@ -91,6 +103,10 @@ export function ClientRelationships({ variant = 'primary' }: { variant?: 'primar
     const onArtworkLoad = () => { void prepare(); };
     const onArtworkError = () => { if (!prepared) setPhase('static'); };
     images.forEach(image => { image.addEventListener('load',onArtworkLoad); image.addEventListener('error',onArtworkError); });
+    const warmup = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) void prepare();
+    }, {rootMargin:'500px'});
+    warmup.observe(element);
     const observer = new IntersectionObserver(entries => {
       const entry = entries[0];
       visible = entry.intersectionRatio >= .35;
@@ -127,7 +143,7 @@ export function ClientRelationships({ variant = 'primary' }: { variant?: 'primar
     document.addEventListener('visibilitychange',onVisibility);
     window.addEventListener(RUN_EVENT,onOther);
     return () => {
-      disposed = true; cancel(); observer.disconnect(); cancelAnimationFrame(resizeFrame);
+      disposed = true; cancel(); observer.disconnect(); warmup.disconnect(); cancelAnimationFrame(resizeFrame);
       images.forEach(image => { image.removeEventListener('load',onArtworkLoad); image.removeEventListener('error',onArtworkError); });
       replay.current = () => {}; togglePlayback.current = () => {};
       reduced.removeEventListener('change',onPreference);
@@ -135,7 +151,7 @@ export function ClientRelationships({ variant = 'primary' }: { variant?: 'primar
       document.removeEventListener('visibilitychange',onVisibility);
       window.removeEventListener(RUN_EVENT,onOther);
     };
-  }, [id]);
+  }, [id, advanceTo]);
 
   return <section id={variant === 'primary' ? 'relationships' : undefined} className={`client-relationships client-relationships-${variant}`} aria-label="The companies in our story">
     <figure>
@@ -145,7 +161,7 @@ export function ClientRelationships({ variant = 'primary' }: { variant?: 'primar
         </div></div>
         <div className="relationship-darkening" aria-hidden="true"/>
         <div className="relationship-scene-label" aria-hidden="true">A WORLD OF CONNECTIONS. ONE STARTING POINT.</div>
-        <div className="relationship-message-copy" aria-hidden="true"><span>Sri Lankan talent.</span><em>Global connections.</em><small>Connecting people with companies like these.</small></div>
+        <div className="relationship-message-copy" aria-hidden="true"><span>Sri Lankan talent.</span><em>Global connections.</em></div>
         <div className="relationship-brand-copy" aria-hidden="true"><span>AL Karrim Lanka</span><span>CONSULTANTS PVT LTD</span><small>PEOPLE. POSSIBILITY. PROGRESS.</small></div>
         {(phase === 'playing' || phase === 'paused' || phase === 'ended') && <button className="relationship-control" type="button" onClick={() => phase === 'ended' ? replay.current() : togglePlayback.current()} aria-label={phase === 'ended' ? 'Replay client animation' : phase === 'paused' ? 'Resume client animation' : 'Pause client animation'}>
           {phase === 'ended' ? <RotateCcw size={16} aria-hidden="true"/> : phase === 'paused' ? <Play size={16} aria-hidden="true"/> : <Pause size={16} aria-hidden="true"/>}

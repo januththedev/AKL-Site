@@ -1,9 +1,8 @@
 'use client';
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { ArrowUpRight } from 'lucide-react';
-import Link from 'next/link';
-import type { Industry, Destination } from '@/lib/types';
+import type { Destination } from '@/lib/types';
 import { journey } from '@/content/default';
 import { TalentRoutes } from '@/components/TalentRoutes';
 import './story-motion.css';
@@ -63,6 +62,16 @@ export function MotionRoot() {
        }, .06);
       }
      });
+     // Reveal intact phrases and paragraphs; the text remains semantic and selectable.
+     main.querySelectorAll<HTMLElement>('[data-story-lines]').forEach(group => {
+      if (group.closest('.home-hero, [data-no-story-motion]') || revealed.current.has(group)) return;
+      const lines = group.querySelectorAll(':scope > p, :scope > [data-story-line]');
+      if (!lines.length) return;
+      gsap.fromTo(lines, { y: 10, opacity: .45 }, {
+       y: 0, opacity: 1, duration: .55, stagger: .09, ease: 'power2.out',
+       scrollTrigger: { trigger: group, start: 'top 91%', once: true, onEnter: () => revealed.current.add(group) },
+      });
+     });
      main.querySelectorAll<HTMLElement>('.client-logo-wall').forEach(wall => {
       const cards = wall.querySelectorAll('.client-logo-tile');
       if (!cards.length || revealed.current.has(wall)) return;
@@ -88,52 +97,6 @@ export function MotionRoot() {
   return () => { cancelled = true; dispose(); };
  }, [pathname]);
  return <div className="reading-progress" aria-hidden="true" />;
-}
-export function IndustryExplorer({industries}:{industries:Industry[]}) {
- const [active,setActive]=useState(0);
- const index = Math.min(active, Math.max(0, industries.length - 1));
- const item = industries[index];
- const [frames,setFrames]=useState<Industry[]>(() => industries[0] ? [industries[0]] : []);
- const currentPhoto = useRef(industries[0]?.image);
- const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
- const detailId = useId();
- const clearHover = () => {
-  if (hoverTimer.current !== null) clearTimeout(hoverTimer.current);
-  hoverTimer.current = null;
- };
- const select = (next: number) => { clearHover(); setActive(next); };
- useEffect(() => () => { if (hoverTimer.current !== null) clearTimeout(hoverTimer.current); }, []);
- useEffect(() => {
-  if (!item || currentPhoto.current === item.image) return;
-  let cancelled = false;
-  const image = new Image();
-  image.src = item.image;
-  // Keep the previous photograph in place until its replacement can actually be painted.
-  const show = () => {
-   if (cancelled) return;
-   currentPhoto.current = item.image;
-   setFrames(previous => previous.at(-1)?.image === item.image ? previous : [...previous.slice(-1), item]);
-  };
-  image.decode().then(show, () => { if (image.naturalWidth > 0) show(); });
-  return () => { cancelled = true; };
- }, [item]);
- useEffect(() => {
-  if (frames.length < 2) return;
-  // Also retire the old layer if animations are disabled or interrupted by a preference change.
-  const timer = setTimeout(() => setFrames(previous => previous.length > 1 ? previous.slice(-1) : previous), 500);
-  return () => clearTimeout(timer);
- }, [frames]);
- if (!item) return null;
- return <div className="industry-explorer"><figure className="industry-image story-industry-image" data-story-enter>
-  {frames.map((frame, i) => <img key={frame.image} className={frames.length > 1 && i === frames.length - 1 ? 'industry-photo-enter' : undefined} src={frame.image} alt={`${frame.title} industry illustration`} aria-hidden={i !== frames.length - 1} width="1000" height="1100" loading="lazy" onAnimationEnd={event => {
-   if (event.animationName === 'industry-photo-enter') setFrames(previous => previous.at(-1)?.image === frame.image ? previous.slice(-1) : previous);
-  }}/>)}
-  <figcaption><span>THE PEOPLE BEHIND THE PROGRESS</span><span>{String(index+1).padStart(2,'0')} / {String(industries.length).padStart(2,'0')}</span></figcaption>
- </figure><div className="industry-list"><p className="section-note">Different industries.<br/>The same belief in people.</p>{industries.map((x,i)=><button type="button" className={index===i?'industry-item active':'industry-item'} key={x.slug} onPointerEnter={event => {
-  if (event.pointerType !== 'mouse') return;
-  clearHover();
-  hoverTimer.current = setTimeout(() => { hoverTimer.current = null; setActive(i); }, 180);
- }} onPointerLeave={clearHover} onFocus={()=>select(i)} onClick={()=>select(i)} aria-pressed={index===i} aria-controls={detailId}><span className="industry-number">{String(i+1).padStart(2,'0')}</span><span className="industry-title">{x.title}</span><ArrowUpRight size={22}/></button>)}<div className="industry-detail" id={detailId} aria-live="polite" aria-atomic="true"><p>{item.description}</p><Link className="text-link" href={`/industries/${item.slug}`}>Explore {item.title.toLowerCase()} <ArrowUpRight size={16}/></Link></div></div></div>;
 }
 export function Journey() {
  const root=useRef<HTMLDivElement>(null);const [active,setActive]=useState(0);

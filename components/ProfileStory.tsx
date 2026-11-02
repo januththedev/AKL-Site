@@ -36,7 +36,7 @@ export function ProfileReach() {
 }
 
 export function ChairmanMessage() {
-  return <section className="section chairman-message">
+  return <section id="chairman-message" className="section chairman-message">
     <div className="chairman-heading"><span className="eyebrow">FROM THE CHAIRMAN’S MESSAGE</span><h2>Integrity meets<br/><em>impact.</em></h2><div className="chairman-signature"><strong>{profile.chairman.name}</strong><span>{profile.chairman.title} · Company profile, November 2025</span></div></div>
     <div className="chairman-copy">{profile.chairman.messageParagraphs.map(text => <p key={text.slice(0, 45)}>{text}</p>)}<a className="text-link" href={`${profile.source.documentUrl}#page=10`} target="_blank" rel="noopener noreferrer">Read the original message <ArrowUpRight size={16}/></a></div>
   </section>;
