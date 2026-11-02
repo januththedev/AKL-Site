@@ -4,7 +4,7 @@ Implemented 2 November 2026 for AL Karrim Lanka Consultants PVT LTD. Latest owne
 
 ## The coded animation
 
-There is no video element, MP4, autoplay audio, new 3D library or Play gate. The six-second camera, two pull-backs, whole-wall softening, black resolve and sharp foreground typography use the browser Web Animations API. Four transparent WebP artwork layers per layout preserve the actual company marks. The page animates four layers, not76 independent cards.
+There is no video element, MP4, autoplay audio, new 3D library or Play gate. The six-second camera, two pull-backs, whole-wall softening, black resolve and sharp foreground typography use the browser Web Animations API. Four transparent WebP artwork layers per layout preserve the actual company marks. The page animates four layers, not76 independent cards. Responsive artwork loading ignores obsolete decode requests; switching portrait/landscape preserves the current animation time, and the end frame remains settled when the screen rotates.
 
 The complete artwork download is228,944 bytes on desktop and138,902 bytes on mobile. This is about 83% and 80% smaller than the superseded MP4 files. The active layout is selected with native picture/source media queries, so mobile does not also download the desktop layers. No logo is generated, redrawn or recoloured. Fonts and final text remain real HTML, which stays crisp during movement.
 
@@ -20,7 +20,7 @@ The artwork layers are core companies, Lödige, the first surrounding ring and t
 | Mobile | Native portrait artwork, the same automatic sequence and no playback tap. |
 | Reduced motion or unsupported animation API | Readable static company wall and the persistent business caption. |
 | Offscreen or hidden tab | The animations pause and resume at the same point when visible again. |
-| End | Full AKL name holds over black. A small Replay action is available without moving focus or scroll. |
+| End | Full AKL name holds over black. One persistent control offers Pause, Resume and Replay without moving keyboard focus or scroll. The camera frame uses non-scrolling overflow clipping so focus cannot silently pan the zoomed artwork inside its border. A manual pause is retained when scrolling away or returning to the tab. |
 | No JavaScript or failed image decode | The unanimated wall, HTML caption and directory link remain useful. No blank media player. |
 
 The scene uses lazy, self-hosted images, requests no video and adds no network dependency for motion itself. One page event prevents two relationship scenes from running simultaneously. It has no shared session key with the original intro and never gates navigation or locks scrolling. Automatic playback is scoped to this content animation; the intro's existing behaviour is preserved.
