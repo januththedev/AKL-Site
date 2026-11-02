@@ -6,6 +6,7 @@ import '@fontsource/manrope/700.css';
 import '@fontsource/instrument-serif/400-italic.css';
 import './globals.css';
 import '@/components/company-profile.css';
+import '@/components/client-relationships.css';
 import { HydrationProbe } from '@/components/HydrationProbe';
 import { INTRO_BOOT_SCRIPT } from '@/lib/intro';
 

@@ -34,10 +34,10 @@ test('retrieval excludes drafts and expired entries',()=>{const base:KnowledgeEn
 import { companyYear, yearsOfExperience, COMPANY_NAME } from '../../lib/brand';
 import { introMoments } from '../../lib/moments';
 import { momentSchema } from '../../lib/validation';
-test('company years roll over at Sri Lankan New Year midnight without changing 1980',()=>{
+test('copyright years roll over on January 1 at Sri Lankan midnight without changing 1980',()=>{
  assert.equal(companyYear(new Date('2026-12-31T18:29:59Z')),2026);
  assert.equal(companyYear(new Date('2026-12-31T18:30:00Z')),2027);
- assert.equal(yearsOfExperience(new Date('2027-01-01T00:00:00Z')),47);
+ assert.equal(yearsOfExperience(new Date('2027-01-01T00:00:00Z')),46);
  assert.equal(COMPANY_NAME,'AL Karrim Lanka Consultants PVT LTD');
 });
 const moment={id:'7f5ceec5-132a-4210-83d5-58eb50bd02b6',title:'A real event',image:'/media/hero-team.webp',thumbnail:'/media/hero-team.webp',alt:'A team meeting outdoors',credit:'Company photographer',location:'Colombo',date:'2026-10-30',useInIntro:true,permissionConfirmed:true as const};

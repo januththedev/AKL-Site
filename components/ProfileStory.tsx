@@ -1,16 +1,17 @@
+import { LiveCompanyDate } from '@/components/LiveCompanyDate';
 import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
 import { companyProfile as profile, profileClients, profileReach } from '@/lib/company-profile';
-import { yearsOfExperience } from '@/lib/brand';
+import { companyYear, yearsOfExperience } from '@/lib/brand';
 import { SectionTitle } from './Public';
 
 export function ProfileMilestones() {
-  return <section className="profile-milestones" aria-label="Our company in perspective">
-    <div><strong>{yearsOfExperience()}<span> years</span></strong><span>Since August 1980</span></div>
+  return <><div className="history-horizon" aria-label="Our story continues from August 1980 to the present year"><span>AUGUST 1980</span><span className="history-horizon-line" aria-hidden="true"/><span><LiveCompanyDate kind="year" initialValue={companyYear()}/></span></div><section className="profile-milestones" aria-label="Our company in perspective">
+    <div><strong><LiveCompanyDate kind="experience" initialValue={yearsOfExperience()}/><span> years</span></strong><span>Since August 1980</span></div>
     <div><strong>125,000<span>+</span></strong><span>Deployments reported in our 2025 profile</span></div>
     <div><strong>{profileClients.length}</strong><span>Client names listed in our profile</span></div>
     <div><strong>{profile.industries.names.length}</strong><span>Industries. One connected approach.</span></div>
-  </section>;
+  </section></>;
 }
 
 export function ProfileApproach() {

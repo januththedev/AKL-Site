@@ -1,0 +1,156 @@
+{
+  "version": "81a7b7453a2e",
+  "duration": 6000,
+  "logoCount": 76,
+  "targetLogoCount": 100,
+  "logoIds": [
+    "saptco",
+    "public-transportation",
+    "riyadh-cables",
+    "lodige",
+    "bin-taleb",
+    "abeer-medical",
+    "abu-dhabi-national-hotels",
+    "action-international",
+    "agility",
+    "alewan-medical",
+    "al-ghazal",
+    "al-jalhami",
+    "karam-services",
+    "al-kawther",
+    "al-mana",
+    "al-mawarid",
+    "al-miladi",
+    "al-qaryan",
+    "safat-dhiafa",
+    "sitco",
+    "almeer-saudi",
+    "amiantit-qatar",
+    "ansab",
+    "cctc",
+    "doosan",
+    "emco-qatar",
+    "emerging-energy",
+    "etlco",
+    "exquisite-trading",
+    "forsan",
+    "gac-shobokshi",
+    "global-emirates",
+    "golf-east",
+    "gs-construction-arabia",
+    "gulf-catering",
+    "hajjan-drilling",
+    "hands-services",
+    "jal-human-resources",
+    "jawahr",
+    "jawdah-cables",
+    "jeddah-cables",
+    "kddb",
+    "madar-maintenance",
+    "marn",
+    "masco",
+    "mirrikh-contracting",
+    "modern-bus",
+    "modern-precision",
+    "multiplex-international",
+    "naser-alsayer-readymix",
+    "national-catering",
+    "newrest",
+    "ontegra",
+    "petromin",
+    "plant-tech-arabia",
+    "prima-international",
+    "qatar-star-services",
+    "safari",
+    "salem-zlaiq",
+    "samsung-ct",
+    "satco",
+    "smasco",
+    "saudi-medical-systems",
+    "seder-group",
+    "shobokshi",
+    "smart-house",
+    "solb-steel",
+    "slisr",
+    "success-international-school",
+    "sunbulah",
+    "target-construction",
+    "thabat",
+    "united-catering",
+    "wasita-emirates",
+    "wjeen-international",
+    "wooden-bakery"
+  ],
+  "missingPriority": [
+    "sapco"
+  ],
+  "exactSequenceReady": false,
+  "landscape": {
+    "width": 1280,
+    "height": 720,
+    "centerX": 0.5445556640625,
+    "centerY": 0.44557291666666665,
+    "initialScale": 3.6099198209957115,
+    "layers": [
+      {
+        "group": "core",
+        "src": "/clients/scene/relationships-landscape-core-81a7b7453a2e.webp",
+        "bytes": 16852,
+        "sha256": "f92a2fc1393252721bc333d2012cd548780c72e9e380f9e215b62ce20d55d072"
+      },
+      {
+        "group": "lodige",
+        "src": "/clients/scene/relationships-landscape-lodige-81a7b7453a2e.webp",
+        "bytes": 12236,
+        "sha256": "ddd7e7ad67a55e3d3a476f2764c6e7ae163a6bf30b32ab2b3fb5e4b0868daabe"
+      },
+      {
+        "group": "ring",
+        "src": "/clients/scene/relationships-landscape-ring-81a7b7453a2e.webp",
+        "bytes": 44756,
+        "sha256": "58509eae6d948812aa0dabb3f34e1cf752bb127aec88cf9cc3ed9bef36f1b095"
+      },
+      {
+        "group": "outer",
+        "src": "/clients/scene/relationships-landscape-outer-81a7b7453a2e.webp",
+        "bytes": 155100,
+        "sha256": "0473f904b0160e65e111248e35046675e240b6096a0a9b60bb998e3c3aea7904"
+      }
+    ],
+    "totalBytes": 228944
+  },
+  "portrait": {
+    "width": 640,
+    "height": 800,
+    "centerX": 0.561298076923077,
+    "centerY": 0.5,
+    "initialScale": 2.484909456740443,
+    "layers": [
+      {
+        "group": "core",
+        "src": "/clients/scene/relationships-portrait-core-81a7b7453a2e.webp",
+        "bytes": 9944,
+        "sha256": "d5429bd5d58711b731f29a52bc894b08de06cc373f64f33ad8e9ddc25e1fe79a"
+      },
+      {
+        "group": "lodige",
+        "src": "/clients/scene/relationships-portrait-lodige-81a7b7453a2e.webp",
+        "bytes": 7556,
+        "sha256": "1edfa5155865f3c1f5d3757555de089abbe565c5a3407c53b93379ec4b83107e"
+      },
+      {
+        "group": "ring",
+        "src": "/clients/scene/relationships-portrait-ring-81a7b7453a2e.webp",
+        "bytes": 26660,
+        "sha256": "9eab80a8ad64a46e99921f047b70c128b970501ffc3bf41cc0cb37e4701c6d1c"
+      },
+      {
+        "group": "outer",
+        "src": "/clients/scene/relationships-portrait-outer-81a7b7453a2e.webp",
+        "bytes": 94742,
+        "sha256": "c7ed384971870ca7655de033f8125d56ef563cdbce9096849fae7a33cdc511ec"
+      }
+    ],
+    "totalBytes": 138902
+  }
+}

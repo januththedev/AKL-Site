@@ -1,0 +1,158 @@
+/* Small visual cues with readable, stationary content as the default. */
+.story-accent {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: var(--story-emphasis, 0%) 1px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.desktop-nav a:after {
+  transition: transform .2s cubic-bezier(.2,.7,.2,1);
+}
+
+.desktop-nav a:focus-visible:after,
+.desktop-nav a[aria-current="page"]:after {
+  transform: scaleX(1);
+}
+
+.desktop-nav a[aria-current="page"] { color: var(--mint); }
+
+:is(.button, .text-link, .glass-pill, .header-careers, .desktop-nav a):focus-visible {
+  outline: 2px solid var(--forest);
+  outline-offset: 5px;
+}
+
+:is(.site-header, .site-footer, .dark-section, .world-section) :is(.button, .text-link, .glass-pill, .header-careers, .desktop-nav a):focus-visible {
+  outline-color: var(--mint);
+}
+
+.button > svg,
+.header-careers > svg {
+  flex-shrink: 0;
+  transition: transform .2s cubic-bezier(.2,.7,.2,1);
+}
+
+:is(.button, .header-careers):is(:hover, :focus-visible) > svg,
+.text-link:focus-visible > svg {
+  transform: translate(2px, -2px);
+}
+
+.header-careers {
+  transition: background-color .2s, border-color .2s;
+}
+
+.header-careers:is(:hover, :focus-visible) { background-color: #ffffff15; }
+
+/* Keep the photograph's frame and the selector's numeric column still. */
+.story-industry-image { animation: none; }
+.story-industry-image .industry-photo-enter { animation: industry-photo-enter .45s ease both; }
+.industry-item,
+.industry-item.active {
+  padding-left: 0;
+  transition: color .18s, border-color .18s;
+}
+
+.industry-item > .industry-number {
+  width: 20px;
+  flex: 0 0 20px;
+  font-variant-numeric: tabular-nums;
+  transition: color .18s;
+}
+
+.industry-item.active > .industry-number { color: var(--forest); }
+.industry-item > .industry-title { transition: transform .2s; }
+.industry-item.active > .industry-title { transform: translateX(3px); }
+.industry-item > svg { flex-shrink: 0; transition: opacity .2s, transform .2s; }
+.industry-item:focus-visible {
+  outline: 2px solid var(--forest);
+  outline-offset: 4px;
+}
+
+.industry-item:is(:hover, :focus-visible) > svg { transform: translate(2px, -2px); }
+.industry-image figcaption > span:last-child { font-variant-numeric: tabular-nums; }
+
+@keyframes industry-photo-enter {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* The progress rail follows the reading position, without a pinned section. */
+.story-journey .journey-steps { position: relative; padding-left: 24px; }
+.story-journey .journey-step {
+  position: relative;
+  opacity: 1;
+  transition: border-color .2s;
+}
+
+.story-journey .journey-step h3 { transition: color .2s; }
+.story-journey .journey-step.active h3 { color: var(--forest); }
+.story-journey .journey-index {
+  min-width: 15px;
+  flex-shrink: 0;
+  align-self: flex-start;
+  font-variant-numeric: tabular-nums;
+  transition: color .2s;
+}
+
+.journey-progress-rail {
+  position: absolute;
+  top: var(--journey-rail-top, 30px);
+  left: 3px;
+  width: 1px;
+  height: var(--journey-rail-height, calc(100% - 60px));
+  background: var(--line);
+  pointer-events: none;
+}
+
+.journey-progress-fill {
+  display: block;
+  width: 1px;
+  height: 100%;
+  background: var(--forest);
+  transform: scaleY(var(--journey-progress, 0));
+  transform-origin: top;
+}
+
+.journey-progress-dot {
+  position: absolute;
+  top: calc(var(--journey-progress, 0) * 100%);
+  left: -3px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--forest);
+  box-shadow: 0 0 0 4px #0e463216;
+  transform: translateY(-50%);
+}
+
+.story-journey .journey-photo { opacity: 0; transition: opacity .45s ease; }
+.story-journey .journey-photo.is-current { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .story-accent { background-size: 100% 1px; }
+  .story-industry-image .industry-photo-enter { animation: none; }
+  .story-journey .journey-photo,
+  .story-journey .journey-step,
+  .story-journey .journey-step h3,
+  .story-journey .journey-index,
+  .industry-item,
+  .industry-item > .industry-title,
+  .industry-item > .industry-number,
+  .industry-item > svg,
+  .button > svg,
+  .header-careers,
+  .header-careers > svg,
+  .desktop-nav a:after { transition: none; }
+  .industry-item.active > .industry-title,
+  .industry-item:is(:hover, :focus-visible) > svg,
+  :is(.button, .header-careers):is(:hover, :focus-visible) > svg,
+  .text-link:focus-visible > svg { transform: none; }
+}
+
+@media print {
+  .journey-progress-rail { display: none; }
+  .story-journey .journey-steps { padding-left: 0; }
+  .story-accent { background: none; }
+}

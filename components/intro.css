@@ -1,4 +1,4 @@
-/* Opening v7 — "A world of relationships". See components/Intro.tsx for the timeline. */
+/* Opening v6 — "Through the globe". See components/Intro.tsx for the timeline. */
 
 /* Cover raised by the <head> boot script before first paint; JS swaps it for the curtain.
    Failsafe: if JavaScript never starts, the cover and the opening fade away after 4 s. */
@@ -78,26 +78,19 @@ html[data-intro='pending'] .rv { visibility: visible; animation: rv-failsafe 0.3
   opacity: 0;
 }
 .rv-frame {
-  display: grid;
-  place-items: center;
-  min-width: 0;
-  padding: 12px;
-  border: 1px solid #ffffff38;
-  border-radius: 7px;
-  background: #fff;
-  opacity: 0;
-  box-shadow: 0 5px 20px #0002;
-}
-.rv-client-grid {
   position: absolute;
-  inset: 15%;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-template-rows: repeat(2, minmax(0, 1fr));
-  gap: 8px;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  filter: saturate(0.8) contrast(1.08) brightness(0.9);
 }
-.rv-frame[data-surface='dark'] { background: #103d32; }
-.rv-frame img { width: 100%; height: 100%; max-height: 56px; object-fit: contain; }
+.rv-photos::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(closest-side, transparent 55%, #030b09cc 100%), linear-gradient(#0b3d3240, #0b3d3240);
+}
 .rv-logo {
   position: absolute;
   inset: 0;
@@ -190,6 +183,4 @@ html[data-intro='pending'] .rv-outline { animation: rv-draw 0.9s 0.05s cubic-bez
 @media (max-width: 600px) {
   .rv-mark { --mark: min(84vw, 50vh); }
   .rv-skip { right: 16px; top: 16px; }
-  .rv-client-grid { gap: 5px; }
-  .rv-frame { padding: 6px; border-radius: 4px; }
 }
