@@ -43,6 +43,14 @@ export function MotionRoot() {
      ].join(','));
      headings.forEach(heading => {
       if (heading.closest('.home-hero, [data-no-story-motion]') || revealed.current.has(heading)) return;
+      const phrases = heading.querySelectorAll<HTMLElement>(':scope > .story-line > .story-line-ink');
+      if (phrases.length) {
+       gsap.fromTo(phrases, { yPercent: 105, opacity: 0 }, {
+        yPercent: 0, opacity: 1, duration: .8, stagger: .11, ease: 'power3.out',
+        scrollTrigger: { trigger: heading, start: 'top 91%', once: true, onEnter: () => revealed.current.add(heading) },
+       });
+       return;
+      }
       const accent = heading.querySelector<HTMLElement>(':scope > em');
       if (accent) {
        accent.classList.add('story-accent');
@@ -67,8 +75,8 @@ export function MotionRoot() {
       if (group.closest('.home-hero, [data-no-story-motion]') || revealed.current.has(group)) return;
       const lines = group.querySelectorAll(':scope > p, :scope > [data-story-line]');
       if (!lines.length) return;
-      gsap.fromTo(lines, { y: 10, opacity: .45 }, {
-       y: 0, opacity: 1, duration: .55, stagger: .09, ease: 'power2.out',
+      gsap.fromTo(lines, { y: 14, opacity: 0 }, {
+       y: 0, opacity: 1, duration: .65, stagger: .12, ease: 'power2.out',
        scrollTrigger: { trigger: group, start: 'top 91%', once: true, onEnter: () => revealed.current.add(group) },
       });
      });

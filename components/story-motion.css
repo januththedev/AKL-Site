@@ -1,4 +1,13 @@
 /* Small visual cues with readable, stationary content as the default. */
+/* Phrase masks reserve descenders and italic overhang, while allowing natural wrapping. */
+.story-line {
+  display: block;
+  overflow: hidden;
+  overflow: clip;
+  padding: .03em .09em .16em .02em;
+  margin: -.03em -.09em -.16em -.02em;
+}
+.story-line-ink { display: block; }
 .story-accent {
   background-image: linear-gradient(currentColor, currentColor);
   background-position: 0 100%;
@@ -131,6 +140,8 @@
 .story-journey .journey-photo.is-current { opacity: 1; }
 
 @media (prefers-reduced-motion: reduce) {
+  .story-line { overflow: visible; }
+  .story-line-ink { opacity: 1!important; transform: none!important; }
   .story-accent { background-size: 100% 1px; }
   .story-industry-image .industry-photo-enter { animation: none; }
   .story-journey .journey-photo,
@@ -152,6 +163,9 @@
 }
 
 @media print {
+  .story-line { overflow: visible; }
+  .story-line-ink { opacity: 1!important; transform: none!important; }
+  [data-story-lines] > p { opacity: 1!important; transform: none!important; }
   .journey-progress-rail { display: none; }
   .story-journey .journey-steps { padding-left: 0; }
   .story-accent { background: none; }

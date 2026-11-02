@@ -22,7 +22,7 @@ export function ProfileApproach() {
     { title: 'Built around your requirement.', text: 'From a specialist role to a large project team: sourcing, screening, documentation, travel coordination and post-deployment follow-up form one connected service.' },
   ];
   return <section className="section profile-approach">
-    <SectionTitle label="WHY AL KARRIM LANKA" heading="The right experience." accent="A personal approach." />
+    <SectionTitle animate label="WHY AL KARRIM LANKA" heading="The right experience." accent="A personal approach." />
     <div className="profile-reasons">{reasons.map((reason, i) => <article key={reason.title} data-reveal><span className="eyebrow">0{i + 1}</span><h3>{reason.title}</h3><p>{reason.text}</p></article>)}</div>
     <p className="profile-source-note">History and recognition from the November 2025 company profile. Contact us for current licence details and engagement requirements.</p>
   </section>;

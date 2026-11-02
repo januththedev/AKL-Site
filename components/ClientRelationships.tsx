@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useId, useRef, useState } from 'react';
-import { ArrowUpRight, Pause, Play, RotateCcw } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import scene from '@/content/client-scene.json';
 
 type Phase = 'waiting' | 'playing' | 'paused' | 'ended' | 'static';
@@ -49,25 +49,23 @@ export function ClientRelationships({ variant = 'primary', advanceTo }: { varian
       const transform = (scale: number, centering: number) => `translate(${-(layout.centerX-.5)*100*scale*centering}%, ${-(layout.centerY-.5)*100*scale*centering}%) scale(${scale})`;
       const camera = animate('.relationship-camera', [
         {transform:transform(layout.initialScale,1),offset:0},
-        {transform:transform(layout.initialScale,1),offset:.10,easing:'cubic-bezier(.3,.7,.2,1)'},
-        {transform:transform(Math.max(1.6,layout.initialScale*.62),.48),offset:.27,easing:'cubic-bezier(.3,.7,.2,1)'},
-        {transform:transform(1,0),offset:.46},
+        {transform:transform(layout.initialScale,1),offset:.12,easing:'cubic-bezier(.3,.7,.2,1)'},
+        {transform:transform(Math.max(1.6,layout.initialScale*.62),.48),offset:.32,easing:'cubic-bezier(.3,.7,.2,1)'},
+        {transform:transform(1,0),offset:.62},
         {transform:transform(1,0),offset:1},
       ]);
       animate('.relationship-artwork', [
-        {opacity:1,filter:'blur(0px)',offset:0}, {opacity:1,filter:'blur(0px)',offset:.46},
-        {opacity:.1,filter:'blur(6px)',offset:.57}, {opacity:.1,filter:'blur(6px)',offset:1},
+        {opacity:1,filter:'blur(0px)',offset:0}, {opacity:1,filter:'blur(0px)',offset:.62},
+        {opacity:.24,filter:'blur(3px)',offset:.84}, {opacity:.24,filter:'blur(3px)',offset:1},
       ]);
-      for (const [group,start,end] of [['lodige',.10,.17],['ring',.14,.25],['outer',.27,.38]] as const) {
+      for (const [group,start,end] of [['lodige',.12,.22],['ring',.22,.36],['outer',.34,.53]] as const) {
         animate(`[data-logo-layer="${group}"]`, [{opacity:0,offset:0},{opacity:0,offset:start},{opacity:1,offset:end},{opacity:1,offset:1}]);
       }
-      animate('.relationship-darkening', [{opacity:0,offset:0},{opacity:0,offset:.46},{opacity:.9,offset:.57},{opacity:.96,offset:1}]);
-      animate('.relationship-message-copy', [
-        {opacity:0,transform:'translateY(8px)',offset:0},{opacity:0,transform:'translateY(8px)',offset:.50},
-        {opacity:1,transform:'translateY(0)',offset:.56},{opacity:1,transform:'translateY(0)',offset:.71},
-        {opacity:0,transform:'translateY(-4px)',offset:.76},{opacity:0,offset:1},
-      ]);
-      animate('.relationship-brand-copy', [{opacity:0,transform:'translateY(6px)',offset:0},{opacity:0,transform:'translateY(6px)',offset:.74},{opacity:1,transform:'translateY(0)',offset:.82},{opacity:1,offset:1}]);
+      animate('.relationship-darkening', [{opacity:0,offset:0},{opacity:0,offset:.62},{opacity:.55,offset:.84},{opacity:.55,offset:1}]);
+      // One idea lands in two phrases; it stays readable instead of switching to a brand card.
+      for (const [selector,start,end] of [['.relationship-line-talent',.64,.80],['.relationship-line-global',.71,.89]] as const) {
+        animate(selector, [{opacity:0,transform:'translateY(105%)',offset:0},{opacity:0,transform:'translateY(105%)',offset:start,easing:'cubic-bezier(.2,.7,.2,1)'},{opacity:1,transform:'translateY(0)',offset:end},{opacity:1,transform:'translateY(0)',offset:1}]);
+      }
       const startTime = document.timeline.currentTime;
       if (typeof startTime === 'number') animations.forEach(animation => { animation.startTime = startTime - resumeAt; });
       resumeAt = 0;
@@ -79,7 +77,7 @@ export function ClientRelationships({ variant = 'primary', advanceTo }: { varian
         // One handoff per visit. Replays stay under the visitor's control.
         if (!advanced && next && visible && !document.hidden && element.getBoundingClientRect().bottom > 0) {
           advanced = true;
-          if (element.contains(document.activeElement)) {
+          if (element.closest('.client-relationships')?.contains(document.activeElement)) {
             const heading = next.querySelector<HTMLElement>('h2');
             if (heading) { heading.tabIndex = -1; heading.focus({ preventScroll: true }); }
           }
@@ -155,19 +153,17 @@ export function ClientRelationships({ variant = 'primary', advanceTo }: { varian
 
   return <section id={variant === 'primary' ? 'relationships' : undefined} className={`client-relationships client-relationships-${variant}`} aria-label="The companies in our story">
     <figure>
-      <div ref={root} className="relationship-scene" data-phase={phase}>
-        <div className="relationship-camera" aria-hidden="true"><div className="relationship-artwork">
+      <div ref={root} id={`relationship-scene-${id}`} className="relationship-scene" data-phase={phase}>
+        <div className="relationship-camera-anchor" aria-hidden="true"><div className="relationship-camera"><div className="relationship-artwork">
           {scene.landscape.layers.map((layer,index) => <picture key={layer.group} data-logo-layer={layer.group}><source media="(max-width: 700px)" srcSet={scene.portrait.layers[index].src}/><img src={layer.src} alt="" width={scene.landscape.width} height={scene.landscape.height} loading="lazy" decoding="async"/></picture>)}
-        </div></div>
+        </div></div></div>
         <div className="relationship-darkening" aria-hidden="true"/>
-        <div className="relationship-scene-label" aria-hidden="true">A WORLD OF CONNECTIONS. ONE STARTING POINT.</div>
-        <div className="relationship-message-copy" aria-hidden="true"><span>Sri Lankan talent.</span><em>Global connections.</em></div>
-        <div className="relationship-brand-copy" aria-hidden="true"><span>AL Karrim Lanka</span><span>CONSULTANTS PVT LTD</span><small>PEOPLE. POSSIBILITY. PROGRESS.</small></div>
-        {(phase === 'playing' || phase === 'paused' || phase === 'ended') && <button className="relationship-control" type="button" onClick={() => phase === 'ended' ? replay.current() : togglePlayback.current()} aria-label={phase === 'ended' ? 'Replay client animation' : phase === 'paused' ? 'Resume client animation' : 'Pause client animation'}>
-          {phase === 'ended' ? <RotateCcw size={16} aria-hidden="true"/> : phase === 'paused' ? <Play size={16} aria-hidden="true"/> : <Pause size={16} aria-hidden="true"/>}
-        </button>}
+        <div className="relationship-message-copy" aria-hidden="true"><span className="relationship-phrase"><span className="relationship-line-talent">Sri Lankan talent.</span></span><span className="relationship-phrase"><em className="relationship-line-global">Global connections.</em></span></div>
       </div>
-      <figcaption><span>Connecting Sri Lankan talent with companies like these.</span><Link className="text-link" href="/clients#client-directory">Explore our clients <ArrowUpRight size={14}/></Link></figcaption>
+      <figcaption><span>Connecting Sri Lankan talent with companies like these.</span><div className="relationship-actions">
+        {(phase === 'playing' || phase === 'paused' || phase === 'ended') && <button className="relationship-control" type="button" aria-controls={`relationship-scene-${id}`} onClick={() => phase === 'ended' ? replay.current() : togglePlayback.current()}>{phase === 'ended' ? 'Replay sequence' : phase === 'paused' ? 'Continue motion' : 'Pause motion'}</button>}
+        <Link className="text-link" href="/clients#client-directory">Explore our clients <ArrowUpRight size={14}/></Link>
+      </div></figcaption>
     </figure>
   </section>;
 }
