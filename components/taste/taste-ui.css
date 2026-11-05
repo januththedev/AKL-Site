@@ -23,8 +23,15 @@
 .tx-roll-strip { display: block; will-change: transform; }
 .tx-roll-strip span { display: block; height: 1em; line-height: 1; text-align: center; }
 .tx-roll-ch { display: inline-block; line-height: 1; white-space: pre; }
+/* the rolling digits are generated content, not text, so the page text holds each figure only once */
+.tx-roll-strip span::before, .tx-roll-ch::before { content: attr(data-d); }
 .tx-fig-label { font-size: 18px; font-weight: 600; line-height: 1.3; color: var(--ink); }
 .tx-fig-note { font-size: 15px; line-height: 1.5; color: #4a6057; }
+/* with four columns, size each figure from its own column so the widest one ("125,000+") always sits inside it */
+@media (min-width: 901px) {
+  .tx-figures li { container-type: inline-size; }
+  .tx-roll { font-size: clamp(40px, 27cqi, 92px); }
+}
 @media (max-width: 900px) { .tx-figures { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) {
   .tx-figures { grid-template-columns: minmax(0, 1fr); gap: 28px; }

@@ -13,7 +13,7 @@ All of these live in `components/taste/`. Pure logic (counter strips, pipeline t
 
 ## What each one does
 
-**Rolling counters.** Four figures: years of experience (worked out from "Established in August 1980"), 125,000+ deployments reported, client names listed and industries recruited for. All four come from the company profile and the content files, nothing is invented. Each digit rolls once, the first time the row is seen, and lands on its real digit. The server renders the final value, and screen readers get the real text, so the roll is decoration only.
+**Rolling counters.** Four figures: years of experience (worked out from "Established in August 1980"), 125,000+ deployments reported, client names listed and industries recruited for. All four come from the company profile and the content files, nothing is invented. Each digit rolls once, the first time the row is seen, and lands on its real digit. The server renders the final value. The digits that roll are drawn with CSS generated content (`data-d` attributes), so the page text that screen readers, search engines, reader mode and copy-paste see holds each figure exactly once, as plain text, and the roll is decoration only. With four columns each figure is sized from its own column (container query units), so the widest one, "125,000+", always sits inside it.
 
 **Logo row.** Eighteen real client logos from the verified catalogue, shown as 64 px high thumbnails. They drift sideways, fade out at the edges, pause while pointed at, pause while off screen and have a pause button. Regenerate the thumbnails with `node scripts/build-marquee-logos.mjs`; it reads `content/client-catalog.json`, writes `public/clients/marquee/` and `components/taste/marquee-logos.json`.
 
@@ -57,7 +57,8 @@ Delete its import and element from `HomeView.tsx` or `InfoPages.tsx`. Nothing el
 - `tsc --noEmit` clean, `next build --webpack` succeeds, 97 of 97 tests pass (8 new, in `tests/redesign/taste-ui.test.ts`).
 - axe-core 4.x: 0 violations on the 11 public routes at 1440 and 390 wide, plus chat open, Moments viewer open (both widths) and the mobile menu. An earlier run found two serious colour-contrast nodes on the pipeline board's "Next" step (text faded with `opacity`). They are fixed with explicit colours.
 - Scripted keyboard checks, 17 of 17: tab order, target size, focus rings, Space on each pause button, the logo row really stopping, and the scene's focus behaviour.
-- Screenshots reviewed at 1440, 1000, 820 and 390 wide, and with reduced motion.
+- The page text of each figure is just the figure and its label (checked in the browser and in the server HTML), and the widest figure fits inside its column at 18 widths from 360 to 2560 px.
+- Screenshots reviewed at 1440, 1024, 1000, 920, 820 and 390 wide, and with reduced motion.
 - Lighthouse (mobile settings, median of three runs) on the home page against the commit this branch started from, both built and served the same way:
 
 | Run | | Before | After |

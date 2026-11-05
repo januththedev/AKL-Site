@@ -7,6 +7,8 @@ import './taste-ui.css';
  * A figure that rolls like an odometer once, the first time it is on screen, and stops on the real value.
  * The figure is in the HTML as written, and each digit strip starts and ends on its own digit, so the
  * figure reads correctly without script, before the roll, after it and under reduced motion (no roll).
+ * The digits that roll are drawn with generated content (data-d), so the page text holds the figure once
+ * (the visually hidden copy) and search engines, reader mode and copy-paste do not see the strips.
  */
 export function CounterRoll({ value, delay = 0, duration = 1400 }: { value: string; delay?: number; duration?: number }) {
   const root = useRef<HTMLSpanElement>(null);
@@ -41,8 +43,8 @@ export function CounterRoll({ value, delay = 0, duration = 1400 }: { value: stri
       <span className="tx-sr">{value}</span>
       <span className="tx-roll-vis" aria-hidden="true">
         {strips.map((strip, index) => strip.kind === 'char'
-          ? <span key={index} className="tx-roll-ch">{strip.ch}</span>
-          : <span key={index} className="tx-roll-col"><span className="tx-roll-strip" data-strip data-turns={strip.turns} data-col={strip.col}>{strip.cells.map((digit, i) => <span key={i}>{digit}</span>)}</span></span>)}
+          ? <span key={index} className="tx-roll-ch" data-d={strip.ch} />
+          : <span key={index} className="tx-roll-col"><span className="tx-roll-strip" data-strip data-turns={strip.turns} data-col={strip.col}>{strip.cells.map((digit, i) => <span key={i} data-d={digit} />)}</span></span>)}
       </span>
     </span>
   );
