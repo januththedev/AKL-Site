@@ -67,7 +67,7 @@ export function IndustryExplorer({ industries, scrollDriven = false }: { industr
       const height = panel.getBoundingClientRect().height;
       // Short viewports keep the same controls, without pinning content off screen.
       ready = height <= window.innerHeight - top - 12;
-      step = Math.max(220, window.innerHeight * .52);
+      step = Math.max(160, window.innerHeight * .3); // shorter pin: less scrolling to get past the section
       track.style.minHeight = ready ? `${height + industries.length * step}px` : '';
       track.dataset.scrollReady = String(ready);
       target = null;

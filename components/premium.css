@@ -259,3 +259,17 @@ summary:focus-visible { outline-color: var(--gold); }
   :root body .industry-scroll-stage .industry-tabs .industry-item > svg { display: none; }
   :root body .industry-scroll-stage .industry-tabs .industry-item.active { background: var(--forest); color: var(--ivory); border-color: var(--forest); padding-left: 14px; }
 }
+
+/* ---------- Design-critique fixes ---------- */
+/* Page openings can carry the primary action in the first screen (For Employers) */
+.page-opening-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; margin-top: 30px; }
+.page-opening .button-primary { background: var(--ivory); color: var(--ink); }
+.page-opening .button-primary:hover { background: #fff; }
+.page-opening-actions .hero-job-link { display: inline-flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; color: inherit; border-bottom: 1px solid currentColor; padding-bottom: 6px; }
+
+/* Contact: call / email / visit visible without scrolling */
+.contact-quick { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 36px; margin-top: 40px; max-width: 1100px; }
+.contact-quick a { display: flex; flex-direction: column; gap: 6px; padding-top: 16px; border-top: 1px solid var(--hair-dark); font-size: 19px; line-height: 1.4; color: var(--ivory); min-height: 44px; transition: color 0.3s var(--ease-premium); }
+.contact-quick a span { font-size: 13px; color: var(--gold); }
+.contact-quick a:hover { color: var(--mint); }
+@media (max-width: 800px) { .contact-quick { grid-template-columns: 1fr; } .contact-quick a { font-size: 17px; } }

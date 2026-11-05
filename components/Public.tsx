@@ -17,8 +17,8 @@ export function Action({href,children,secondary=false,external=false}:{href:stri
 export function SectionTitle({kicker,heading,accent,light=false,animate=false}:{kicker?:string;heading:string;accent?:string;light?:boolean;animate?:boolean;label?:string}) {
  return <div className={`section-heading ${light?'light':''}`} data-reveal>{kicker&&<span className="eyebrow">{kicker}</span>}{animate?<StoryHeading heading={heading} accent={accent}/>:<h2>{accent?`${heading} ${accent}`:heading}</h2>}</div>;
 }
-export function PageOpening({page}:{page:PageCopy;number?:string}) {
- return <section className="page-opening"><div className="page-opening-copy">{page.eyebrow&&<span className="eyebrow">{page.eyebrow}</span>}<h1>{page.accent?`${page.heading} ${page.accent}`:page.heading}</h1><p>{page.intro}</p></div><figure className="page-opening-image"><ResponsiveImage src={page.image} width={1200} height={1000} alt="Industry and destination illustration" sizes="(max-width: 1000px) 100vw, 50vw" priority/></figure></section>;
+export function PageOpening({page,actions}:{page:PageCopy;number?:string;actions?:React.ReactNode}) {
+ return <section className="page-opening"><div className="page-opening-copy">{page.eyebrow&&<span className="eyebrow">{page.eyebrow}</span>}<h1>{page.accent?`${page.heading} ${page.accent}`:page.heading}</h1><p>{page.intro}</p>{actions&&<div className="page-opening-actions">{actions}</div>}</div><figure className="page-opening-image"><ResponsiveImage src={page.image} width={1200} height={1000} alt="Industry and destination illustration" sizes="(max-width: 1000px) 100vw, 50vw" priority/></figure></section>;
 }
 export function EditorialLink({href,children}:{href:string;children:React.ReactNode}) {return <Link href={href} className="text-link">{children}<ArrowRight size={16}/></Link>;}
 export function FaqList({items}:{items:{question:string;answer:string}[]}) {return <div className="faq-list">{items.map(x=><details key={x.question}><summary><strong className="faq-question">{x.question}</strong><span className="faq-plus" aria-hidden="true">+</span></summary><p>{x.answer}</p></details>)}</div>;}
