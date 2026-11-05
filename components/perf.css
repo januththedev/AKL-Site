@@ -1,0 +1,24 @@
+/* Performance overrides. Loaded after globals.css so these win at equal specificity.
+   Stacked backdrop-filter is the costliest paint on phones: the Moments gallery alone repeats
+   .moment-glass per tile while the sticky header and a full-screen lightbox also blur what is behind them.
+   On small / touch screens the repeated and full-screen blurs are replaced by a more opaque tint
+   (same look, no per-frame backdrop sampling); the single sticky header keeps a light blur. */
+@media (max-width: 800px), (hover: none) and (pointer: coarse) {
+  .moment-glass { backdrop-filter: none; -webkit-backdrop-filter: none; background: #07191694; }
+  .moment-photo:hover .moment-glass { background: #071916b0; }
+  .industry-index-photo > span { backdrop-filter: none; -webkit-backdrop-filter: none; background: #071916c4; }
+  .glass-pill { backdrop-filter: none; -webkit-backdrop-filter: none; background: #ffffff14; }
+  .moment-lightbox { backdrop-filter: none; -webkit-backdrop-filter: none; background: #040e0efc; }
+  .site-header { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); background: rgba(7, 25, 22, .92); }
+}
+
+/* Visitors who asked the OS for less transparency get opaque surfaces everywhere. */
+@media (prefers-reduced-transparency: reduce) {
+  .site-header { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgb(7, 25, 22); }
+  .glass-pill { backdrop-filter: none; -webkit-backdrop-filter: none; background: #1a2d29; }
+  .moment-glass { backdrop-filter: none; -webkit-backdrop-filter: none; background: #071916f2; }
+  .moment-lightbox { backdrop-filter: none; -webkit-backdrop-filter: none; background: #040e0e; }
+  .industry-index-photo > span { backdrop-filter: none; -webkit-backdrop-filter: none; background: #071916; }
+  .intro-skip { backdrop-filter: none; -webkit-backdrop-filter: none; background: #1a2d29; }
+  .mobile-navigation { background: rgb(7, 25, 22); }
+}

@@ -6,6 +6,10 @@ import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import type { Industry } from '@/lib/types';
 import { industryAtScroll, industryChapterOffset } from '@/lib/industry-scroll';
 import './industry-experience.css';
+import { ResponsiveImage, primeResponsiveImage } from './ResponsiveImage';
+
+// One value for the rendered <img> and the preloads, so the browser downloads each photo once.
+const EXPLORER_PHOTO_SIZES = '(max-width: 1000px) 100vw, 50vw';
 
 type Display = { index: number; frames: Industry[]; failed: boolean };
 
@@ -25,7 +29,7 @@ export function IndustryExplorer({ industries, scrollDriven = false }: { industr
     if (!next) return;
     let cancelled = false;
     const image = new Image();
-    image.src = next.image;
+    primeResponsiveImage(image, next.image, EXPLORER_PHOTO_SIZES);
     const commit = (failed: boolean) => {
       if (cancelled) return;
       // Copy, photograph, selected tab and counter change as one readable frame.
@@ -115,7 +119,7 @@ export function IndustryExplorer({ industries, scrollDriven = false }: { industr
     const observer = new IntersectionObserver(entries => {
       if (!entries.some(entry => entry.isIntersecting)) return;
       for (const index of [display.index - 1, display.index + 1]) {
-        if (industries[index]) { const image = new Image(); image.src = industries[index].image; }
+        if (industries[index]) { primeResponsiveImage(new Image(), industries[index].image, EXPLORER_PHOTO_SIZES); }
       }
     }, { rootMargin: '300px' });
     observer.observe(track);
@@ -128,7 +132,7 @@ export function IndustryExplorer({ industries, scrollDriven = false }: { industr
     <div ref={stage} className="industry-scroll-stage">
       <div className="industry-explorer">
         <figure className="industry-image story-industry-image">
-          {display.frames.map((photo, index) => <img key={photo.image} className={display.frames.length > 1 && index === display.frames.length - 1 ? 'industry-photo-enter' : undefined} src={photo.image} alt={`${photo.title} — illustrative industry photograph`} aria-hidden={index !== display.frames.length - 1} width="1000" height="1100" loading="lazy"/>)}
+          {display.frames.map((photo, index) => <ResponsiveImage key={photo.image} className={display.frames.length > 1 && index === display.frames.length - 1 ? 'industry-photo-enter' : undefined} src={photo.image} alt={`${photo.title} — illustrative industry photograph`} aria-hidden={index !== display.frames.length - 1} width={1000} height={1100} sizes={EXPLORER_PHOTO_SIZES}/>)}
           {display.failed && <div className="industry-photo-fallback"><span>OUR EXPERTISE</span><strong>{item.title}</strong></div>}
           <figcaption><span>THE PEOPLE BEHIND THE PROGRESS</span><span>{String(display.index + 1).padStart(2, '0')} / {String(industries.length).padStart(2, '0')}</span></figcaption>
         </figure>

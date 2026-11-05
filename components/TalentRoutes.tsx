@@ -276,7 +276,7 @@ export function TalentRoutes({
                 type="button"
                 ref={el => { pinRefs.current[m.index] = el; }}
                 className="tr-pin"
-                aria-label={`${dest.title} — select route${m.count > 1 ? `. ${m.count} nearby destinations available in the list below` : ''}`}
+                aria-label={`${m.count > 1 ? `${m.count} ` : ''}${num(m.index)} ${dest.title} ${m.isOrigin ? 'Colombo · origin' : dest.region}. Select route${m.count > 1 ? `. ${m.count} nearby destinations are available in the list below` : ''}`}
                 aria-pressed={on}
                 tabIndex={m.index === tabStop ? 0 : -1}
                 onFocus={() => onSelect(m.index)}
@@ -289,9 +289,9 @@ export function TalentRoutes({
                 onPointerLeave={() => window.clearTimeout(hoverTimer.current)}
               >
                 <span className="tr-dot" aria-hidden="true" />
-                {m.count > 1 && <span className="tr-cluster-count" aria-hidden="true">{m.count}</span>}
+                {m.count > 1 && <span className="tr-cluster-count" aria-hidden="true">{m.count}</span>}{' '}
                 <span className="tr-label" data-side={m.side} aria-hidden="true">
-                  <i>{num(m.index)}</i>{dest.title}
+                  <i>{num(m.index)}</i>{' '}{dest.title}{' '}
                   <small>{m.isOrigin ? 'Colombo · origin' : dest.region}</small>
                 </span>
               </button>

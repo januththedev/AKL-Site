@@ -11,3 +11,28 @@
 .admin-button.danger{background:transparent;color:#8c3a24;border-color:#e3b9a8}.admin-button.danger:hover{background:#fff0e9}
 .admin-inquiry-body .span-two{grid-column:1/-1}.admin-inquiry-body dd{margin:6px 0 0;overflow-wrap:anywhere;white-space:pre-line}
 .admin-button:disabled{opacity:.55;cursor:not-allowed}
+/* Editorial workflow: unsaved state, field errors, diff summary, upload steps, opening sequence */
+.admin-topbar-right{display:flex;align-items:center;gap:18px}
+.admin-dirty{display:inline-flex;align-items:center;gap:7px;background:#fff4d6;color:#7a5a0c;border:1px solid #ecd48f;border-radius:999px;padding:6px 12px;font-size:10px;font-weight:600}
+.admin-unsaved-dot{width:7px;height:7px;background:#e0a526;border-radius:50%;margin-left:auto}
+.pill.warn{background:#fff4d6;color:#7a5a0c}.pill.added{background:#e2f3e5;color:#2f7040}.pill.removed{background:#fde8e1;color:#8c3a24}.pill.changed{background:#e8eef9;color:#34508a}.pill.reordered{background:#f0eaf8;color:#5b3f86}
+.pill svg{vertical-align:-2px;margin-right:3px}
+.admin-field-error{display:flex;align-items:flex-start;gap:6px;margin-top:7px;color:#9a3b1f;font-size:10px;font-weight:500;line-height:1.5;text-transform:none}.admin-field-error svg{flex-shrink:0;margin-top:2px}
+.admin-form-grid input[aria-invalid=true],.admin-form-grid textarea[aria-invalid=true],.admin-form-grid select[aria-invalid=true]{border-color:#c9694a;background:#fff8f5}
+.admin-tab-alert{color:#c9694a;margin-left:6px;vertical-align:-1px}
+.admin-session-banner,.admin-conflict{display:flex;flex-direction:column;gap:12px;align-items:flex-start}.admin-conflict p{margin:0}
+.admin-session-banner .admin-button{text-decoration:none}
+.admin-diff{list-style:none;margin:0;padding:0}.admin-diff li{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-top:1px solid #edf1e8;font-size:11px;line-height:1.6}.admin-diff li.more{color:#7c8d6d;font-size:10px}
+.admin-diff small{display:block;color:#718563;font-size:10px;overflow-wrap:anywhere}
+.admin-diff-kind{flex:0 0 66px;text-transform:uppercase;letter-spacing:.06em;font-size:8px;font-weight:700;padding-top:3px;color:#5d7452}.admin-diff li.removed .admin-diff-kind{color:#9a3b1f}.admin-diff li.changed .admin-diff-kind{color:#34508a}.admin-diff li.reordered .admin-diff-kind{color:#5b3f86}
+.admin-diff-group{margin-top:22px}.admin-diff-group h4{font-size:11px;font-weight:700;margin:0 0 6px}
+.admin-diff-counts{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:12px;margin:0 0 6px}
+.admin-intro-summary{font-size:11px;margin:0 0 14px}.warn-text{color:#9a3b1f;font-weight:600}
+.admin-intro-list{list-style:none;margin:0 0 14px;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.admin-intro-list li{display:flex;align-items:center;gap:10px;background:#f4f8ef;border:1px solid #dfe8d5;border-radius:4px;padding:8px;font-size:11px;min-width:0}.admin-intro-list img{width:64px;height:48px;object-fit:cover;border-radius:3px;flex-shrink:0}.admin-intro-list small{display:block;color:#78896b;font-size:9px;margin-top:3px}
+.admin-frame-no{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#204a30;color:#fff;font-size:10px;font-weight:700;flex-shrink:0}
+.admin-steps{list-style:none;display:flex;flex-wrap:wrap;gap:6px 22px;margin:22px 0 8px;padding:0;font-size:10px}.admin-steps li{display:flex;align-items:center;gap:7px;color:#8c9a7e}.admin-steps li.done{color:#2f7040}.admin-steps li.active{color:#183c28;font-weight:600}.admin-steps li.failed{color:#9a3b1f;font-weight:600}
+.admin-progress{display:block;width:100%;height:8px;margin:6px 0 12px;accent-color:#204a30}
+.admin-notes{margin:0 0 24px}.admin-notes h4{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#8d9b80;margin:0 0 10px}.admin-notes ul{list-style:none;margin:0;padding:0}.admin-notes li{background:#f4f8ef;border-left:3px solid #9cb98f;padding:10px 14px;margin-bottom:8px;border-radius:0 4px 4px 0}.admin-notes li p{margin:0;font-size:11px;line-height:1.7;white-space:pre-line;overflow-wrap:anywhere}.admin-notes small{display:block;margin-top:6px;font-size:9px;color:#7c8d6d}
+.admin-moment-fields{gap:14px!important;padding:16px!important}.admin-moment-fields>.admin-field-error{grid-column:1/-1}
+@media(max-width:700px){.admin-topbar-right{gap:10px}.admin-dirty{padding:5px 9px}.admin-diff li{flex-direction:column;gap:2px}.admin-intro-list{grid-template-columns:1fr}.admin-moment-fields{grid-template-columns:1fr!important}.admin-moment-fields .span-two{grid-column:1}}

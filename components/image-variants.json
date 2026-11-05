@@ -1,0 +1,117 @@
+{
+ "/media/airport.webp": {
+  "width": 1680,
+  "height": 1120,
+  "widths": [
+   640,
+   1024,
+   1600
+  ]
+ },
+ "/media/automotive.webp": {
+  "width": 1680,
+  "height": 848,
+  "widths": [
+   640,
+   1024,
+   1600
+  ]
+ },
+ "/media/colombo-dusk.webp": {
+  "width": 1680,
+  "height": 1120,
+  "widths": [
+   640,
+   1024,
+   1600
+  ]
+ },
+ "/media/construction-facade.webp": {
+  "width": 1680,
+  "height": 1121,
+  "widths": [
+   640,
+   1024,
+   1600
+  ]
+ },
+ "/media/container-port.webp": {
+  "width": 1680,
+  "height": 1120,
+  "widths": [
+   640,
+   1024,
+   1600
+  ]
+ },
+ "/media/dubai-night.webp": {
+  "width": 1120,
+  "height": 1680,
+  "widths": [
+   640,
+   1024
+  ]
+ },
+ "/media/employer-meeting.webp": {
+  "width": 1680,
+  "height": 1120,
+  "widths": [
+   640,
+   1024,
+   1600
+  ]
+ },
+ "/media/hero-team.webp": {
+  "width": 1680,
+  "height": 1120,
+  "widths": [
+   640,
+   1024,
+   1600
+  ]
+ },
+ "/media/hospitality.webp": {
+  "width": 1680,
+  "height": 1113,
+  "widths": [
+   640,
+   1024,
+   1600
+  ]
+ },
+ "/media/logistics.webp": {
+  "width": 1120,
+  "height": 1680,
+  "widths": [
+   640,
+   1024
+  ]
+ },
+ "/media/muscat.webp": {
+  "width": 1680,
+  "height": 1120,
+  "widths": [
+   640,
+   1024,
+   1600
+  ]
+ },
+ "/media/port-team.webp": {
+  "width": 1680,
+  "height": 1120,
+  "widths": [
+   640,
+   1024,
+   1600
+  ]
+ },
+ "/media/welding.webp": {
+  "width": 1680,
+  "height": 945,
+  "widths": [
+   640,
+   1024,
+   1600
+  ]
+ }
+}

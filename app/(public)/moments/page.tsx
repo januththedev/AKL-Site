@@ -1,4 +1,5 @@
 import { getSnapshot } from '@/lib/server/content';
 import { MomentsGallery } from '@/components/MomentsGallery';
-export const metadata={title:'Moments — Our story in frames',description:'People, places and perspectives from AL Karrim Lanka Consultants PVT LTD.'};
+export const metadata=publicPageMetadata({title:'Moments — Our story in frames',description:'People, places and perspectives from AL Karrim Lanka Consultants PVT LTD.',path:'/moments'});
+import { publicPageMetadata } from '@/lib/structuredData';
 export default async function MomentsPage(){const {content}=await getSnapshot();return <><section className="moments-opening"><span className="eyebrow">A STORY STILL UNFOLDING / AL KARRIM LANKA</span><h1 data-story-heading data-story-phrases><span className="story-line"><span className="story-line-ink">Some stories</span></span>{' '}<span className="story-line"><span className="story-line-ink">are better <em>felt.</em></span></span></h1><div data-story-lines><p>People. Places. The moments in between.<br/>A different perspective on what moves us.</p><a href="#moments-gallery" className="glass-pill">Explore the collection ↓</a></div><span className="moments-outline" aria-hidden="true">MOMENTS</span></section><MomentsGallery moments={content.moments||[]}/></>;}

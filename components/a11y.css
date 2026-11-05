@@ -1,0 +1,58 @@
+/*
+ * Accessibility layer: focus visibility, text contrast on light sections, touch-target size and
+ * the Moments viewer controls. Loaded after globals.css so these small overrides win without
+ * editing the design files.
+ */
+
+/* Focus ring: >= 3:1 against both the ivory sections and the dark ink sections. */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:2px solid #2f8a63;outline-offset:4px}
+.site-header :is(a,button):focus-visible,.mobile-navigation :is(a,button):focus-visible,.site-footer :is(a,button):focus-visible,.chat-panel :is(a,button,input,select):focus-visible,.chat-launcher:focus-visible,.moment-lightbox :is(a,button):focus-visible,.talent-routes .tr-pin:focus-visible{outline-color:var(--mint)}
+[tabindex="-1"]:focus-visible{outline:0}
+#main-content:focus{outline:0}
+.skip-link:focus{outline:3px solid var(--ink);outline-offset:2px}
+
+/* Text contrast on ivory / pale-green sections (WCAG AA 4.5:1). Same hue family, darker value. */
+body .credibility-band>div>span:last-child,body .section-note,body .side-note,body .client-source-note,body .profile-source-note,body .industry-scroll-caption>span:last-child>span{color:#46594d}
+body .industry-item,body .industry-item>.industry-number{color:#4f6256}
+body .industry-item.active{color:var(--ink)}
+body .roots-copy>.eyebrow,body .roots-copy>p{color:#3f5a4c}
+body .employer-band>.eyebrow{color:#2f4d3b}
+body .service-row>span,body .faq-list summary>span:first-child,body .industry-index-nav a>span,body .client-step-number,body .client-sector-links>a>span:first-child,body .client-directory-heading>p>span{color:#46594d}
+body .profile-milestones strong>span{color:#44614f}
+body .journey-step{opacity:.82}
+body .journey-step.active{opacity:1}
+body .journey-step p{color:#2f4439}
+body .journey-index{color:#3d5246}
+
+/* Touch targets (>= 44px) for chrome controls on touch-sized screens. */
+.menu-toggle{min-width:44px;min-height:44px}
+.menu-toggle>svg{display:block;margin:auto}
+.chat-launcher{min-height:44px}
+.chat-panel :is(button,select){min-height:44px;min-width:44px}
+.chat-form button{display:inline-flex;align-items:center;justify-content:center}
+.chat-suggestions button{min-height:44px}
+.site-footer :is(.footer-grid a,.footer-bottom a,.footer-bottom button){display:inline-flex;align-items:center;min-height:44px}
+.footer-grid>div>a{display:flex}
+.industry-index-nav a,.client-sector-links>a,.destination-tabs button{min-height:44px}
+@media(pointer:coarse){.moment-photo{min-height:44px}.text-link{min-height:44px;display:inline-flex;align-items:center}}
+
+/* Busy submit keeps focus (aria-disabled instead of disabled). */
+.button[aria-disabled="true"]{opacity:.6;cursor:progress}
+
+/* Moments viewer: previous/next controls, position status and load-error state. */
+.moment-viewer-nav{position:fixed;left:0;right:0;bottom:18px;display:flex;align-items:center;justify-content:center;gap:18px;z-index:1;pointer-events:none}
+.moment-viewer-nav>*{pointer-events:auto}
+.moment-viewer-nav .glass-pill{margin-top:0;min-width:56px;min-height:48px;padding:12px 20px;font-size:16px}
+.moment-viewer-nav>span{font-size:11px;color:var(--ivory);background:#04100ecc;padding:8px 12px;border-radius:20px}
+.moment-lightbox{padding-bottom:90px}
+.moment-viewer-error{display:grid;place-items:center;gap:6px;min-height:40dvh;border:1px solid #ffffff30;border-radius:12px;padding:30px;color:var(--ivory)}
+.moment-viewer-error p{font-size:14px;color:var(--ivory);margin:0}
+.moment-lightbox span,.moment-lightbox p{font-size:12px}
+
+/* Talent Routes: a real space now separates the number from the name (screen readers and label-in-name). */
+.tr-label i{margin-right:.15em}
+body .chat-notice{color:#4d5f47;font-size:10px}
+.brand{min-height:44px}
+.hero-caption>a{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center}
+body .industry-item,body .industry-scroll-stage .industry-item{min-height:44px}
+.site-footer .footer-bottom a{min-width:44px;justify-content:center}

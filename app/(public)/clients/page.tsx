@@ -6,14 +6,15 @@ import { ClientRelationships } from '@/components/ClientRelationships';
 import { LiveCompanyDate } from '@/components/LiveCompanyDate';
 import { companyProfile, profileClients, profileReach } from '@/lib/company-profile';
 import { yearsOfExperience } from '@/lib/brand';
+import { publicPageMetadata } from '@/lib/structuredData';
 import { getSnapshot } from '@/lib/server/content';
 import '@/components/client-story.css';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = publicPageMetadata({
   title: 'Our clients — Lasting connections',
   description: 'Explore the companies and relationships documented in AL Karrim Lanka’s company profile. Sri Lankan workforce capability, connected to international employers.',
-  alternates: { canonical: '/clients' },
-};
+  path: '/clients',
+});
 
 const support = [
   { title: 'Start with the work.', description: 'The roles, skills and scale of your requirement shape the recruitment approach. From a specialised technical position to a project team, the brief comes first.' },

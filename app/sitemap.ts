@@ -1,2 +1,8 @@
 import type { MetadataRoute } from 'next';
-export default function sitemap():MetadataRoute.Sitemap {const base=process.env.SITE_BASE_URL||'https://al-karrim.net';return ['','/about','/clients','/moments','/services','/industries','/employers','/destinations','/recruitment','/contact','/privacy','/terms','/image-credits'].map(path=>({url:base+path,changeFrequency:'monthly',priority:path===''?1:path==='/employers'?.9:.7}));}
+import { getSnapshot } from '@/lib/server/content';
+import { siteBaseUrl, sitemapRoutes } from '@/lib/structuredData';
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const { content } = await getSnapshot();
+  return sitemapRoutes({ base: siteBaseUrl(), industrySlugs: content.industries.map(industry => industry.slug) });
+}
