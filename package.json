@@ -3,7 +3,7 @@
   "private": true,
   "version": "2.0.0",
   "type": "module",
-  "description": "Premium website for Al Karrim Lanka Consultant (Pvt) Ltd \u2014 international manpower recruitment since 1980.",
+  "description": "Premium website for Al Karrim Lanka Consultant (Pvt) Ltd — international manpower recruitment since 1980.",
   "scripts": {
     "dev": "node scripts/dev.mjs",
     "build": "next build --webpack",
@@ -34,8 +34,8 @@
     "react": "19.2.9",
     "react-dom": "19.2.9",
     "react-router-dom": "^6.28.0",
-    "sharp": "^0.34.0",
-    "zod": "^4.1.0"
+    "sharp": "^0.35.5",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
@@ -49,5 +49,8 @@
     "tsx": "^4.20.0",
     "typescript": "^5.6.3",
     "vite": "^5.4.11"
+  },
+  "overrides": {
+    "zod": "$zod"
   }
 }

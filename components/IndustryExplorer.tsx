@@ -9,7 +9,7 @@ import './industry-experience.css';
 import { ResponsiveImage, primeResponsiveImage } from './ResponsiveImage';
 
 // One value for the rendered <img> and the preloads, so the browser downloads each photo once.
-const EXPLORER_PHOTO_SIZES = '(max-width: 1000px) 100vw, 50vw';
+const EXPLORER_PHOTO_SIZES = '(max-width: 1000px) 100vw, 80vw'; // cover-cropped near-square slot from 16:9 photos
 
 type Display = { index: number; frames: Industry[]; failed: boolean };
 

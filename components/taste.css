@@ -1,0 +1,61 @@
+/*
+ * Taste pass (design-taste-frontend checker, 5 Nov 2026). Loaded last (app/layout.tsx).
+ * Fixes what the checker measured on /, /employers and /contact: reading contrast,
+ * one button system, one heading scale, no tilt, aligned header/footer edges.
+ * Selectors use `:root body` so they win over the minified globals and page sheets.
+ */
+
+/* ---------- Reading text: 7:1 on paper (was 4.8-6.4:1) ---------- */
+:root body :is(.industry-copy, .roots-copy, .capability-copy, .service-row, .profile-section, .inquiry-intro, .faq-list details) p { /* paper grounds only */
+  color: #263b31; /* 9.6:1 on #f5f2e9 */
+}
+/* Muted figures/labels on paper: at least 3:1 */
+:root body .big-fact > span { color: var(--stone); }
+/* Long lines end without a one-word orphan ("1980.") */
+:root body p { text-wrap: pretty; }
+
+/* ---------- Map labels: readable on the busy globe ---------- */
+:root body .tr-label {
+  color: var(--ivory);
+  background: rgba(7, 25, 22, 0.78);
+  padding: 3px 7px;
+  border-radius: 2px;
+  text-shadow: none;
+}
+
+/* ---------- One button system: square 2px corners everywhere ---------- */
+:root body .header-careers,
+:root body .glass-pill,
+:root body .chat-launcher { border-radius: 2px; }
+/* Primary on dark openings is paper, like the hero */
+:root body .simple-opening .button-primary { background: var(--ivory); color: var(--ink); }
+:root body .simple-opening .button-primary:hover { background: #fff; }
+:root body .faq-close { margin-top: 40px; }
+/* Dark buttons on paper are the same forest primary, so a page has one filled style */
+:root body .button-dark { background: var(--forest); color: var(--ivory); }
+:root body .button-dark:hover { background: var(--ink); }
+
+/* ---------- One heading scale ---------- */
+:root body main h2 { font-size: clamp(40px, 5vw, 72px); line-height: 1.04; }
+:root body main :is(.profile-cover, .destination-copy, .form-success) h3 { font-size: clamp(24px, 2.4vw, 32px); line-height: 1.15; }
+/* A figure never outranks the page title */
+:root body .capability-number > strong { font-size: clamp(56px, 5.4vw, 76px); line-height: 1; }
+@media (max-width: 700px) { :root body .capability-number > strong { font-size: 44px; } }
+
+/* ---------- Nothing tilts ---------- */
+:root body .profile-cover { transform: none; rotate: none; }
+
+/* ---------- Header on the page's content edges; brand on one line ---------- */
+:root body .site-header { padding-left: max(6.5%, calc((100vw - 1420px) / 2)); padding-right: max(6.5%, calc((100vw - 1420px) / 2)); }
+:root body .site-header .brand > span.brand-name > span.brand-suffix { display: none; }
+@media (max-width: 700px) { :root body .site-header { padding-left: 24px; padding-right: 24px; } }
+
+/* ---------- Footer: wordmark set left, no rule between its parts ---------- */
+:root body .footer-wordmark { text-align: left; }
+:root body .footer-grid { border-top: 0; }
+
+/* ---------- Contact: the three ways to reach us span the container ---------- */
+:root body .contact-quick { max-width: none; }
+
+/* ---------- Gallery: no caption under a photograph (the viewer still reads it) ---------- */
+:root body .moments-collection .moment > figcaption { display: none; }

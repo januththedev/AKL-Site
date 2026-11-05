@@ -14,9 +14,17 @@ const POST_ALLOWED = new Set([
   'sign-in/email', 'sign-up/email', 'sign-out',
   'send-verification-email', 'verify-email', 'request-password-reset', 'reset-password',
 ]);
-const GET_BLOCKED = /^(admin|organization|api-key|multi-session|list-sessions|list-accounts|revoke)/;
+const GET_BLOCKED = /^(admin|organization|api-key|multi-session|list-sessions|list-accounts|revoke)/i;
+// The provider proxy resolves `${baseUrl}/${path}` with new URL(), and params arrive decoded, so an encoded
+// "%2F..%2F" (or a backslash) would let "get-session/../admin/…" pass the prefix check yet reach the blocked
+// endpoint upstream. Only plain segments are forwarded.
+const SAFE_PATH = /^[A-Za-z0-9_-]+(?:\/[A-Za-z0-9_-]+)*$/;
 
-const pathOf = async (context: Context) => (await context.params).path.join('/');
+const pathOf = async (context: Context) => {
+  const path = (await context.params).path.join('/');
+  if (!SAFE_PATH.test(path)) throw new Error('NOT_FOUND');
+  return path;
+};
 
 export async function GET(request: Request, context: Context) {
   try {

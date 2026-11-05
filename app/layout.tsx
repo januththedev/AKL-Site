@@ -12,6 +12,7 @@ import '@/components/a11y.css';
 import '@/components/perf.css';
 import '@/components/premium.css'; // loaded last: see docs/PREMIUM-FEEL-PLAN.md
 import '@/components/premium-chrome.css';
+import '@/components/taste.css'; // taste checker fixes, loaded last
 import { HydrationProbe } from '@/components/HydrationProbe';
 import { INTRO_BOOT_SCRIPT } from '@/lib/intro';
 
