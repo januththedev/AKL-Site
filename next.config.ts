@@ -68,6 +68,8 @@ const nextConfig: NextConfig = {
       // Cache the files, not the dynamic /clients page that shares this prefix.
       ...[...new Set([...clientLogos, ...clientCatalog, ...clientScene.landscape.layers, ...clientScene.portrait.layers].map(asset => asset.src))].map(source => ({ source, headers: assetCache })),
       { source: '/intro/:path*', headers: assetCache },
+      { source: '/taste/:path*', headers: assetCache },
+      { source: '/clients/marquee/:path*', headers: assetCache },
       { source: '/documents/:path*', headers: assetCache },
     ];
   },

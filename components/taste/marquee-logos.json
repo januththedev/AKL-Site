@@ -1,0 +1,128 @@
+[
+  {
+    "id": "saptco",
+    "name": "SAPTCO",
+    "src": "/clients/marquee/saptco.webp",
+    "width": 290,
+    "height": 64
+  },
+  {
+    "id": "lodige",
+    "name": "Lödige Industries",
+    "src": "/clients/marquee/lodige.webp",
+    "width": 109,
+    "height": 64
+  },
+  {
+    "id": "action-international",
+    "name": "Action International Services",
+    "src": "/clients/marquee/action-international.webp",
+    "width": 204,
+    "height": 64
+  },
+  {
+    "id": "alewan-medical",
+    "name": "Al Ewan Medical",
+    "src": "/clients/marquee/alewan-medical.webp",
+    "width": 104,
+    "height": 64
+  },
+  {
+    "id": "al-kawther",
+    "name": "Al Kawther Industries",
+    "src": "/clients/marquee/al-kawther.webp",
+    "width": 184,
+    "height": 64
+  },
+  {
+    "id": "al-mawarid",
+    "name": "Al Mawarid Manpower",
+    "src": "/clients/marquee/al-mawarid.webp",
+    "width": 172,
+    "height": 64
+  },
+  {
+    "id": "al-miladi",
+    "name": "Al Miladi",
+    "src": "/clients/marquee/al-miladi.webp",
+    "width": 64,
+    "height": 64
+  },
+  {
+    "id": "al-qaryan",
+    "name": "Al Qaryan Group",
+    "src": "/clients/marquee/al-qaryan.webp",
+    "width": 255,
+    "height": 64
+  },
+  {
+    "id": "sitco",
+    "name": "Al Salamah International Trading (SITCO)",
+    "src": "/clients/marquee/sitco.webp",
+    "width": 174,
+    "height": 42
+  },
+  {
+    "id": "amiantit-qatar",
+    "name": "Amiantit Qatar Pipes",
+    "src": "/clients/marquee/amiantit-qatar.webp",
+    "width": 176,
+    "height": 64
+  },
+  {
+    "id": "ansab",
+    "name": "Ansab General Contracting",
+    "src": "/clients/marquee/ansab.webp",
+    "width": 147,
+    "height": 64
+  },
+  {
+    "id": "cctc",
+    "name": "Control Contracting & Trading",
+    "src": "/clients/marquee/cctc.webp",
+    "width": 132,
+    "height": 64
+  },
+  {
+    "id": "emco-qatar",
+    "name": "EMCO Qatar",
+    "src": "/clients/marquee/emco-qatar.webp",
+    "width": 93,
+    "height": 64
+  },
+  {
+    "id": "emerging-energy",
+    "name": "Emerging Energy Contracting (EEC)",
+    "src": "/clients/marquee/emerging-energy.webp",
+    "width": 98,
+    "height": 57
+  },
+  {
+    "id": "etlco",
+    "name": "Environmental Testing & Laboratories (ETLCO)",
+    "src": "/clients/marquee/etlco.webp",
+    "width": 171,
+    "height": 64
+  },
+  {
+    "id": "exquisite-trading",
+    "name": "Exquisite Trading LLC",
+    "src": "/clients/marquee/exquisite-trading.webp",
+    "width": 215,
+    "height": 63
+  },
+  {
+    "id": "gac-shobokshi",
+    "name": "General Agencies & Contracting (Shobokshi-GAC)",
+    "src": "/clients/marquee/gac-shobokshi.webp",
+    "width": 131,
+    "height": 64
+  },
+  {
+    "id": "golf-east",
+    "name": "Golf East Contracting",
+    "src": "/clients/marquee/golf-east.webp",
+    "width": 161,
+    "height": 64
+  }
+]
