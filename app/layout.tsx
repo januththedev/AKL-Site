@@ -3,12 +3,15 @@ import '@fontsource/manrope/400.css';
 import '@fontsource/manrope/500.css';
 import '@fontsource/manrope/600.css';
 import '@fontsource/manrope/700.css';
+import '@fontsource/instrument-serif/400.css';
 import '@fontsource/instrument-serif/400-italic.css';
 import './globals.css';
 import '@/components/company-profile.css';
 import '@/components/client-relationships.css';
 import '@/components/a11y.css';
 import '@/components/perf.css';
+import '@/components/premium.css'; // loaded last: see docs/PREMIUM-FEEL-PLAN.md
+import '@/components/premium-chrome.css';
 import { HydrationProbe } from '@/components/HydrationProbe';
 import { INTRO_BOOT_SCRIPT } from '@/lib/intro';
 

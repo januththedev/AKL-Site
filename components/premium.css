@@ -1,0 +1,249 @@
+/*
+ * Premium layer — see docs/PREMIUM-FEEL-PLAN.md.
+ * Loaded last (app/layout.tsx) so it overrides globals.css without rewriting it.
+ * Principles: one serif voice for headlines, readable body, no tiny tracked caps,
+ * numbers only on real sequences, gold as a sparing signature, quiet motion.
+ */
+
+:root {
+  --gold: #c9a55c;
+  --stone: #5f6f67;
+  --hair-light: rgba(7, 25, 22, 0.12);
+  --hair-dark: rgba(201, 165, 92, 0.25);
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Type scale: major third from 17px */
+  --fs-label: 13px;
+  --fs-body: 17px;
+  --fs-lead: 21px;
+  --fs-h4: 27px;
+  --fs-h3: 34px;
+  --space-section: clamp(96px, 11vw, 176px);
+}
+
+/* ---------- Base reading comfort ---------- */
+body { font-size: var(--fs-body); line-height: 1.7; }
+p { line-height: 1.7; }
+@media (max-width: 700px) { :root { --fs-body: 16px; --fs-lead: 19px; } }
+
+/* ---------- Headlines: one serif voice ---------- */
+h1, h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  letter-spacing: -0.022em;
+}
+h1 { line-height: 0.98; }
+h2 { line-height: 1.04; }
+/* The second-line italic accent becomes part of the same upright statement… */
+h1 em, h2 em, h3 em { font-family: inherit; font-style: normal; letter-spacing: inherit; }
+/* …except for the two deliberate italic moments: the hero and the footer question. */
+.home-hero h1 em,
+.footer-headline em { font-family: var(--serif); font-style: italic; }
+.section-heading h2 { font-size: clamp(42px, 5.2vw, 83px); line-height: 1.02; }
+h3 { font-weight: 500; letter-spacing: -0.01em; }
+
+/* ---------- Body copy that was set at 10–11px ---------- */
+.hero-copy-bottom > p,
+.roots-copy > p,
+.industry-detail > p,
+.journey-step p,
+.service-row p,
+.service-row > p,
+.process-grid p,
+.destination-copy p,
+.faq-list details > p,
+.page-opening-copy > p,
+.profile-section .small-note,
+.capability-number > p {
+  font-size: var(--fs-body);
+  line-height: 1.7;
+  max-width: 64ch;
+}
+.hero-copy-bottom > p,
+.page-opening-copy > p { font-size: var(--fs-lead); line-height: 1.6; }
+
+/* ---------- Labels: sentence case, readable, untracked ---------- */
+.eyebrow,
+.fact-title,
+.footer-label,
+.side-note,
+.section-header-row > .side-note,
+.world-section .section-header-row > .side-note,
+.industry-image figcaption,
+.destination-photo-caption,
+.client-logo-tile figcaption,
+.client-relationships figcaption,
+.moment figcaption div > span,
+.moments-count,
+.roots-signature,
+.chairman-signature > span,
+.profile-milestones > div > span,
+.profile-reach li > span,
+.sector-tile > div > span,
+.capability-tags > span,
+.form-grid label,
+.form-footnote,
+.consent,
+.signin-form label,
+.credit-item p,
+.credit-item a,
+.client-source-note,
+.profile-source-note,
+.moments-source-note,
+.footer-bottom,
+.footer-brand > span > span,
+.brand > span > span,
+.direct-contact > span,
+.receipt,
+.form-stepper,
+.glass-pill,
+.relationship-control,
+.chat-notice,
+.chat-message small,
+.chat-header span,
+.destination-tabs > button,
+.desktop-nav a,
+.header-careers,
+.hero-job-link,
+.text-link {
+  font-size: var(--fs-label);
+  letter-spacing: 0.01em;
+  text-transform: none;
+  line-height: 1.5;
+}
+.side-note,
+.section-header-row > .side-note { font-size: 15px; color: inherit; opacity: 0.78; max-width: 34ch; }
+.eyebrow { font-weight: 600; gap: 10px; margin-bottom: 18px; }
+.eyebrow .tiny-square { display: none; }
+.desktop-nav a { font-size: 14px; font-weight: 500; }
+.text-link { font-size: 15px; font-weight: 600; }
+.footer-bottom { font-size: 13px; }
+.footer-grid p,
+.footer-grid > div > a,
+.footer-grid .text-link { font-size: 15px; }
+.form-grid input,
+.form-grid select,
+.form-grid textarea { font-size: 16px; } /* 16px also stops iOS zoom-on-focus */
+
+/* ---------- Decorative meta strings: removed ---------- */
+.hero-photo-coordinates,
+.page-index,
+.image-corner,
+.vertical-caption,
+.journey-visual-label,
+.history-horizon,
+.image-label { display: none !important; }
+
+/* ---------- Numbers only on real sequences ---------- */
+.industry-item > .industry-number,
+.destination-tabs > button > span,
+.faq-list summary > span:first-child,
+.moment-index { display: none; }
+.journey-index { font-family: var(--serif); font-size: 27px; letter-spacing: 0; }
+
+/* ---------- Buttons ---------- */
+.button {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  text-transform: none;
+  min-height: 54px;
+  padding: 16px 24px;
+  gap: 22px;
+  transition: background-color 0.35s var(--ease-premium), color 0.35s var(--ease-premium), border-color 0.35s var(--ease-premium);
+}
+.button, .hero-job-link { white-space: nowrap; }
+.hero-topline { display: none; }
+.button svg { transition: transform 0.45s var(--ease-premium); }
+.button:hover svg,
+.button:focus-visible svg { transform: translate(3px, -3px); }
+.button-primary { background: var(--forest); color: var(--ivory); }
+.button-primary:hover { background: var(--ink); }
+/* On dark grounds the primary button turns to paper */
+.home-hero .button-primary,
+.world-section .button-primary,
+.site-footer .button-primary,
+.clients-section .button-primary { background: var(--ivory); color: var(--ink); }
+.home-hero .button-primary:hover,
+.world-section .button-primary:hover,
+.site-footer .button-primary:hover,
+.clients-section .button-primary:hover { background: #fff; }
+
+/* Text links: underline draws from the left */
+.text-link {
+  border-bottom: 0;
+  padding-bottom: 6px;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 100% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.5s var(--ease-premium);
+}
+.text-link:hover { background-size: 0% 1px; background-position: 100% 100%; }
+.text-link svg { transition: transform 0.45s var(--ease-premium); }
+.text-link:hover svg { transform: translateX(3px); }
+
+/* ---------- Rhythm ---------- */
+.section { padding-top: var(--space-section); padding-bottom: var(--space-section); }
+.employer-band { padding-top: var(--space-section); padding-bottom: var(--space-section); }
+
+/* ---------- One photographic grade ---------- */
+.hero-photograph > img,
+.roots-image img,
+.journey-visual img,
+.industry-image img,
+.destination-photo img,
+.page-opening-image img,
+.moment img,
+.sector-tile img {
+  filter: saturate(0.86) contrast(1.04) brightness(0.98) sepia(0.06);
+}
+.hero-photograph,
+.page-opening-image,
+.roots-image,
+.industry-image,
+.journey-visual { border-radius: 0; }
+
+/* ---------- Client logos: calm, monochrome until engaged ---------- */
+.client-logo-tile img,
+.client-relationships img {
+  filter: grayscale(1);
+  opacity: 0.72;
+  transition: filter 0.5s var(--ease-premium), opacity 0.5s var(--ease-premium);
+}
+.client-logo-tile:hover img,
+.client-logo-tile:focus-within img,
+.client-relationships a:hover img,
+.client-relationships a:focus-visible img { filter: none; opacity: 1; }
+
+/* ---------- Hairlines: gold on dark, ink on paper ---------- */
+.site-footer .footer-grid,
+.world-section .destination-tabs > button { border-color: var(--hair-dark); }
+
+/* ---------- Focus: gold signature ---------- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible { outline-color: var(--gold); }
+
+/* Chat launcher label was 11px */
+.chat-launcher { font-size: 13px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .button, .button svg, .text-link, .text-link svg, .client-logo-tile img, .client-relationships img { transition: none; }
+}
+
+/* ---------- Phone fixes from the final review ---------- */
+@media (max-width: 700px) {
+  /* Industry names overlapped once the number column was removed: stack them */
+  .industry-list { display: block; }
+  .industry-list .industry-item { width: 100%; }
+  /* Footer question: the round arrow sat on top of "next?" */
+  .footer-headline { flex-wrap: wrap; }
+  .footer-headline .round-arrow { margin-left: 0; }
+  /* Chat launcher: compact 48px circle instead of a wide pill covering headings */
+  .chat-launcher { width: 48px; height: 48px; padding: 0; justify-content: center; font-size: 0; gap: 0; }
+  .chat-launcher .status-dot { display: none; }
+  .chat-launcher svg { width: 20px; height: 20px; }
+}

@@ -17,7 +17,6 @@ type Marker = { index: number; x: number; y: number; side: Side; isOrigin: boole
 
 const useIsoLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 const pct = (v: number, total: number) => `${Math.round((v / total) * 10000) / 100}%`;
-const num = (i: number) => String(i + 1).padStart(2, '0');
 
 export function TalentRoutes({
   destinations,
@@ -276,7 +275,7 @@ export function TalentRoutes({
                 type="button"
                 ref={el => { pinRefs.current[m.index] = el; }}
                 className="tr-pin"
-                aria-label={`${m.count > 1 ? `${m.count} ` : ''}${num(m.index)} ${dest.title} ${m.isOrigin ? 'Colombo · origin' : dest.region}. Select route${m.count > 1 ? `. ${m.count} nearby destinations are available in the list below` : ''}`}
+                aria-label={`${m.count > 1 ? `${m.count} ` : ''}${dest.title}, ${m.isOrigin ? 'Colombo, origin' : dest.region}. Select route${m.count > 1 ? `. ${m.count} nearby destinations are available in the list below` : ''}`}
                 aria-pressed={on}
                 tabIndex={m.index === tabStop ? 0 : -1}
                 onFocus={() => onSelect(m.index)}
@@ -291,8 +290,8 @@ export function TalentRoutes({
                 <span className="tr-dot" aria-hidden="true" />
                 {m.count > 1 && <span className="tr-cluster-count" aria-hidden="true">{m.count}</span>}{' '}
                 <span className="tr-label" data-side={m.side} aria-hidden="true">
-                  <i>{num(m.index)}</i>{' '}{dest.title}{' '}
-                  <small>{m.isOrigin ? 'Colombo · origin' : dest.region}</small>
+                  {dest.title}{' '}
+                  <small>{m.isOrigin ? 'Colombo, origin' : dest.region}</small>
                 </span>
               </button>
             </div>
@@ -301,8 +300,7 @@ export function TalentRoutes({
       </div>
 
       <p className="tr-caption">
-        <span>A world of connections</span>
-        <span>From Colombo · explore destinations below</span>
+        <span>Illustrative routes from Colombo</span>
       </p>
       <p className="tr-sr" role="status" aria-live="polite">
         {current ? `Selected: ${current.title}, ${current.region}.` : ''}

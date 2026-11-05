@@ -6,8 +6,8 @@ import { StoryHeading } from './StoryHeading';
 export function ClientSignature({ advanceTo }: { advanceTo?: string }) {
   return <section className="client-signature" aria-labelledby="client-signature-title">
     <div className="client-signature-heading">
-      <div><span className="eyebrow">RELATIONSHIPS THAT SHAPE OUR STORY</span><StoryHeading id="client-signature-title" heading="Good companies." accent="Lasting connections."/></div>
-      <Link className="text-link" href="/clients">Meet our clients <ArrowUpRight size={16}/></Link>
+      <StoryHeading id="client-signature-title" heading="Lasting relationships with good companies."/>
+      <Link className="text-link" href="/clients">See our clients <ArrowUpRight size={16}/></Link>
     </div>
     <ClientRelationships variant="teaser" advanceTo={advanceTo}/>
   </section>;

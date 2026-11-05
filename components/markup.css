@@ -1,0 +1,87 @@
+/*
+ * Layout follow-through for the premium markup pass (see docs/PREMIUM-FEEL-PLAN.md).
+ * Removing numbers, captions and decorative strings from the markup leaves grids with
+ * fewer children; these rules re-seat them. Imported by Public.tsx, so it loads with
+ * every public page. Selectors are prefixed with `:root body` so they win over globals.css and page-level stylesheets.
+ */
+
+/* Services: title | description | arrow (the number column is gone) */
+:root body .service-row { grid-template-columns: 1.1fr 1fr 25px; }
+:root body .service-row > span { font-size: 13px; }
+@media (max-width: 800px) { :root body .service-row { grid-template-columns: 1fr 1fr 20px; } }
+@media (max-width: 560px) {
+  :root body .service-row { grid-template-columns: 1fr 24px; }
+  :root body .service-row > p { grid-column: 1; grid-row: 2; font-size: 16px; }
+  :root body .service-row > svg { grid-column: 2; grid-row: 1; }
+}
+:root body .service-row > p { font-size: var(--fs-body, 17px); max-width: 52ch; }
+
+/* FAQ: question + plus, no number column */
+:root body .faq-list summary { font-size: clamp(18px, 1.6vw, 21px); letter-spacing: -0.01em; }
+:root body .faq-list summary > .faq-question { font-weight: 500; }
+:root body .faq-list details > p { margin: 0 45px 25px 0; font-size: var(--fs-body, 17px); color: #3f5a4c; }
+@media (max-width: 560px) { :root body .faq-list summary { font-size: 17px; } :root body .faq-list details > p { margin-right: 10px; font-size: 16px; } }
+
+/* Moments: View photo label, caption without an index column */
+:root body .moments-collection .moment-glass { font-size: 13px; letter-spacing: 0.01em; text-transform: none; }
+:root body .moments-collection .moment figcaption { gap: 0; }
+:root body .moments-collection .moment figcaption h3 { margin-top: 0; }
+
+/* Industry explorer: progress line only */
+:root body .industry-scroll-caption { justify-content: flex-start; }
+:root body .industry-scroll-caption .industry-scroll-progress { flex: 1; }
+
+/* Profile cover mock-up (employers): readable sentence-case lines */
+:root body .profile-cover > span { font-size: 13px; letter-spacing: 0.01em; text-transform: none; }
+:root body .profile-cover > span:last-child { font-size: 13px; }
+:root body .profile-cover h3 { font-family: var(--serif); font-weight: 400; }
+
+/* Client directory, sector links, industry directory nav: no number column, readable size */
+:root body .client-name-list > li { font-size: 15px; line-height: 1.5; }
+:root body .industry-index-nav a { font-size: 15px; }
+@media (max-width: 700px) { :root body .industry-index-nav a { font-size: 15px; } }
+
+/* ---------- Nothing below 12px, no tracked caps: leftovers that out-specified premium.css ---------- */
+:root body .eyebrow.eyebrow { font-size: 13px; letter-spacing: 0.01em; text-transform: none; line-height: 1.5; }
+:root body .credibility-band > div > span:last-child { font-size: 15px; line-height: 1.5; }
+:root body .text-link.text-link { font-size: 15px; letter-spacing: 0; text-transform: none; }
+:root body .roots-copy .roots-closing { font-size: var(--fs-body, 17px); }
+:root body .industry-copy p { font-size: var(--fs-body, 17px); line-height: 1.7; max-width: 52ch; }
+:root body .client-record span { font-size: 15px; line-height: 1.5; }
+:root body .client-step-number { font-size: 17px; }
+:root body .client-perspective figcaption { font-size: 13px; letter-spacing: 0.01em; text-transform: none; }
+:root body .client-reach li { font-size: 15px; letter-spacing: 0; text-transform: none; }
+:root body .client-directory-heading > p > span { font-size: 13px; }
+:root body .industry-role-list li { font-size: 14px; letter-spacing: 0; text-transform: none; }
+:root body .industry-index-note { font-size: 14px; }
+:root body .moments-collection .moment-glass span { font-size: 13px; letter-spacing: 0.01em; text-transform: none; }
+
+/* Destination map: sentence-case labels at a readable size */
+:root body .tr-label { font-size: 13px; letter-spacing: 0.01em; text-transform: none; max-width: 150px; }
+:root body .tr-label small { font-size: 12px; letter-spacing: 0.01em; text-transform: none; }
+:root body .tr-caption { font-size: 13px; letter-spacing: 0; text-transform: none; }
+:root body .tr-cluster-count { font-size: 12px; }
+
+/* Only the hero and the footer question are italic */
+:root body .capability-number > span:first-child { font-style: normal; font-family: inherit; letter-spacing: 0; text-transform: none; font-size: 15px; }
+
+
+/* ---------- Reading text floor: body copy 17px (16px on phones), notes 14px ---------- */
+:root body :is(.capability-copy, .inquiry-intro, .form-success, .chairman-copy, .editorial-content, .credit-item, .client-sectors-heading, .client-support-heading, .client-directory-heading, .profile-section) > p:not(.lead):not(.small-note),
+:root body [data-story-lines] > p:not(.lead):not(.roots-closing),
+:root body .credit-item p { font-size: var(--fs-body, 17px); line-height: 1.7; max-width: 64ch; }
+:root body .simple-opening > p { font-size: var(--fs-lead, 21px); line-height: 1.6; max-width: 56ch; }
+:root body :is(.section-note, .profile-source-note, .moments-source-note, .industry-index-note, .profile-section .small-note) { font-size: 14px; line-height: 1.6; max-width: 64ch; }
+:root body .side-note { font-size: 15px; }
+:root body .hero-job-link,
+:root body .destination-tabs > button,
+:root body :is(.credit-item, .direct-contact, .moments-source-note) a { font-size: 15px; letter-spacing: 0; text-transform: none; }
+:root body .client-directory-list > summary { font-size: 17px; }
+:root body .moments-section-heading .glass-pill,
+:root body .moments-opening .glass-pill { font-size: 14px; letter-spacing: 0; text-transform: none; }
+:root body .capability-tags > span { font-size: 14px; }
+@media (max-width: 700px) { :root body .industry-item .industry-title { font-size: 22px; } }
+:root body :is(.employer-band, .profile-section, .profile-reach, .profile-reasons, .contact-grid) p:not(.small-note),
+:root body .profile-reasons article p { font-size: var(--fs-body, 17px); line-height: 1.7; max-width: 52ch; }
+:root body .contact-grid a { font-size: 17px; }
+:root body .contact-grid .text-link { font-size: 15px; }

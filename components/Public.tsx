@@ -3,16 +3,22 @@ import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import type { PageCopy } from '@/lib/types';
 import { StoryHeading } from './StoryHeading';
 import { ResponsiveImage } from './ResponsiveImage';
+import './markup.css';
 
 export function Action({href,children,secondary=false,external=false}:{href:string;children:React.ReactNode;secondary?:boolean;external?:boolean}) {
  const className=`button ${secondary?'button-outline':'button-primary'}`;
  return external?<a href={href} className={className} target="_blank" rel="noopener noreferrer">{children}<ArrowUpRight size={17}/></a>:<Link href={href} className={className}>{children}<ArrowUpRight size={17}/></Link>;
 }
-export function SectionTitle({label,heading,accent,light=false,animate=false}:{label:string;heading:string;accent?:string;light?:boolean;animate?:boolean}) {
- return <div className={`section-heading ${light?'light':''}`} data-reveal><span className="eyebrow"><span className="tiny-square"/>{label}</span>{animate?<StoryHeading heading={heading} accent={accent}/>:<h2>{heading}{accent&&<><br/><em>{accent}</em></>}</h2>}</div>;
+/**
+ * One serif statement per section. `accent` (if given) continues the same sentence; it is never a second styled line.
+ * `kicker` is a sentence-case label, used only where it adds information the heading does not.
+ * `label` is the retired eyebrow prop: still accepted so older callers compile, never rendered.
+ */
+export function SectionTitle({kicker,heading,accent,light=false,animate=false}:{kicker?:string;heading:string;accent?:string;light?:boolean;animate?:boolean;label?:string}) {
+ return <div className={`section-heading ${light?'light':''}`} data-reveal>{kicker&&<span className="eyebrow">{kicker}</span>}{animate?<StoryHeading heading={heading} accent={accent}/>:<h2>{accent?`${heading} ${accent}`:heading}</h2>}</div>;
 }
-export function PageOpening({page,number='01'}:{page:PageCopy;number?:string}) {
- return <section className="page-opening"><div className="page-opening-copy"><span className="eyebrow"><span className="tiny-square"/>{page.eyebrow}</span><h1>{page.heading}<br/><em>{page.accent}</em></h1><p>{page.intro}</p><span className="page-index">AL KARRIM LANKA / CHAPTER {number}</span></div><figure className="page-opening-image"><ResponsiveImage src={page.image} width={1200} height={1000} alt="Industry and destination illustration" sizes="(max-width: 1000px) 100vw, 50vw" priority/><span className="image-corner">PEOPLE. POSSIBILITY. PROGRESS.</span></figure></section>;
+export function PageOpening({page}:{page:PageCopy;number?:string}) {
+ return <section className="page-opening"><div className="page-opening-copy">{page.eyebrow&&<span className="eyebrow">{page.eyebrow}</span>}<h1>{page.accent?`${page.heading} ${page.accent}`:page.heading}</h1><p>{page.intro}</p></div><figure className="page-opening-image"><ResponsiveImage src={page.image} width={1200} height={1000} alt="Industry and destination illustration" sizes="(max-width: 1000px) 100vw, 50vw" priority/></figure></section>;
 }
 export function EditorialLink({href,children}:{href:string;children:React.ReactNode}) {return <Link href={href} className="text-link">{children}<ArrowRight size={16}/></Link>;}
-export function FaqList({items}:{items:{question:string;answer:string}[]}) {return <div className="faq-list">{items.map((x,i)=><details key={x.question}><summary><span>0{i+1}</span>{x.question}<span className="faq-plus">+</span></summary><p>{x.answer}</p></details>)}</div>;}
+export function FaqList({items}:{items:{question:string;answer:string}[]}) {return <div className="faq-list">{items.map(x=><details key={x.question}><summary><strong className="faq-question">{x.question}</strong><span className="faq-plus" aria-hidden="true">+</span></summary><p>{x.answer}</p></details>)}</div>;}

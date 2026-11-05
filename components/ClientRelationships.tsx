@@ -158,11 +158,11 @@ export function ClientRelationships({ variant = 'primary', advanceTo }: { varian
           {scene.landscape.layers.map((layer,index) => <picture key={layer.group} data-logo-layer={layer.group}><source media="(max-width: 700px)" srcSet={scene.portrait.layers[index].src}/><img src={layer.src} alt="" width={scene.landscape.width} height={scene.landscape.height} loading="lazy" decoding="async"/></picture>)}
         </div></div></div>
         <div className="relationship-darkening" aria-hidden="true"/>
-        <div className="relationship-message-copy" aria-hidden="true"><span className="relationship-phrase"><span className="relationship-line-talent">Sri Lankan talent.</span></span><span className="relationship-phrase"><em className="relationship-line-global">Global connections.</em></span></div>
+        <div className="relationship-message-copy" aria-hidden="true"><span className="relationship-phrase"><span className="relationship-line-talent">Sri Lankan talent.</span></span><span className="relationship-phrase"><span className="relationship-line-global">Global connections.</span></span></div>
       </div>
       <figcaption><span>Connecting Sri Lankan talent with companies like these.</span><div className="relationship-actions">
         {(phase === 'playing' || phase === 'paused' || phase === 'ended') && <button className="relationship-control" type="button" aria-controls={`relationship-scene-${id}`} onClick={() => phase === 'ended' ? replay.current() : togglePlayback.current()}>{phase === 'ended' ? 'Replay sequence' : phase === 'paused' ? 'Continue motion' : 'Pause motion'}</button>}
-        <Link className="text-link" href="/clients#client-directory">Explore our clients <ArrowUpRight size={14}/></Link>
+        <Link className="text-link" href="/clients#client-directory">See our clients <ArrowUpRight size={14}/></Link>
       </div></figcaption>
     </figure>
   </section>;

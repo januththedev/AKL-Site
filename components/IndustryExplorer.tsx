@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from 'react';
 import Link from 'next/link';
-import { ArrowDown, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import type { Industry } from '@/lib/types';
 import { industryAtScroll, industryChapterOffset } from '@/lib/industry-scroll';
 import './industry-experience.css';
@@ -16,7 +16,6 @@ type Display = { index: number; frames: Industry[]; failed: boolean };
 export function IndustryExplorer({ industries, scrollDriven = false }: { industries: Industry[]; scrollDriven?: boolean }) {
   const [requested, setRequested] = useState(0);
   const [display, setDisplay] = useState<Display>({ index: 0, frames: industries[0] ? [industries[0]] : [], failed: false });
-  const [enhanced, setEnhanced] = useState(false);
   const root = useRef<HTMLDivElement>(null);
   const stage = useRef<HTMLDivElement>(null);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -71,7 +70,6 @@ export function IndustryExplorer({ industries, scrollDriven = false }: { industr
       step = Math.max(220, window.innerHeight * .52);
       track.style.minHeight = ready ? `${height + industries.length * step}px` : '';
       track.dataset.scrollReady = String(ready);
-      setEnhanced(ready);
       target = null;
       schedule();
     };
@@ -133,11 +131,9 @@ export function IndustryExplorer({ industries, scrollDriven = false }: { industr
       <div className="industry-explorer">
         <figure className="industry-image story-industry-image">
           {display.frames.map((photo, index) => <ResponsiveImage key={photo.image} className={display.frames.length > 1 && index === display.frames.length - 1 ? 'industry-photo-enter' : undefined} src={photo.image} alt={`${photo.title} — illustrative industry photograph`} aria-hidden={index !== display.frames.length - 1} width={1000} height={1100} sizes={EXPLORER_PHOTO_SIZES}/>)}
-          {display.failed && <div className="industry-photo-fallback"><span>OUR EXPERTISE</span><strong>{item.title}</strong></div>}
-          <figcaption><span>THE PEOPLE BEHIND THE PROGRESS</span><span>{String(display.index + 1).padStart(2, '0')} / {String(industries.length).padStart(2, '0')}</span></figcaption>
+          {display.failed && <div className="industry-photo-fallback"><strong>{item.title}</strong></div>}
         </figure>
         <div className="industry-list">
-          <p className="section-note">Different industries.<br/>The same belief in people.</p>
           <div className="industry-tabs" role="tablist" aria-label="Our industry expertise">
             {industries.map((industry, index) => <button ref={element => { tabs.current[index] = element; }} type="button" role="tab" id={`${panelId}-tab-${index}`} key={industry.slug} className={`industry-item ${display.index === index ? 'active' : ''}`} aria-selected={display.index === index} aria-controls={panelId} tabIndex={display.index === index ? 0 : -1} onClick={() => select(index)} onKeyDown={event => {
               let next = index;
@@ -149,14 +145,14 @@ export function IndustryExplorer({ industries, scrollDriven = false }: { industr
               event.preventDefault();
               tabs.current[next]?.focus({ preventScroll: true });
               select(next);
-            }}><span className="industry-number">{String(index + 1).padStart(2, '0')}</span><span className="industry-title">{industry.title}</span><ArrowUpRight size={19} aria-hidden="true"/></button>)}
+            }}><span className="industry-title">{industry.title}</span><ArrowUpRight size={19} aria-hidden="true"/></button>)}
           </div>
           <div className="industry-detail" id={panelId} role="tabpanel" aria-labelledby={`${panelId}-tab-${display.index}`} aria-busy={requested !== display.index} tabIndex={0}>
             <div key={item.slug} className="industry-copy" aria-live="polite" aria-atomic="true"><p>{item.description}</p><Link className="text-link" href={`/industries/${item.slug}`}>Explore {item.title.toLowerCase()} <ArrowUpRight size={16}/></Link></div>
           </div>
         </div>
       </div>
-      <div className="industry-scroll-caption"><span>{enhanced ? 'SCROLL TO EXPLORE' : 'SELECT AN INDUSTRY'} <ArrowDown size={12} aria-hidden="true"/></span><div className="industry-scroll-progress" aria-hidden="true"><span style={{ transform: `scaleX(${(display.index + 1) / industries.length})` }}/></div><span>{String(display.index + 1).padStart(2, '0')} <span>/ {String(industries.length).padStart(2, '0')}</span></span></div>
+      <div className="industry-scroll-caption"><div className="industry-scroll-progress" aria-hidden="true"><span style={{ transform: `scaleX(${(display.index + 1) / industries.length})` }}/></div></div>
     </div>
   </div>;
 }

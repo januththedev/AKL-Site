@@ -3,9 +3,9 @@ import type { SiteContent } from '@/lib/types';
 
 export const defaultContent: SiteContent = {
   moments: [],
-  home: { eyebrow: 'SRI LANKAN ROOTS. INTERNATIONAL REACH.', heading: 'The right people.', accent: 'A world of possibility.', intro: 'Connecting the skill and ambition of Sri Lanka with the companies moving the world forward. International recruitment, shaped by experience since 1980.', image: '/media/hero-team.webp' },
-  employers: { eyebrow: 'YOUR NEXT TEAM STARTS HERE', heading: 'Great work begins', accent: 'with the right people.', intro: 'A recruitment partner for your next chapter. Discover our capabilities, explore the industries we serve, and tell us what your business needs.', image: '/media/port-team.webp' },
-  about: { eyebrow: 'OUR STORY / SINCE 1980', heading: 'Rooted in Sri Lanka.', accent: 'Looking to the world.', intro: 'For more than four decades, Al Karrim Lanka has connected Sri Lankan capability with international opportunity. Our story begins in August 1980, with a belief in the people who make progress possible.', image: '/media/colombo-dusk.webp' },
+  home: { eyebrow: 'Sri Lankan roots, international reach', heading: 'The right people.', accent: 'A world of possibility.', intro: 'Connecting the skill and ambition of Sri Lanka with the companies moving the world forward. International recruitment, shaped by experience since 1980.', image: '/media/hero-team.webp' },
+  employers: { eyebrow: 'For employers', heading: 'Great work begins', accent: 'with the right people.', intro: 'A recruitment partner for your next chapter. Discover our capabilities, explore the industries we serve, and tell us what your business needs.', image: '/media/port-team.webp' },
+  about: { eyebrow: 'Our story since 1980', heading: 'Rooted in Sri Lanka,', accent: 'looking to the world.', intro: 'For more than four decades, Al Karrim Lanka has connected Sri Lankan capability with international opportunity. Our story begins in August 1980, with a belief in the people who make progress possible.', image: '/media/colombo-dusk.webp' },
   settings: { brand: COMPANY_NAME, phone: '+94 112 592551', email: 'alkarrim@slt.lk', address: 'No 10/1, Duplication Road, Colombo 05, Sri Lanka', careersUrl: 'https://alk.intellixhr.com/careers', facebookUrl: 'https://www.facebook.com/alkarrimlanka603/', profileUrl: '/documents/company-profile-nov2025.pdf' },
   story: { heading: 'A small island.\nAn extraordinary workforce.', body: 'Founded in August 1980, Al Karrim Lanka began with a simple belief: Sri Lankan skill deserves a global stage. From these roots, our recruitment story has reached the Gulf, Europe, Asia and Australia.', closing: 'From a first conversation to a new beginning, we bring people and opportunity closer.' },
   industries: [
@@ -18,9 +18,9 @@ export const defaultContent: SiteContent = {
     { slug: 'logistics', title: 'Logistics', description: 'Connecting the people behind the supply chain, from warehouse operations to global movement.', image: '/media/port-team.webp', roles: ['Warehouse teams', 'Transport operations', 'Supply-chain support'] },
   ],
   destinations: [
-    { slug: 'united-arab-emirates', title: 'United Arab Emirates', region: 'THE GULF', description: 'A meeting point of industries, people and ambition. Explore recruitment requirements with our team.', image: '/media/dubai-night.webp' },
-    { slug: 'oman', title: 'Oman', region: 'THE GULF', description: 'A new perspective on opportunity. Contact our team about the scope of your recruitment requirements.', image: '/media/muscat.webp' },
-    { slug: 'sri-lanka', title: 'Sri Lanka', region: 'OUR HOME', description: 'Our roots, our people, our point of connection with the world.', image: '/media/colombo-dusk.webp' },
+    { slug: 'united-arab-emirates', title: 'United Arab Emirates', region: 'The Gulf', description: 'A meeting point of industries, people and ambition. Explore recruitment requirements with our team.', image: '/media/dubai-night.webp' },
+    { slug: 'oman', title: 'Oman', region: 'The Gulf', description: 'A new perspective on opportunity. Contact our team about the scope of your recruitment requirements.', image: '/media/muscat.webp' },
+    { slug: 'sri-lanka', title: 'Sri Lanka', region: 'Our home', description: 'Our roots, our people, our point of connection with the world.', image: '/media/colombo-dusk.webp' },
   ],
 };
 
