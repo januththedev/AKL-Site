@@ -247,3 +247,15 @@ summary:focus-visible { outline-color: var(--gold); }
   .chat-launcher .status-dot { display: none; }
   .chat-launcher svg { width: 20px; height: 20px; }
 }
+
+/* Industry tabs on phones/tablets: wrapping chips instead of a 4-column grid that overlapped */
+@media (max-width: 900px) {
+  :root body .industry-tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+  :root body .industry-scroll-stage .industry-tabs .industry-item {
+    width: auto; flex: 0 0 auto; padding: 10px 14px; border: 1px solid var(--hair-light);
+    border-radius: 999px; font-size: 15px; letter-spacing: 0; gap: 6px;
+  }
+  :root body .industry-scroll-stage .industry-tabs .industry-item .industry-title { font-size: 15px; }
+  :root body .industry-scroll-stage .industry-tabs .industry-item > svg { display: none; }
+  :root body .industry-scroll-stage .industry-tabs .industry-item.active { background: var(--forest); color: var(--ivory); border-color: var(--forest); padding-left: 14px; }
+}
