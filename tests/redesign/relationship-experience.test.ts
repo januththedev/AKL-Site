@@ -28,7 +28,9 @@ test('the restored photo opening and its session behaviour match the pre-client-
     'content/client-logos.json': 'b2adb04deeda75fcf6ec762948498dd4910dc679bfd143b5efc143109b9f27cb',
   };
   for (const [file, digest] of Object.entries(expected)) {
-    assert.equal(createHash('sha256').update(readFileSync(new URL(`../../${file}`, import.meta.url))).digest('hex'), digest, file);
+    // Normalise line endings so a Windows checkout (core.autocrlf) hashes the same as the committed LF text.
+    const text = readFileSync(new URL(`../../${file}`, import.meta.url), 'utf8').replace(/\r\n/g, '\n');
+    assert.equal(createHash('sha256').update(text).digest('hex'), digest, file);
   }
 });
 
