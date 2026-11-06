@@ -35,6 +35,9 @@ const LIFE = DRAW + HOLD + FADE;
 const HUBS = 12;
 const STILL_T = 7;                                 // the reduced-motion frame
 const BOX = 1.32;                                  // canvases cover the globe's centre +- BOX * R
+// AKL patch: turning to a node
+const GLIDE = 1.6, SWAY = 2.2;                     // seconds to turn to a node; degrees of slow sway once it is there
+const ROUTE_IN = 1.5, ROUTE_OUT = 0.55, BEAT = 2.8; // a held route: draw-in, fade-out, and the beat of its packet and ripple
 const reducedQuery = typeof window !== 'undefined' && window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
 
 const sstep = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
@@ -124,8 +127,26 @@ const VIEWS = [-80, -38, 12, 30, 78, 112];
 let NETWORK = null;
 export function configureNetwork(n) {
   NETWORK = n && Array.isArray(n.cities) && n.cities.length > 1
-    ? { cities: n.cities.map(c => [+c[0], +c[1]]), origin: Math.max(0, Math.min(n.cities.length - 1, n.origin | 0)), view: Number.isFinite(+n.view) ? +n.view : null }
+    ? {
+      cities: n.cities.map(c => [+c[0], +c[1]]),
+      origin: Math.max(0, Math.min(n.cities.length - 1, n.origin | 0)),
+      view: Number.isFinite(+n.view) ? +n.view : null,
+      names: Array.isArray(n.names) ? n.names.map(s => String(s)) : [], // a label for each node
+      font: typeof n.font === 'string' ? n.font : '',                 // the page's own font, for the labels
+    }
     : null;
+}
+
+// AKL patch: a mounted globe can be turned to one of its network's nodes. focusHub(el, i) glides the globe so
+// node i faces the viewer and holds it there: the route from the origin to it stays drawn, the node is labelled
+// and the ambient arcs stop. Node `origin` shows the whole network (every route from the origin at once).
+// { instant: true } skips the glide. Returns false when no network globe is mounted on el.
+const INSTANCES = new Map();
+export function focusHub(el, index, options) {
+  const inst = INSTANCES.get(el);
+  if (!inst) return false;
+  inst.focus(index, options);
+  return true;
 }
 
 // one 512 x 256 equirectangular coverage map, rasterised on first use and shared by every globe
@@ -247,8 +268,8 @@ function lattice(N, seed, land) {
 }
 
 // network nodes from the seed alone (never from the lattice): cities on the map, land points otherwise
-function pickHubs(prm, seed, land) {
-  if (NETWORK) return NETWORK.cities.map(([lo, la]) => unit(lo, la));
+function pickHubs(prm, seed, land, net) {
+  if (net) return net.cities.map(([lo, la]) => unit(lo, la));
   const r = rng(`hubs:${seed}`);
   let pool;
   if (prm.map >= 0.5 && earthSampler()) pool = CITIES.map(([lo, la]) => unit(lo, la));
@@ -462,6 +483,7 @@ function mountGlobe(el, { palette, params: given, seed }) {
   let P = normalizePalette(palette);
   let prm = resolveParams(params, given);
   const sd = hashSeed(seed ?? 1);
+  const net = NETWORK; // this globe keeps the network it was mounted with
   const cs = getComputedStyle(el);
   if (cs.position === 'static') el.style.position = 'relative';
   if (cs.isolation !== 'isolate') el.style.isolation = 'isolate';
@@ -470,15 +492,17 @@ function mountGlobe(el, { palette, params: given, seed }) {
   let T = tones(P, prm);
   const r0 = rng(`globe:${sd}`);
   const viewSeeded = VIEWS[Math.floor(r0() * VIEWS.length)] + (r0() - 0.5) * 16;
-  const view = NETWORK && NETWORK.view != null ? NETWORK.view : viewSeeded;
+  const view = net && net.view != null ? net.view : viewSeeded;
   const rollSeeded = (r0() - 0.5) * 22 * DEG;
-  const roll = NETWORK ? 0 : rollSeeded;
+  const roll = net ? 0 : rollSeeded;
   const free0 = r0() * 360;
 
   let W = 0, H = 0, dpr = 1, pl = null, box = null, L = null, hubs = [], landKey = '', land = null;
   let shown = false, fallbackOn = false, dead = false, use2D = false, glr = null, dotsCv = null, losses = 0;
   let arcCache = new Map(), stillSet = null, headSprite = null, lastT = 0, acc = 0;
   let rebuildTimer = 0, releaseTimer = 0, fbEls = [], glDone = null;
+  // AKL patch: the focused node, the pose (turn and tilt) the globe glides to, the routes just left, a focus asked for early
+  let focus = -1, pose = null, focusAt = 0, leaving = [], leftAt = -1e9, pendingFocus = null;
   // this globe's place in the page's WebGL budget: off screen, the budget may free it for another effect
   const holder = { seen: 0, get visible() { return lc.visible; }, release: () => releaseGL() };
   const lattices = new Map();
@@ -659,7 +683,7 @@ function mountGlobe(el, { palette, params: given, seed }) {
     landKey = key;
     land = landFn(prm, sd);
     lattices.clear();
-    hubs = pickHubs(prm, sd, land);
+    hubs = pickHubs(prm, sd, land, net);
     arcCache = new Map();
     stillSet = null;
     return true;
@@ -704,6 +728,7 @@ function mountGlobe(el, { palette, params: given, seed }) {
     box = { x: x0, y: y0, w: Math.max(1, x1 - x0), h: Math.max(1, y1 - y0) };
     for (const c of [ground, over, dotsCv]) if (c) sizeCanvas(c);
     setLand();
+    if (pendingFocus) { const [i, o] = pendingFocus; pendingFocus = null; setFocus(i, o); }
     ensureLattice(!moved);
     paintGround();
     // arcs not yet born are chosen again for the new layout; the live one stays
@@ -714,7 +739,18 @@ function mountGlobe(el, { palette, params: given, seed }) {
 
   /* ---- time ---- */
   const spin0 = () => (prm.map >= 0.5 ? -view * DEG - STILL_T * prm.speed * DEG : free0 * DEG);
-  const matAt = t => rotMat(spin0() + t * prm.speed * DEG, prm.tilt * DEG, roll);
+  // AKL patch: free-running, the globe turns at a steady rate. Once a node is focused it glides to a pose that
+  // faces that node and holds it, with a slow sway so it is never quite dead still.
+  const poseAt = t => {
+    if (!pose) return { spin: spin0() + t * prm.speed * DEG, tilt: prm.tilt * DEG };
+    const k = pose.dur > 0 ? Math.min(1, Math.max(0, (t - pose.t0) / pose.dur)) : 1;
+    const e = easeInOut(k);
+    const spin = pose.spin0 + (pose.spin1 - pose.spin0) * e;
+    const tilt = pose.tilt0 + (pose.tilt1 - pose.tilt0) * e;
+    if (k < 1) return { spin, tilt };
+    return { spin: spin + sstep(0, 2.5, t - pose.t0 - pose.dur) * SWAY * DEG * Math.sin((t - pose.t0) * 0.55), tilt };
+  };
+  const matAt = t => { const p = poseAt(t); return rotMat(p.spin, p.tilt, roll); };
   const calmRadius = () => (0.35 + 0.4 * prm.calm) * H;
   const calmAt = (x, y) => prm.calm * (1 - sstep(calmRadius() * 0.35, calmRadius(), Math.hypot(x - prm.calmX * W, y - prm.calmY * H)));
   const screen = p => [pl.gx + p[0] * pl.R, pl.gy - p[1] * pl.R];
@@ -729,8 +765,8 @@ function mountGlobe(el, { palette, params: given, seed }) {
   }
   function pairs(okA, okB, r) {
     const out = [];
-    if (NETWORK) {
-      const o = NETWORK.origin;
+    if (net) {
+      const o = net.origin;
       for (let j = 0; j < hubs.length; j++) if (j !== o && okA[o] && okB[o] && okA[j] && okB[j]) out.push([o, j]);
       return out;
     }
@@ -886,7 +922,141 @@ function mountGlobe(el, { palette, params: given, seed }) {
     ctx.stroke();
   }
 
+  /* ---- AKL patch: a focused node ---- */
+  // the nodes whose routes are drawn while `f` is focused: the origin shows every route, any other node only its own
+  const routesTo = f => (f === net.origin ? hubs.map((_, j) => j).filter(j => j !== net.origin) : [f]);
+  function route(a, b, head, alpha, m, withHead) {
+    const pts = arcPath(a, b, Math.max(0.002, head), m);
+    const n = pts.length / 3;
+    const hx = pts[(n - 1) * 3], hy = pts[(n - 1) * 3 + 1];
+    const cm = 1 - 0.85 * calmAt((pts[0] + hx) / 2, (pts[1] + hy) / 2);
+    ctx.globalAlpha = 1;
+    strokeArc(pts, (T.dark ? 0.9 : 0.95) * alpha * cm);
+    if (withHead && head < 1 && pts[(n - 1) * 3 + 2] > 0.5) {
+      ctx.globalAlpha = 0.8 * alpha * cm;
+      ctx.drawImage(headSprite, hx - 4, hy - 4, 8, 8);
+      dot(hx, hy, 1.3, T.head, alpha * cm);
+    }
+  }
+  // a pill with the node's name, up and to one side of it, joined to it by a hairline
+  function tag(text, x, y, toLeft, a) {
+    if (!text || a < 0.02) return;
+    ctx.font = `600 12px ${net.font || 'system-ui, sans-serif'}`;
+    ctx.textBaseline = 'middle';
+    const w = Math.ceil(ctx.measureText(text).width) + 20, h = 24, r = h / 2;
+    const bx = toLeft ? x - 14 - w : x + 14, by = y - 16 - h;
+    ctx.globalAlpha = a;
+    ctx.strokeStyle = rgba(T.arc, 0.5);
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(toLeft ? bx + w - r * 0.4 : bx + r * 0.4, by + h);
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(bx + r, by);
+    ctx.arcTo(bx + w, by, bx + w, by + h, r);
+    ctx.arcTo(bx + w, by + h, bx, by + h, r);
+    ctx.arcTo(bx, by + h, bx, by, r);
+    ctx.arcTo(bx, by, bx + w, by, r);
+    ctx.closePath();
+    ctx.fillStyle = rgba(P.bg, 0.86);
+    ctx.fill();
+    ctx.strokeStyle = rgba(T.arc, 0.65);
+    ctx.stroke();
+    ctx.fillStyle = P.ink;
+    ctx.fillText(text, bx + 10, by + h / 2 + 0.5);
+    ctx.globalAlpha = 1;
+  }
+  function drawFocus(t, m, still) {
+    const o = net.origin, A = hubs[o], all = focus === o;
+    // the route that has just been left fades away
+    if (!still && leaving.length && t - leftAt < ROUTE_OUT) {
+      const f = 1 - (t - leftAt) / ROUTE_OUT;
+      for (const j of leaving) route(A, hubs[j], 1, 0.9 * f * f, m, false);
+    }
+    // the nodes: steady and small, the focused one and the origin a little stronger
+    hubs.forEach((h, i) => {
+      const p = rot(m, h[0], h[1], h[2]);
+      if (p[2] <= 0.15) return;
+      const [x, y] = screen(p);
+      const fade = sstep(0.15, 0.5, p[2]) * (1 - 0.9 * calmAt(x, y));
+      if (fade < 0.01) return;
+      const lit = i === focus || i === o;
+      dot(x, y, lit ? 2.6 : 1.6, lit ? T.head : T.arc, fade * (lit ? 1 : 0.7));
+      ring(x, y, lit ? 6 : 4.2, T.arc, fade * (lit ? 0.7 : 0.2));
+    });
+    // the held route, or every route from the origin
+    routesTo(focus).forEach((j, n) => {
+      const age = still ? 99 : t - focusAt - (all ? Math.min(n * 0.14, 0.9) : 0);
+      if (age <= 0) return;
+      const head = still ? 1 : easeInOut(Math.min(1, age / ROUTE_IN));
+      route(A, hubs[j], head, (still ? 1 : sstep(0, 0.25, age)) * (all ? 0.62 : 1), m, !still);
+      if (still || age < ROUTE_IN) return;
+      // once it is drawn a packet keeps travelling it, and a ripple leaves the end it reaches (the origin, for the overview)
+      const q = ((age - ROUTE_IN) % BEAT) / BEAT;
+      if (!all) {
+        const pts = arcPath(A, hubs[j], Math.max(0.002, easeInOut(q)), m);
+        const k = pts.length / 3 - 1;
+        if (pts[k * 3 + 2] > 0.5) {
+          const fade = Math.sin(Math.PI * q);
+          ctx.globalAlpha = 0.8 * fade;
+          ctx.drawImage(headSprite, pts[k * 3] - 4, pts[k * 3 + 1] - 4, 8, 8);
+          dot(pts[k * 3], pts[k * 3 + 1], 1.3, T.head, fade);
+        }
+      }
+    });
+    if (!still) {
+      const q = Math.max(0, t - focusAt - ROUTE_IN) % BEAT / BEAT;
+      const end = rot(m, hubs[focus][0], hubs[focus][1], hubs[focus][2]);
+      if (end[2] > 0.2 && t - focusAt > ROUTE_IN) {
+        const [x, y] = screen(end);
+        ring(x, y, 5 + 14 * easeOut(q), T.arc, 0.42 * (1 - q) * (1 - q));
+      }
+    }
+    // the label of the focused node, once the globe has turned to it
+    const p = rot(m, hubs[focus][0], hubs[focus][1], hubs[focus][2]);
+    if (p[2] > 0.3) {
+      const [x, y] = screen(p);
+      const arrived = still || !pose || pose.dur === 0 ? 1 : sstep(pose.dur * 0.55, pose.dur, t - pose.t0);
+      const [ox] = screen(rot(m, A[0], A[1], A[2]));
+      tag(net.names[focus] || '', x, y, ox > x, arrived * sstep(0.3, 0.55, p[2]));
+    }
+    ctx.globalAlpha = 1;
+  }
+  // turn to node `index`. The path is the short way round; the pose also tips the pole toward the route's latitude
+  // so the route sits near the middle of the globe rather than near an edge.
+  function setFocus(index, options) {
+    if (!net) return;
+    if (!hubs.length) { pendingFocus = [index, options]; return; } // not laid out yet: apply it once it is
+    const next = Number.isInteger(index) && index >= 0 && index < hubs.length ? index : net.origin;
+    if (next === focus && !(options && options.force)) return;
+    const t = lc.time;
+    const instant = !!(options && options.instant) || !lc.running;
+    const here = poseAt(t); // where the globe is on screen right now, so the glide starts from it
+    let spin1, tilt1;
+    if (next === net.origin) {
+      spin1 = -net.view * DEG;
+      tilt1 = prm.tilt * DEG;
+    } else {
+      // face the middle of the route from the origin, weighted toward the node, so both ends stay on screen
+      const a = hubs[net.origin], h = hubs[next];
+      let x = 0.38 * a[0] + 0.62 * h[0], y = 0.38 * a[1] + 0.62 * h[1], z = 0.38 * a[2] + 0.62 * h[2];
+      const len = Math.hypot(x, y, z);
+      if (len < 0.2) { x = h[0]; y = h[1]; z = h[2]; } else { x /= len; y /= len; z /= len; }
+      spin1 = -Math.atan2(x, z);
+      tilt1 = Math.max(-22 * DEG, Math.min(40 * DEG, 0.55 * Math.asin(Math.max(-1, Math.min(1, y))) + 0.45 * prm.tilt * DEG));
+    }
+    let d = (spin1 - here.spin) % (2 * Math.PI);
+    if (d > Math.PI) d -= 2 * Math.PI; else if (d < -Math.PI) d += 2 * Math.PI;
+    if (focus >= 0) { leaving = routesTo(focus); leftAt = t; }
+    pose = { spin0: here.spin, tilt0: here.tilt, spin1: here.spin + d, tilt1, t0: t, dur: instant ? 0 : GLIDE };
+    focus = next;
+    focusAt = instant ? t - ROUTE_IN - 1 : t + GLIDE * 0.4; // the route starts to draw once the turn is under way
+    lc.redraw();
+  }
+
   function drawNetwork(t, m, still) {
+    if (net && focus >= 0) { drawFocus(t, m, still); return; }
     const live = [];
     if (prm.arcs > 0 && hubs.length > 1) {
       if (still) live.push(...stillArcs(t));
@@ -983,10 +1153,11 @@ function mountGlobe(el, { palette, params: given, seed }) {
     lc.redraw();
   }
 
-  return {
+  const api = {
     pause: () => lc.pause(),
     resume: () => lc.resume(),
     redraw: () => lc.redraw(),
+    focus: setFocus,
     set(next) {
       prm = resolveParams(params, { ...prm, ...next });
       arcCache = new Map();
@@ -999,6 +1170,7 @@ function mountGlobe(el, { palette, params: given, seed }) {
     },
     destroy() {
       dead = true;
+      if (INSTANCES.get(el) === api) INSTANCES.delete(el);
       clearTimeout(rebuildTimer);
       lc.destroy();
       ro.disconnect();
@@ -1011,9 +1183,11 @@ function mountGlobe(el, { palette, params: given, seed }) {
     },
     get canvas() { return over; },
     get info() {
-      return { webgl: glr ? 1 : 0, canvas: glr ? 'webgl+2d' : '2d', fallback: fallbackOn ? el.dataset.fxFallback : null, dpr, size: [over.width, over.height], box, dots: L ? L.N : 0, land: landKey, globe: pl, running: lc.running };
+      return { webgl: glr ? 1 : 0, canvas: glr ? 'webgl+2d' : '2d', fallback: fallbackOn ? el.dataset.fxFallback : null, dpr, size: [over.width, over.height], box, dots: L ? L.N : 0, land: landKey, globe: pl, running: lc.running, focus };
     },
   };
+  if (net) INSTANCES.set(el, api);
+  return api;
 }
 
 export default {

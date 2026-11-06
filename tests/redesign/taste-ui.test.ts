@@ -78,6 +78,6 @@ test('the vendored globe keeps the patch that draws every arc from Colombo', asy
   const { readFileSync } = await import('node:fs');
   const source = readFileSync(new URL('../../public/taste/effects/dotted-globe/effect.js', import.meta.url), 'utf8');
   assert.match(source, /export function configureNetwork/);
-  assert.match(source, /if \(NETWORK\) return NETWORK\.cities/);
+  assert.match(source, /if \(net\) return net\.cities/);
   assert.match(source, /out\.push\(\[o, j\]\)/);
 });

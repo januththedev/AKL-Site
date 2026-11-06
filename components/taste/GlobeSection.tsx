@@ -1,19 +1,20 @@
 import { SectionTitle } from '../Public';
-import { profileReach } from '@/lib/company-profile';
-import { DottedGlobe } from './DottedGlobe';
+import type { Destination } from '../../lib/types';
+import { GlobeExplorer } from './GlobeExplorer';
 
-/** The dotted globe beside the regions named in the company profile (for the Destinations page). */
-export function GlobeSection() {
+/** The dotted globe tied to the destinations content (for the Destinations page). */
+export function GlobeSection({ destinations }: { destinations: Destination[] }) {
   return (
     <section className="section dark-section">
-      <div className="tx-gs">
-        <div className="tx-gs-copy">
-          <SectionTitle light animate heading="Routes from Colombo." />
-          <p>Our company profile describes reach across these regions. The routes on the globe are illustrative, not current vacancies.</p>
-          <ul className="tx-gs-list">{profileReach.map(region => <li key={region}>{region}</li>)}</ul>
-        </div>
-        <DottedGlobe />
-      </div>
+      <GlobeExplorer
+        destinations={destinations}
+        intro={(
+          <>
+            <SectionTitle light animate heading="Routes from Colombo." />
+            <p>Our company profile describes reach across the Gulf, Europe, Asia and Australia. Choose a destination to turn the globe to it. The routes are illustrative, not current vacancies.</p>
+          </>
+        )}
+      />
     </section>
   );
 }

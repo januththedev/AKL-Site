@@ -135,16 +135,37 @@
 .tx-dg-host::before { content: ''; position: absolute; inset: 7%; border-radius: 50%; background: radial-gradient(circle at 50% 46%, rgba(136, 216, 174, 0.14), rgba(7, 25, 22, 0) 66%); pointer-events: none; }
 .tx-dg-pause { position: absolute; right: 4%; bottom: 4%; }
 
+/* ---------- destination picker: the site's destinations as chips and one card ---------- */
+.tx-dp { display: grid; gap: clamp(10px, 1.6svh, 16px); }
+.tx-dp-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.tx-dp-chip {
+  font: inherit; font-size: 14px; font-weight: 600; line-height: 1; padding: 10px 14px; border-radius: 999px; cursor: pointer;
+  color: rgba(245, 242, 233, 0.88); background: rgba(245, 242, 233, 0.05); border: 1px solid rgba(245, 242, 233, 0.38);
+  transition: background-color 0.2s var(--ease-premium), border-color 0.2s var(--ease-premium), color 0.2s var(--ease-premium);
+}
+.tx-dp-chip:hover { border-color: var(--gold); background: rgba(201, 165, 92, 0.16); }
+.tx-dp-chip[aria-pressed='true'] { color: var(--ink); background: var(--gold); border-color: var(--gold); }
+.tx-dp-chip:focus-visible { outline: 2px solid var(--mint); outline-offset: 3px; }
+.tx-dp-detail { min-height: 10.25rem; } /* room for about four lines, so the buttons and the link do not jump between destinations */
+.tx-dp-card { display: grid; gap: 8px; align-content: start; animation: tx-dp-in 0.45s var(--ease-premium) both; }
+.tx-dp-card .eyebrow { margin: 0; color: var(--mint); text-transform: uppercase; } /* the content writes some regions in capitals and some not */
+.tx-dp-card h3 { margin: 0; font-size: clamp(22px, 3.2svh, 30px); line-height: 1.1; color: var(--ivory); }
+.tx-dp-card p { margin: 0; max-width: 44ch; font-size: clamp(14.5px, 2.1svh, 16.5px); line-height: 1.55; color: rgba(245, 242, 233, 0.84); }
+@keyframes tx-dp-in { from { opacity: 0; transform: translateY(6px); } }
+@media (prefers-reduced-motion: reduce) { .tx-dp-card { animation: none; } .tx-dp-chip { transition: none; } }
+
 /* ---------- Colombo pull-back scene ---------- */
 .tx-cp { position: relative; color: var(--ivory); background: var(--ink); }
 .tx-cp-stage {
   position: relative; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: center;
   padding: var(--space-section) max(6.5%, calc((100vw - 1420px) / 2));
 }
-.tx-cp-copy { position: relative; z-index: 2; grid-column: 1 / span 5; display: grid; gap: 20px; align-content: center; }
+/* the copy is sized from the screen's height as well as its width, so the whole column fits inside the held stage */
+.tx-cp-copy { position: relative; z-index: 2; grid-column: 1 / span 5; display: grid; gap: clamp(10px, 1.7svh, 18px); align-content: center; }
 .tx-cp-copy .eyebrow { color: var(--mint); }
-.tx-cp-copy h2 { margin: 0; font-size: clamp(40px, 4.6vw, 68px); line-height: 1.02; }
-.tx-cp-copy p { margin: 0; max-width: 34ch; font-size: 20px; line-height: 1.55; color: rgba(245, 242, 233, 0.84); }
+.tx-cp-copy h2 { margin: 0; font-size: clamp(34px, min(4.4vw, 6.4svh), 62px); line-height: 1.02; }
+.tx-cp-intro { margin: 0; max-width: 46ch; font-size: clamp(15px, 2.2svh, 18px); line-height: 1.5; color: rgba(245, 242, 233, 0.84); }
+.tx-cp-note { margin: 0; max-width: 64ch; font-size: 13px; line-height: 1.4; color: rgba(245, 242, 233, 0.62); }
 .tx-cp-copy .text-link { justify-self: start; }
 /* the site's link ring is dark forest green, which disappears on this dark stage */
 .tx-cp .tx-cp-copy .text-link:focus-visible { outline-color: var(--mint); }
@@ -154,7 +175,12 @@
   position: absolute; z-index: 3; left: -4%; bottom: 4%; width: 38%; aspect-ratio: 3 / 2; overflow: hidden;
   border: 1px solid rgba(201, 165, 92, 0.55); border-radius: calc(8px / var(--tx-s, 1)); transform-origin: 50% 50%; will-change: transform;
 }
-.tx-cp-frame img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.tx-cp-frame img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
+/* a new destination's photograph fades in over the one before it */
+.tx-cp-enter { animation: tx-cp-fade 0.7s var(--ease-premium) both; }
+@keyframes tx-cp-fade { from { opacity: 0; } }
+/* in the scene the globe is never taller than the stage that holds it */
+.tx-cp .tx-dg { max-width: min(680px, 80svh); margin-inline: auto; }
 /* held: the stage sticks for two screens while the scroll pulls the camera back */
 .tx-cp.is-live { height: 300svh; }
 .tx-cp.is-live .tx-cp-stage { position: sticky; top: 0; height: 100svh; padding-block: calc(var(--header-h, 72px) + 16px) 32px; overflow: hidden; }
@@ -168,10 +194,8 @@
 
 /* ---------- destinations page: globe beside the list of regions ---------- */
 .tx-gs { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; row-gap: 40px; align-items: center; }
-.tx-gs-copy { grid-column: 1 / span 5; }
-.tx-gs-copy > p { max-width: 38ch; font-size: 18px; line-height: 1.6; color: rgba(245, 242, 233, 0.82); }
-.tx-gs-list { list-style: none; margin: 32px 0 0; padding: 0; }
-.tx-gs-list li { padding: 14px 0; font-size: 18px; border-top: 1px solid var(--hair-dark); }
+.tx-gs-copy { grid-column: 1 / span 5; display: grid; gap: 20px; align-content: center; }
+.tx-gs-copy > p { margin: 0; max-width: 46ch; font-size: 17px; line-height: 1.6; color: rgba(245, 242, 233, 0.82); }
 .tx-gs .tx-dg { grid-column: 7 / span 6; justify-self: end; }
 @media (max-width: 900px) { .tx-gs-copy, .tx-gs .tx-dg { grid-column: 1 / -1; } .tx-gs .tx-dg { justify-self: center; } }
 
