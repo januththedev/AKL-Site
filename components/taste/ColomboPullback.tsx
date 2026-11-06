@@ -6,7 +6,7 @@ import { ResponsiveImage, primeResponsiveImage } from '../ResponsiveImage';
 import type { Destination } from '../../lib/types';
 import { DestinationPicker } from './DestinationPicker';
 import { DottedGlobe } from './DottedGlobe';
-import { buildNetwork, nodeFor, tourStart } from './destinations';
+import { buildNetwork, destinationAt, nodeFor, tourStart } from './destinations';
 import { ease, holdProgress, pullbackAt, seg, type PullbackGeo } from './logic';
 import { useOnScreen, useReducedMotion } from './motion';
 import { useDestinationTour } from './useDestinationTour';
@@ -209,7 +209,7 @@ export function ColomboPullback({ destinations }: { destinations: Destination[] 
         </div>
         <div className="tx-cp-world">
           <div ref={globe} className="tx-cp-globe">
-            <DottedGlobe network={hubs.network} focus={nodeFor(hubs, tour.selected)} paused={tour.paused} onTogglePause={tour.togglePause} onReady={setGlobeReady} />
+            <DottedGlobe network={hubs.network} focus={nodeFor(hubs, tour.selected)} paused={tour.paused} onTogglePause={tour.togglePause} onReady={setGlobeReady} onPick={node => { const index = destinationAt(hubs, node); if (index >= 0) tour.choose(index); }} onInteract={tour.engage} />
           </div>
           <div ref={frame} className="tx-cp-frame">
             <FrameImages src={current.image} alt={`${current.title}: illustrative photograph`} home={homeImage} />

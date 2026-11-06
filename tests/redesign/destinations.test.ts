@@ -84,3 +84,28 @@ test('the vendored globe keeps the patch that turns it to a chosen node', async 
   assert.match(source, /INSTANCES\.set\(el, /);
   assert.match(source, /names: Array\.isArray\(n\.names\)/);
 });
+
+test('each destination knows its place: city, coordinates and distance from Colombo', async () => {
+  const { placeOf, formatCoords, destinationAt } = await import('../../components/taste/destinations');
+  const uae = placeOf(dest('united-arab-emirates', 'United Arab Emirates'))!;
+  assert.equal(uae.city, 'Dubai');
+  assert.ok(uae.km > 3000 && uae.km < 3500, `${uae.km}`); // Colombo to Dubai is about 3,300 km
+  const syd = placeOf(dest('australia', 'Australia'))!;
+  assert.ok(syd.km > 8500 && syd.km < 9000, `${syd.km}`); // about 8,750 km
+  const home = placeOf(dest('sri-lanka', 'Sri Lanka'))!;
+  assert.equal(home.home, true);
+  assert.equal(home.km, 0);
+  assert.equal(placeOf(dest('narnia', 'Narnia')), null);
+  assert.equal(formatCoords(-33.87, 151.21), '33.9° S, 151.2° E');
+  const hubs = buildNetwork(list);
+  list.forEach((_, i) => assert.equal(hubs.hubOf[destinationAt(hubs, hubs.hubOf[i])], hubs.hubOf[i]));
+  assert.equal(destinationAt(hubs, 0), hubs.home);
+});
+
+test('the vendored globe keeps the hand controls (pick, nudge, hover)', async () => {
+  const { readFileSync } = await import('node:fs');
+  const source = readFileSync(new URL('../../public/taste/effects/dotted-globe/effect.js', import.meta.url), 'utf8');
+  assert.match(source, /export function globeOn/);
+  assert.match(source, /pick\(x, y\)/);
+  assert.match(source, /nudge\(dx, dy\)/);
+});

@@ -35,5 +35,6 @@ export function useDestinationTour({ count, home, start, active }: { count: numb
   const choose = useCallback((index: number) => { setEngaged(true); setChosen(index); }, []);
   const reset = useCallback(() => setChosen(start), [start]);
   const togglePause = useCallback(() => setPaused(value => !value), []);
-  return { selected, choose, reset, paused, togglePause, engaged, setHeld };
+  const engage = useCallback(() => setEngaged(true), []); // the visitor took hold of the globe
+  return { selected, choose, reset, paused, togglePause, engaged, engage, setHeld };
 }

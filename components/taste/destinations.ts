@@ -80,3 +80,26 @@ export function nextStop(order: readonly number[], current: number) {
 
 /** How long the tour rests on each destination. */
 export const TOUR_DWELL_MS = 4800;
+
+/** The destination a globe node stands for (Colombo's own entry for node 0), or -1. */
+export function destinationAt(hubs: DestinationHubs, node: number) {
+  if (node === 0) return hubs.home;
+  return hubs.hubOf.indexOf(node);
+}
+
+export type Place = { city: string; lat: number; lon: number; km: number; home: boolean };
+
+/** Where a destination is drawn on the globe, and how far that is from Colombo in a straight line over the earth. */
+export function placeOf(destination: Destination): Place | null {
+  const geo = resolveGeo(destination.slug, destination.title);
+  if (!geo) return null;
+  const rad = Math.PI / 180;
+  const [a1, a2, dl] = [ORIGIN.lat * rad, geo.lat * rad, (geo.lon - ORIGIN.lon) * rad];
+  const h = Math.sin((a2 - a1) / 2) ** 2 + Math.cos(a1) * Math.cos(a2) * Math.sin(dl / 2) ** 2;
+  const km = Math.round((2 * 6371 * Math.asin(Math.min(1, Math.sqrt(h)))) / 10) * 10;
+  return { city: geo.city, lat: geo.lat, lon: geo.lon, km, home: isOrigin(geo) };
+}
+
+/** "25.2° N, 55.3° E" */
+export const formatCoords = (lat: number, lon: number) =>
+  `${Math.abs(lat).toFixed(1)}° ${lat >= 0 ? 'N' : 'S'}, ${Math.abs(lon).toFixed(1)}° ${lon >= 0 ? 'E' : 'W'}`;

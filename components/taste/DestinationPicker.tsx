@@ -1,7 +1,9 @@
 'use client';
 import { useEffect, useState } from 'react';
 import type { FocusEvent } from 'react';
+import { MapPin } from 'lucide-react';
 import type { Destination } from '../../lib/types';
+import { formatCoords, placeOf } from './destinations';
 import './taste-ui.css';
 
 /**
@@ -21,6 +23,7 @@ export function DestinationPicker({ destinations, selected, onChoose, onHold, an
   useEffect(() => setEnhanced(true), []);
   const current = destinations[selected] ?? destinations[0];
   if (!current) return null;
+  const place = placeOf(current);
   const leave = (event: FocusEvent<HTMLDivElement>) => {
     if (!(event.relatedTarget instanceof Node && event.currentTarget.contains(event.relatedTarget))) onHold(false);
   };
@@ -40,6 +43,16 @@ export function DestinationPicker({ destinations, selected, onChoose, onHold, an
           <span className="eyebrow">{current.region}</span>
           <h3>{current.title}</h3>
           <p>{current.description}</p>
+          {place && (
+            <p className="tx-dp-place">
+              <MapPin aria-hidden="true" />
+              <span>
+                {place.home ? 'Colombo, where every route starts' : place.city === 'Regional centre' ? 'Pinned at a regional centre' : `Pinned at ${place.city}`}
+                {' · '}{formatCoords(place.lat, place.lon)}
+                {!place.home && <>{' · '}about {place.km.toLocaleString('en')} km from Colombo</>}
+              </span>
+            </p>
+          )}
         </div>
       </div>
     </div>

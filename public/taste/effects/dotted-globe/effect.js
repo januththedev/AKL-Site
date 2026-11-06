@@ -142,6 +142,8 @@ export function configureNetwork(n) {
 // and the ambient arcs stop. Node `origin` shows the whole network (every route from the origin at once).
 // { instant: true } skips the glide. Returns false when no network globe is mounted on el.
 const INSTANCES = new Map();
+// AKL patch: the mounted network globe on el (focus, pick, nudge, setHover), or null
+export function globeOn(el) { return INSTANCES.get(el) || null; }
 export function focusHub(el, index, options) {
   const inst = INSTANCES.get(el);
   if (!inst) return false;
@@ -503,6 +505,8 @@ function mountGlobe(el, { palette, params: given, seed }) {
   let rebuildTimer = 0, releaseTimer = 0, fbEls = [], glDone = null;
   // AKL patch: the focused node, the pose (turn and tilt) the globe glides to, the routes just left, a focus asked for early
   let focus = -1, pose = null, focusAt = 0, leaving = [], leftAt = -1e9, pendingFocus = null;
+  // AKL patch: a turn the visitor dragged in (kept until the next focus), the node under the pointer, the last matrix drawn
+  let nudgeSpin = 0, nudgeTilt = 0, hover = -1, lastM = null;
   // this globe's place in the page's WebGL budget: off screen, the budget may free it for another effect
   const holder = { seen: 0, get visible() { return lc.visible; }, release: () => releaseGL() };
   const lattices = new Map();
@@ -750,7 +754,7 @@ function mountGlobe(el, { palette, params: given, seed }) {
     if (k < 1) return { spin, tilt };
     return { spin: spin + sstep(0, 2.5, t - pose.t0 - pose.dur) * SWAY * DEG * Math.sin((t - pose.t0) * 0.55), tilt };
   };
-  const matAt = t => { const p = poseAt(t); return rotMat(p.spin, p.tilt, roll); };
+  const matAt = t => { const p = poseAt(t); return rotMat(p.spin + nudgeSpin, Math.max(-60 * DEG, Math.min(60 * DEG, p.tilt + nudgeTilt)), roll); };
   const calmRadius = () => (0.35 + 0.4 * prm.calm) * H;
   const calmAt = (x, y) => prm.calm * (1 - sstep(calmRadius() * 0.35, calmRadius(), Math.hypot(x - prm.calmX * W, y - prm.calmY * H)));
   const screen = p => [pl.gx + p[0] * pl.R, pl.gy - p[1] * pl.R];
@@ -975,15 +979,32 @@ function mountGlobe(el, { palette, params: given, seed }) {
       for (const j of leaving) route(A, hubs[j], 1, 0.9 * f * f, m, false);
     }
     // the nodes: steady and small, the focused one and the origin a little stronger
-    hubs.forEach((h, i) => {
+    // names never overprint: the focused node's pill is placed first, then any name with room around it
+    const named = [];
+    { const fp = rot(m, hubs[focus][0], hubs[focus][1], hubs[focus][2]); if (fp[2] > 0.3) { const [fx, fy] = screen(fp); named.push([fx - 60, fy - 44, fx + 80, fy + 8]); } }
+    const order = hubs.map((_, i) => i).sort((a, b) => (b === hover) - (a === hover) || (b === o) - (a === o));
+    order.forEach(i => {
+      const h = hubs[i];
       const p = rot(m, h[0], h[1], h[2]);
       if (p[2] <= 0.15) return;
       const [x, y] = screen(p);
       const fade = sstep(0.15, 0.5, p[2]) * (1 - 0.9 * calmAt(x, y));
       if (fade < 0.01) return;
-      const lit = i === focus || i === o;
+      const lit = i === focus || i === o || i === hover;
       dot(x, y, lit ? 2.6 : 1.6, lit ? T.head : T.arc, fade * (lit ? 1 : 0.7));
       ring(x, y, lit ? 6 : 4.2, T.arc, fade * (lit ? 0.7 : 0.2));
+      if (i === hover && i !== focus) ring(x, y, 10, T.arc, fade * 0.55);
+      // every place on the visible side carries its name, quietly; the focused one gets the pill below
+      if (i !== focus && net.names[i] && p[2] > 0.35) {
+        ctx.font = `${i === hover ? 600 : 500} 11px ${net.font || 'system-ui, sans-serif'}`;
+        const box = [x + 6, y - 9, x + 10 + ctx.measureText(net.names[i]).width, y + 9];
+        if (named.some(b => box[0] < b[2] && box[2] > b[0] && box[1] < b[3] && box[3] > b[1])) return;
+        named.push(box);
+        ctx.textBaseline = 'middle';
+        ctx.globalAlpha = fade * (i === hover ? 1 : 0.72) * sstep(0.35, 0.6, p[2]);
+        ctx.fillStyle = P.ink;
+        ctx.fillText(net.names[i], x + 8, y + 0.5);
+      }
     });
     // the held route, or every route from the origin
     routesTo(focus).forEach((j, n) => {
@@ -1033,6 +1054,7 @@ function mountGlobe(el, { palette, params: given, seed }) {
     const t = lc.time;
     const instant = !!(options && options.instant) || !lc.running;
     const here = poseAt(t); // where the globe is on screen right now, so the glide starts from it
+    here.spin += nudgeSpin; here.tilt += nudgeTilt; nudgeSpin = 0; nudgeTilt = 0;
     let spin1, tilt1;
     if (next === net.origin) {
       spin1 = -net.view * DEG;
@@ -1120,6 +1142,7 @@ function mountGlobe(el, { palette, params: given, seed }) {
     if (!use2D) ensureGL();
     holder.seen = performance.now();
     const m = matAt(t);
+    lastM = m;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, over.width, over.height);
     ctx.setTransform(dpr, 0, 0, dpr, -box.x * dpr, -box.y * dpr);
@@ -1158,6 +1181,27 @@ function mountGlobe(el, { palette, params: given, seed }) {
     resume: () => lc.resume(),
     redraw: () => lc.redraw(),
     focus: setFocus,
+    // AKL patch: the visitor's hand on the globe. pick(x, y) is the node nearest a point (CSS px inside el, within
+    // 22 px, visible side only) or -1; nudge(dx, dy) turns the globe by a drag in CSS px; setHover(i) highlights a node.
+    pick(x, y) {
+      if (!lastM || !hubs.length || !pl) return -1;
+      let best = -1, bd = 22;
+      hubs.forEach((h, i) => {
+        const p = rot(lastM, h[0], h[1], h[2]);
+        if (p[2] <= 0.2) return;
+        const [sx, sy] = screen(p);
+        const d = Math.hypot(sx - x, sy - y);
+        if (d < bd) { bd = d; best = i; }
+      });
+      return best;
+    },
+    nudge(dx, dy) {
+      if (!pl) return;
+      nudgeSpin -= dx / pl.R;
+      nudgeTilt = Math.max(-50 * DEG, Math.min(50 * DEG, nudgeTilt + dy / pl.R));
+      lc.redraw();
+    },
+    setHover(i) { const next = Number.isInteger(i) ? i : -1; if (next !== hover) { hover = next; lc.redraw(); } },
     set(next) {
       prm = resolveParams(params, { ...prm, ...next });
       arcCache = new Map();

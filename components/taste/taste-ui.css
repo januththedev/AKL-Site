@@ -201,3 +201,11 @@
 
 /* the pipeline section sits on the site's sage ground, so the dark board stands out between two light sections */
 .tx-pbs { background: #e9ede3; }
+
+
+/* ---------- the globe in hand ---------- */
+.tx-dg-host[data-ready] { cursor: grab; touch-action: pan-y; }  /* vertical swipes still scroll the page on phones */
+.tx-dg-host[data-over='place'] { cursor: pointer; }
+.tx-dg-host[data-dragging] { cursor: grabbing; }
+.tx-dp-place { display: flex; gap: 8px; align-items: flex-start; margin: 2px 0 0; font-size: 13px !important; line-height: 1.45 !important; color: var(--gold) !important; font-variant-numeric: tabular-nums; }
+.tx-dp-place svg { flex: none; width: 14px; height: 14px; margin-top: 2px; }

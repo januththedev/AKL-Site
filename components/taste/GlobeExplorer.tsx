@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
 import type { Destination } from '../../lib/types';
 import { DestinationPicker } from './DestinationPicker';
 import { DottedGlobe } from './DottedGlobe';
-import { buildNetwork, nodeFor, tourStart } from './destinations';
+import { buildNetwork, destinationAt, nodeFor, tourStart } from './destinations';
 import { useOnScreen } from './motion';
 import { useDestinationTour } from './useDestinationTour';
 import './taste-ui.css';
@@ -27,7 +27,7 @@ export function GlobeExplorer({ destinations, intro }: { destinations: Destinati
         {intro}
         <DestinationPicker destinations={destinations} selected={tour.selected} onChoose={tour.choose} onHold={tour.setHeld} announce={tour.engaged} />
       </div>
-      <DottedGlobe network={hubs.network} focus={nodeFor(hubs, tour.selected)} paused={tour.paused} onTogglePause={tour.togglePause} onReady={setGlobeReady} />
+      <DottedGlobe network={hubs.network} focus={nodeFor(hubs, tour.selected)} paused={tour.paused} onTogglePause={tour.togglePause} onReady={setGlobeReady} onPick={node => { const index = destinationAt(hubs, node); if (index >= 0) tour.choose(index); }} onInteract={tour.engage} />
     </div>
   );
 }

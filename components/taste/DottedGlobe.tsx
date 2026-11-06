@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
+import type { PointerEvent as ReactPointerEvent } from 'react';
 import { Pause, Play } from 'lucide-react';
 import { useReducedMotion } from './motion';
 import type { GlobeNetwork } from './destinations';
@@ -10,6 +11,7 @@ type FxModule = { mount(el: HTMLElement, id: string, options: { palette: Record<
 type EffectModule = {
   configureNetwork(network: (GlobeNetwork & { font?: string }) | null): void;
   focusHub(el: HTMLElement, index: number, options?: { instant?: boolean; force?: boolean }): boolean;
+  globeOn(el: HTMLElement): { pick(x: number, y: number): number; nudge(dx: number, dy: number): void; setHover(i: number): void } | null;
 };
 
 const BASE = '/taste/effects/';
@@ -31,6 +33,8 @@ export function DottedGlobe({
   paused = false,
   onTogglePause,
   onReady,
+  onPick,
+  onInteract,
   className = '',
   label = 'Globe with routes from Colombo',
 }: {
@@ -40,6 +44,10 @@ export function DottedGlobe({
   onTogglePause?: () => void;
   /** Called with true once the globe is on screen and facing its first place, and with false if it is torn down. */
   onReady?: (ready: boolean) => void;
+  /** A place on the globe was tapped or clicked (its node). */
+  onPick?: (node: number) => void;
+  /** The visitor took hold of the globe (dragged it). */
+  onInteract?: () => void;
   className?: string;
   label?: string;
 }) {
@@ -51,6 +59,49 @@ export function DottedGlobe({
   const [ready, setReady] = useState(false);
   useEffect(() => { focusNow.current = focus; }, [focus]); // what a globe that finishes loading later should face
   useEffect(() => { onReady?.(ready); }, [ready, onReady]);
+
+  // the visitor's hand: drag to turn the globe, point at a place to light it, tap or click it to choose it
+  const drag = useRef<{ x: number; y: number; moved: number } | null>(null);
+  const hand = () => (host.current && effectModule.current?.globeOn(host.current)) || null;
+  const at = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const r = event.currentTarget.getBoundingClientRect();
+    return [event.clientX - r.left, event.clientY - r.top] as const;
+  };
+  const onPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (!ready || (event.pointerType === 'mouse' && event.button !== 0)) return;
+    drag.current = { x: event.clientX, y: event.clientY, moved: 0 };
+    event.currentTarget.setPointerCapture?.(event.pointerId);
+  };
+  const onPointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const g = hand();
+    if (!g) return;
+    const d = drag.current;
+    if (d) {
+      const dx = event.clientX - d.x, dy = event.clientY - d.y;
+      d.moved += Math.abs(dx) + Math.abs(dy);
+      d.x = event.clientX; d.y = event.clientY;
+      if (d.moved > 6) { g.nudge(dx, dy); g.setHover(-1); onInteract?.(); event.currentTarget.dataset.dragging = 'true'; }
+      return;
+    }
+    const node = g.pick(...at(event));
+    g.setHover(node);
+    event.currentTarget.dataset.over = node >= 0 ? 'place' : 'globe';
+  };
+  const onPointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const d = drag.current;
+    drag.current = null;
+    delete event.currentTarget.dataset.dragging;
+    const g = hand();
+    if (!d || !g || d.moved > 6 || !host.current) return;
+    const node = g.pick(...at(event));
+    if (node < 0) return;
+    effectModule.current?.focusHub(host.current, node, { force: true }); // turn back to it even if it was already chosen
+    onPick?.(node);
+  };
+  const onPointerLeave = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (!drag.current) hand()?.setHover(-1);
+    delete event.currentTarget.dataset.over;
+  };
 
   // a new set of places builds a new globe
   const networkKey = network ? JSON.stringify([network.cities, network.names, network.view]) : '';
@@ -102,7 +153,7 @@ export function DottedGlobe({
 
   return (
     <div className={`tx-dg ${className}`.trim()}>
-      <div ref={host} className="tx-dg-host" role="img" aria-label={label} />
+      <div ref={host} className="tx-dg-host" role="img" aria-label={`${label}. Drag to turn it; the buttons choose a place.`} data-ready={ready ? 'true' : undefined} onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp} onPointerLeave={onPointerLeave} />
       {ready && !reduced && onTogglePause && (
         <button type="button" className="tx-pause tx-dg-pause" aria-pressed={paused} aria-label={paused ? 'Play the tour' : 'Pause the tour'} onClick={onTogglePause}>
           {paused ? <Play aria-hidden="true" /> : <Pause aria-hidden="true" />}

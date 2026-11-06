@@ -19,3 +19,12 @@
 @media(max-width:1000px){.desktop-nav{gap:15px}.site-header{padding:0 20px}.desktop-nav a{font-size:10px}.moments-grid{gap:65px 6%}.moment:nth-child(even){padding-top:70px}}
 @media(max-width:700px){.site-header{width:calc(100% - 24px);top:8px;transform:translateY(8px);height:70px;margin-bottom:-70px;border-radius:14px}.brand img{height:43px;width:43px}.brand>span{font-size:10px}.brand>span>span{font-size:6px}.home-hero{padding-top:112px}.page-opening-copy{padding-top:120px}.simple-opening{padding-top:130px}.moments-opening{padding:145px 6% 75px}.moments-opening h1{font-size:clamp(60px,14vw,90px);margin:40px 0}.moments-opening>div{display:block}.moments-opening .glass-pill{margin-top:25px}.moments-opening p{font-size:12px}.moments-collection{padding:65px 6%}.moments-section-heading{align-items:center}.moments-section-heading h2{font-size:45px}.moments-section-heading .glass-pill{padding:12px 16px;font-size:9px}.moments-grid{gap:45px 6%}.moment:nth-child(even){padding-top:50px}.moment h3{font-size:18px}.moment>figcaption{gap:10px;margin-top:18px}.moment-glass{left:10px;right:10px;bottom:10px;padding:12px;font-size:7px;border-radius:6px}.moment-index{font-size:7px}.moment figcaption div>span{font-size:8px}.moment-lightbox{padding:80px 5% 30px}.intro-cinema-label{font-size:6px;left:22px;right:22px}.intro-live-grid{grid-template-columns:repeat(20,1fr);grid-template-rows:repeat(25,1fr)}.footer-bottom>div{flex-wrap:wrap;row-gap:15px}}
 @media(prefers-reduced-motion:reduce){.moment-photo>img{transform:none!important}.moment-photo,.glass-pill{transition:none}}
+
+/* ---------- the company name: "Lanka" in the opening's lettering ---------- */
+.brand-lanka { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.02em; }
+.site-header .brand-lanka, .site-footer .brand-lanka, .dark-section .brand-lanka, .tx-cp .brand-lanka, .mobile-menu .brand-lanka { color: var(--mint); }
+.footer-wordmark .brand-lanka { padding-right: 0.06em; }
+/* inside the small brand lock-ups, Lanka keeps the size of the name, not the suffix's */
+.brand-name>.brand-lanka,.footer-brand>span>.brand-lanka{display:inline!important;font-size:1.1em!important;letter-spacing:-.01em!important;text-transform:none!important}
+/* "AL - Karrim Lanka" is longer than the old wordmark: scale it so it always fits the width */
+.site-footer .footer-wordmark{font-size:clamp(34px,10.6vw,196px)}
