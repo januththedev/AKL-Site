@@ -948,12 +948,16 @@ function mountGlobe(el, { palette, params: given, seed }) {
     ctx.font = `600 12px ${net.font || 'system-ui, sans-serif'}`;
     ctx.textBaseline = 'middle';
     const w = Math.ceil(ctx.measureText(text).width) + 20, h = 24, r = h / 2;
-    const bx = toLeft ? x - 14 - w : x + 14, by = y - 16 - h;
+    // the preferred side, unless the pill would leave the drawing area (a small globe on a phone): then the other side
+    let bx = toLeft ? x - 14 - w : x + 14, by = y - 16 - h;
+    if (box && bx < box.x + 2) bx = x + 14;
+    if (box && bx + w > box.x + box.w - 2) bx = Math.max(box.x + 2, x - 14 - w);
+    if (box && by < box.y + 2) by = y + 16;
     ctx.globalAlpha = a;
     ctx.strokeStyle = rgba(T.arc, 0.5);
     ctx.lineWidth = 1;
     ctx.beginPath();
-    ctx.moveTo(toLeft ? bx + w - r * 0.4 : bx + r * 0.4, by + h);
+    ctx.moveTo(bx + w / 2 < x ? bx + w - r * 0.4 : bx + r * 0.4, by > y ? by : by + h);
     ctx.lineTo(x, y);
     ctx.stroke();
     ctx.beginPath();
@@ -1040,7 +1044,7 @@ function mountGlobe(el, { palette, params: given, seed }) {
       const [x, y] = screen(p);
       const arrived = still || !pose || pose.dur === 0 ? 1 : sstep(pose.dur * 0.55, pose.dur, t - pose.t0);
       const [ox] = screen(rot(m, A[0], A[1], A[2]));
-      tag(net.names[focus] || '', x, y, ox > x, arrived * sstep(0.3, 0.55, p[2]));
+      tag(net.names[focus] || '', x, y, false, arrived * sstep(0.3, 0.55, p[2])); // right of the node: the framed photograph sits bottom-left of the globe
     }
     ctx.globalAlpha = 1;
   }

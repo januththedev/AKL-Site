@@ -15,6 +15,7 @@ import { ExperienceNumbers } from '@/components/taste/ExperienceNumbers';
 import { PipelineSection } from '@/components/taste/PipelineSection';
 import { ColomboPullback } from '@/components/taste/ColomboPullback';
 import { brandify } from '@/components/Brand';
+import { GLOBE_DESTINATIONS } from '@/components/taste/globe-destinations';
 
 // The roots photo fills half the row on desktop and the full width once the section stacks.
 const ROOTS_SIZES = '(max-width: 1000px) 100vw, 85vw'; // the slot is portrait: a 3:2 photo needs ~1.7x its width
@@ -28,7 +29,7 @@ export function HomeView({content:c}:{content:SiteContent}) {
  <section className="roots-section"><div className="roots-image" data-reveal><ResponsiveImage src="/media/colombo-dusk.webp" alt="Colombo coastline at dusk — Sri Lankan geographic context" width={1200} height={800} sizes={ROOTS_SIZES}/></div><div className="roots-copy" data-reveal data-story-lines><StoryHeading heading="A small island with an extraordinary workforce."/><p>{brandify(c.story.body)}</p><p className="roots-closing">{c.story.closing}</p><EditorialLink href="/about">Read our story</EditorialLink><div className="roots-signature"><span>Established August 1980</span></div></div></section>
  <section className="section journey-section"><div className="section-header-row"><SectionTitle animate heading="Every great journey starts with a conversation."/><EditorialLink href="/recruitment">See the full process</EditorialLink></div><Journey/></section>
  <PipelineSection/>
- <ColomboPullback destinations={withProfileReach(c.destinations)}/>
+ <ColomboPullback destinations={GLOBE_DESTINATIONS}/>
  <MomentsGallery moments={c.moments||[]} preview/>
  <section className="employer-band"><StoryHeading heading="Your next chapter needs the right people."/><div><p>Explore our recruitment capabilities, the industries we serve, and how we can support your workforce requirements.</p><Action href="/employers">See employer services</Action></div></section></>;
 }

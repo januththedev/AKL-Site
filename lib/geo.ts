@@ -38,6 +38,7 @@ const ENTRIES: Entry[] = [
   { keys: ['south asia'], point: { city: 'Regional centre', lat: 20, lon: 77 } },
   { keys: ['asia', 'far east'], point: { city: 'Singapore', lat: 1.35, lon: 103.82 } },
   { keys: ['australia'], point: { city: 'Sydney', lat: -33.87, lon: 151.21 } },
+  { keys: ['papua new guinea'], point: { city: 'Port Moresby', lat: -9.44, lon: 147.18 } },
   { keys: ['new zealand'], point: { city: 'Auckland', lat: -36.85, lon: 174.76 } },
   { keys: ['united kingdom', 'uk', 'britain', 'england'], point: { city: 'London', lat: 51.51, lon: -0.13 } },
   { keys: ['germany'], point: { city: 'Berlin', lat: 52.52, lon: 13.4 } },

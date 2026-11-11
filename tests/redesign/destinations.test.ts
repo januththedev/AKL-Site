@@ -109,3 +109,15 @@ test('the vendored globe keeps the hand controls (pick, nudge, hover)', async ()
   assert.match(source, /pick\(x, y\)/);
   assert.match(source, /nudge\(dx, dy\)/);
 });
+
+test('the globe shows exactly the countries Januth listed, all placed on the map, Colombo first', async () => {
+  const { GLOBE_DESTINATIONS } = await import('../../components/taste/globe-destinations');
+  assert.deepEqual(GLOBE_DESTINATIONS.map(d => d.title), ['Sri Lanka', 'Saudi Arabia', 'Kuwait', 'Oman', 'Bahrain', 'Qatar', 'Malaysia', 'Papua New Guinea', 'Australia']);
+  const hubs = buildNetwork(GLOBE_DESTINATIONS);
+  assert.equal(hubs.home, 0);
+  assert.ok(hubs.hubOf.every(n => n >= 0), JSON.stringify(hubs.hubOf));
+  assert.equal(new Set(hubs.hubOf.slice(1)).size, 8); // every country its own place
+  const { placeOf } = await import('../../components/taste/destinations');
+  assert.equal(placeOf(GLOBE_DESTINATIONS[5])!.city, 'Doha');
+  assert.equal(placeOf(GLOBE_DESTINATIONS[7])!.city, 'Port Moresby');
+});
