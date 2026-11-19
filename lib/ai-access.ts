@@ -16,4 +16,4 @@ export function restrictAiRequest(userAgent: string | null, pathname: string) {
   return !policyPaths.has(pathname) && declaredAiAgent.test(userAgent || '');
 }
 
-export const AI_ACCESS_MESSAGE = 'Automated AI access is not permitted by this website. Please see /ai-policy.txt or contact AL Karrim Lanka Consultants PVT LTD for permission.\n';
+export const AI_ACCESS_MESSAGE = 'Automated AI access is not permitted by this website. Please see /ai-policy.txt or contact Al - Karrim Lanka Consultants Pvt Ltd for permission.\n';

@@ -8,7 +8,7 @@ import { SectionTitle } from './Public';
 export function ProfileMilestones() {
   return <section className="profile-milestones" aria-label="Our company in perspective">
     <div><strong><LiveCompanyDate kind="experience" initialValue={yearsOfExperience()}/><span> years</span></strong><span>Since August 1980</span></div>
-    <div><strong>125,000<span>+</span></strong><span>Deployments reported in our 2025 profile</span></div>
+    <div><strong>125,000<span>+</span></strong><span>Deployments reported in our company profile</span></div>
     <div><strong>{profileClients.length}</strong><span>Client names listed in our profile</span></div>
     <div><strong>{profile.industries.names.length}</strong><span>Industries. One connected approach.</span></div>
   </section>;
@@ -24,7 +24,7 @@ export function ProfileApproach() {
   return <section className="section profile-approach">
     <SectionTitle animate heading="Four decades of experience, applied to your requirement." />
     <div className="profile-reasons">{reasons.map(reason => <article key={reason.title} data-reveal><h3>{reason.title}</h3><p>{reason.text}</p></article>)}</div>
-    <p className="profile-source-note">History and recognition from the November 2025 company profile. Contact us for current licence details and engagement requirements.</p>
+    <p className="profile-source-note">History and recognition from our company profile. Contact us for current licence details and engagement requirements.</p>
   </section>;
 }
 
@@ -37,7 +37,7 @@ export function ProfileReach() {
 
 export function ChairmanMessage() {
   return <section id="chairman-message" className="section chairman-message">
-    <div className="chairman-heading"><span className="eyebrow">From the chairman’s message</span><h2>Integrity meets impact.</h2><div className="chairman-signature"><strong>{profile.chairman.name}</strong><span>{profile.chairman.title}, from the November 2025 company profile</span></div></div>
+    <div className="chairman-heading"><span className="eyebrow">From the chairman’s message</span><h2>Integrity meets impact.</h2><div className="chairman-signature"><strong>{profile.chairman.name}</strong><span>{profile.chairman.title}, from our company profile</span></div></div>
     <div className="chairman-copy">{profile.chairman.messageParagraphs.map(text => <p key={text.slice(0, 45)}>{text}</p>)}<a className="text-link" href={`${profile.source.documentUrl}#page=10`} target="_blank" rel="noopener noreferrer">Read the original message <ArrowUpRight size={16}/></a></div>
   </section>;
 }

@@ -12,9 +12,11 @@ export function Lanka() {
 /** Any text that names the company, with "Lanka" in the opening's lettering. Other uses of "Lanka" (Sri Lanka) stay plain. */
 export function brandify(text: string): ReactNode {
   if (!text || !/Karrim Lanka/i.test(text)) return text;
-  return text.split(/(Karrim Lanka)/i).map((part, index) =>
+  return text.split(/(Karrim Lanka|Consultants Pvt Ltd)/i).map((part, index) =>
     /^Karrim Lanka$/i.test(part)
       ? <Fragment key={index}>{part.slice(0, part.length - 5)}<Lanka /></Fragment>
-      : part,
+      : /^Consultants Pvt Ltd$/i.test(part)
+        ? <span key={index} className="brand-legal">{part}</span>
+        : part,
   );
 }

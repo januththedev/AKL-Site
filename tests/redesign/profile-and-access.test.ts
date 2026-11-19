@@ -25,7 +25,7 @@ test('the real Next proxy returns an uncached denial and preserves policy discov
 
 test('declared AI fetchers are restricted on pages, source documents and client assets', () => {
   for (const agent of ['GPTBot/1.4', 'Mozilla/5.0 (compatible; ChatGPT-User/1.0)', 'OAI-SearchBot/1.4', 'Claude-User/1.0', 'ClaudeBot/1.0', 'PerplexityBot/1.0']) {
-    for (const path of ['/', '/clients', '/documents/company-profile-nov2025.pdf', '/clients/doosan.png', '/api/chat']) {
+    for (const path of ['/', '/clients', '/documents/company-profile-nov2025.pdf', '/documents/company-profile.pdf', '/clients/doosan.png', '/api/chat']) {
       assert.equal(restrictAiRequest(agent, path), true, `${agent}: ${path}`);
     }
   }

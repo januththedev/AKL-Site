@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ArrowUpRight, ChevronDown } from 'lucide-react';
 import { StoryHeading } from '@/components/StoryHeading';
 import { ClientRelationships } from '@/components/ClientRelationships';
-import { LiveCompanyDate } from '@/components/LiveCompanyDate';
+import { CurrentMonth, LiveCompanyDate } from '@/components/LiveCompanyDate';
 import { companyProfile, profileClients, profileReach } from '@/lib/company-profile';
 import { yearsOfExperience } from '@/lib/brand';
 import { publicPageMetadata } from '@/lib/structuredData';
@@ -33,7 +33,7 @@ export default async function ClientsPage() {
     <ClientRelationships advanceTo="client-story"/>
     <section className="section client-story" id="client-story">
       <div className="client-story-intro"><div><StoryHeading heading="Every requirement starts with the work ahead."/></div><div data-story-lines><p className="lead">Good recruitment begins with understanding what people will help you achieve.</p><p>A hotel opening. A construction programme. A specialist workshop. Different operations call for different skills, and a practical understanding of the work ahead.</p><p>Our company profile describes recruitment for both large project teams and specialised technical staff, shaped around an employer’s operational goals and regional requirements.</p></div></div>
-      <div className="client-record" aria-label="Our company record"><div><strong><LiveCompanyDate kind="experience" initialValue={yearsOfExperience()}/></strong><span>Completed years of experience<br/>Established August 1980</span></div><div><strong>125,000+</strong><span>Deployments reported<br/>November 2025 company profile</span></div><div><strong>{content.industries.length}</strong><span>Industries. Different skills.<br/>One belief in people.</span></div></div>
+      <div className="client-record" aria-label="Our company record"><div><strong><LiveCompanyDate kind="experience" initialValue={yearsOfExperience()}/></strong><span>Completed years of experience<br/>Established August 1980</span></div><div><strong>125,000+</strong><span>Deployments reported<br/>Company profile, <CurrentMonth/></span></div><div><strong>{content.industries.length}</strong><span>Industries. Different skills.<br/>One belief in people.</span></div></div>
     </section>
     <section className="section client-support">
       <div className="client-support-heading"><StoryHeading heading="A clear path from brief to mobilisation."/><p>Professional, skilled, semi-skilled and general workforce requirements. A connected process that brings the practical details together.</p><Link className="text-link" href="/services">See our services <ArrowUpRight size={16}/></Link></div>
@@ -45,9 +45,9 @@ export default async function ClientsPage() {
     </section>
     <section className="section client-sectors"><div className="client-sectors-heading"><div><StoryHeading heading="The sectors we recruit for."/></div><p>Explore the role families and recruitment perspective behind each of our sectors.</p></div><div className="client-sector-links">{content.industries.map(industry => <Link key={industry.slug} href={`/industries/${industry.slug}`}>{industry.title}<ArrowUpRight size={19}/></Link>)}</div></section>
     <section className="section client-directory" id="client-directory">
-      <div className="client-directory-heading"><div><StoryHeading heading="The full record from our company profile."/></div><p><strong>{profileClients.length}</strong> names listed<br/><span>Company profile, November 2025</span></p></div>
+      <div className="client-directory-heading"><div><StoryHeading heading="The full record from our company profile."/></div><p><strong>{profileClients.length}</strong> names listed<br/><span>Company profile, <CurrentMonth/></span></p></div>
       <details className="client-directory-list"><summary>Explore all {profileClients.length} company names <ChevronDown size={18}/></summary><ol className="client-name-list">{profileClients.map(client => <li key={client.id}>{client.name}</li>)}</ol></details>
-      <p className="profile-source-note">A record from the November 2025 profile, rather than a statement of current contracts. Transcribed from pages 8–9, preserving the printed names. One exact duplicate is omitted; similar names are retained.</p>
+      <p className="profile-source-note">A record from our company profile, rather than a statement of current contracts. Transcribed from pages 8–9, preserving the printed names. One exact duplicate is omitted; similar names are retained.</p>
       <a className="text-link" href={`${companyProfile.source.documentUrl}#page=8`} target="_blank" rel="noopener noreferrer">View the original client pages <ArrowUpRight size={16}/></a>
     </section>
     <section className="client-next"><StoryHeading heading="Let’s build what comes next."/><Link href="/employers#request-workforce" className="button button-primary">Send a workforce brief <ArrowUpRight size={18}/></Link></section>

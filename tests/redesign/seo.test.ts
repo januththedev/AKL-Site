@@ -101,7 +101,7 @@ test('JSON-LD serialisation cannot close the script element or break out of it',
 test('organization JSON-LD uses the company facts and escapes hostile settings', () => {
   const data = organizationJsonLd({ settings: defaultContent.settings, base: SITE }) as Record<string, unknown>;
   assert.equal(data['@type'], 'EmploymentAgency');
-  assert.equal(data.name, 'AL Karrim Lanka Consultants PVT LTD');
+  assert.equal(data.name, 'Al - Karrim Lanka Consultants Pvt Ltd');
   assert.equal(data.foundingDate, '1980-08');
   assert.equal(data.logo, `${SITE}/brand/AKL-Official-Logo-512.png`);
   assert.equal(data.telephone, defaultContent.settings.phone);
