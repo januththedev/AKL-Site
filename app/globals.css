@@ -39,5 +39,7 @@
 @media(max-width:560px){.form-success{padding:28px 22px}.form-success .button,.inquiry-section .button{white-space:normal;max-width:100%}}
 /* the full name (owner, 2026-11-19): "Al - Karrim Lanka" at full size, "Consultants Pvt Ltd" clearly smaller under it, everywhere */
 :root body .site-header .brand > span.brand-name > span.brand-suffix.brand-suffix{display:block}
-:root body .brand > span.brand-name > span.brand-suffix{font-size:.5em;margin-top:3px;opacity:.72}
+:root body .brand > span.brand-name > span.brand-suffix{font-size:.5em;margin-top:3px;opacity:.72;letter-spacing:.19em;margin-right:-.19em}
+/* spaced so "Consultants Pvt Ltd" ends under the last letter of "Lanka" (owner, 2026-11-19) */
+:root body .brand > span.brand-name > span.brand-since{display:block;font-family:var(--sans);font-size:.42em;margin-top:6px;opacity:.55;letter-spacing:.04em}
 .brand-legal{font-size:.8em;letter-spacing:.01em;opacity:.8}
