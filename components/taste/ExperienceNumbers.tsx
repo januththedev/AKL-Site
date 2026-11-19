@@ -10,24 +10,24 @@ import logos from './marquee-logos.json';
  * company profile (the same ones the About page shows), and every number is in the HTML as written.
  */
 export function ExperienceNumbers({ industryCount }: { industryCount: number }) {
-  const figures = [
+  const figures: { value: string; label: string; note?: string }[] = [
     { value: String(yearsOfExperience()), label: 'Years of experience', note: 'Established in August 1980' },
-    { value: '125,000+', label: 'Deployments reported', note: 'In our November 2025 company profile' },
-    { value: String(profileClients.length), label: 'Client names listed', note: 'In the same company profile' },
-    { value: String(industryCount), label: 'Industries we recruit for', note: 'Hospitality to logistics' },
+    { value: '125,000+', label: 'Deployments reported' },
+    { value: String(profileClients.length), label: 'Client names listed' },
+    { value: String(industryCount), label: 'Industries we recruit for' },
   ];
   return (
     <section className="section ivory-section tx-xp">
       <div className="section-header-row">
         <SectionTitle animate heading="Experience in numbers." />
-        <p className="side-note" data-reveal>Figures from our company profile. Talk to our team about your current requirement.</p>
+        <p className="side-note" data-reveal>Talk to our team about your current requirement.</p>
       </div>
       <ul className="tx-figures">
         {figures.map((figure, index) => (
           <li key={figure.label}>
             <CounterRoll value={figure.value} delay={index * 90} />
             <span className="tx-fig-label">{figure.label}</span>
-            <span className="tx-fig-note">{figure.note}</span>
+            {figure.note && <span className="tx-fig-note">{figure.note}</span>}
           </li>
         ))}
       </ul>
