@@ -193,7 +193,7 @@ export function Intro({ moments = [] }: { moments?: Moment[] }) {
           <span className="rv-clip"><span className="rv-word">Lanka</span></span>
         </p>
         <p className="rv-meta">
-          <span>Consultants PVT LTD</span>
+          <span className="rv-legal">Consultants Pvt Ltd</span>
           <span className="rv-dot" aria-hidden="true" />
           <span>Since 1980 — <span className="rv-year">{FOUNDING_YEAR}</span></span>
         </p>

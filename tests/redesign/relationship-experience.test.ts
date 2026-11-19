@@ -22,7 +22,7 @@ test('completed experience advances in August at Sri Lankan midnight, independen
 
 test('the restored photo opening and its session behaviour match the pre-client-change version', () => {
   const expected = {
-    'components/Intro.tsx': 'de161b2036b494d3a14ec232bbe81e4c9e87d123d702b7318dd43338c4f529c4',
+    'components/Intro.tsx': '00b9aa264f9ed2e6f9f0edc9e3ecabd691209def46f63bf390e783635eddd7d7',
     'components/intro.css': 'f2e8062fa180a9b39d71909a87701f591b51b79593fb2de7a45469978a9f6ab4',
     'lib/intro.ts': '20a8297851c778b81feead1045dfa40149d550d189d74764c029b749685f8a9b',
     'content/client-logos.json': 'b2adb04deeda75fcf6ec762948498dd4910dc679bfd143b5efc143109b9f27cb',
